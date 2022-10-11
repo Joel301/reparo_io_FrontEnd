@@ -6,6 +6,7 @@ function App() {
         <div className="App">
             <h1>reparo.io</h1>
             <p>init page</p>
+            <p>auth branch</p>
         </div>
     );
 }
