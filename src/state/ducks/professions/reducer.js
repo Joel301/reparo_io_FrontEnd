@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
-    profesions: []
+    professions: []
 };
 const profReducer = createReducer(initialState, (builder) => {});
 
