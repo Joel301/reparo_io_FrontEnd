@@ -10,6 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const domain = process.env.REACT_APP_AUTH_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH_DOMAIN_KEY_CLIENT_ID;
 
+console.log(process.env);
 root.render(
     <React.StrictMode>
         <Auth0Provider
