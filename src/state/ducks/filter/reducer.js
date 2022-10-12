@@ -6,7 +6,7 @@ const initialState = {
 };
 const filterReducer = createReducer(initialState, action, (builder) => {
         switch(action.type){
-            case 'GET_PROFESSIONALS':
+            case 'GET_PROFESSIONALS_BY_NAME':
                 return{
                     ...state,
                     professionals: action.payload
