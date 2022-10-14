@@ -1,0 +1,57 @@
+.landing {
+    text-align: center;
+}
+
+.navbar {
+    background-color: rgba(0, 0, 138, 0.796);
+    color: white;
+    margin-top: 0;
+    height: 80px;
+}
+
+.navbar p {
+    margin-top: 0;
+    padding-top: 15px;
+    font-size: 30px;
+}
+
+.alter-buttons {
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    background-color: rgb(223, 223, 223);
+    height: 300px;
+}
+
+
+.btns {
+    margin: 100px;
+
+}
+
+.btn-selected {
+    margin: 100px;
+    opacity: 0%;
+}
+
+.img {
+    width: 100px;
+}
+
+.img2 {
+    width: 115px;
+}
+
+.img:hover {
+    transition: width 0.2s;
+    width: 105px;
+}
+
+.img2:hover {
+    transition: width 0.2s;
+    width: 120px;
+}
+
+.img-arrow {
+    width: 20px;
+}

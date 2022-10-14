@@ -1,12 +1,20 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
+
+import { Route, Routes } from "react-router-dom" 
+
+import Landing from "./views/pages/Landing"
+
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <h1>reparo.io</h1>
-      <p>init page</p>
-    </div>
+    <>
+      <Routes>
+          
+          <Route path="/" element={<Landing />}/>
+
+      </Routes>
+    </>
   );
 }
 
