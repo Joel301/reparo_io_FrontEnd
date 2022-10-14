@@ -1,12 +1,19 @@
-import logo from "./logo.svg";
 import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+
+import FormProfession from './views/components/FormProfession';
 
 function App() {
   return (
-    <div className="App">
-      <h1>reparo.io</h1>
-      <p>init page</p>
+
+    <div >
+      <Router>
+        <Routes>
+          <Route exact path='/' element={<FormProfession/>}></Route>
+        </Routes>
+      </Router>
     </div>
+
   );
 }
 
