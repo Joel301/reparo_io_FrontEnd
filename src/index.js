@@ -5,8 +5,12 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./state/store";
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import {store} from "./state/store"
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
