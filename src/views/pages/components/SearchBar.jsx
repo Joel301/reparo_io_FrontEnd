@@ -1,16 +1,18 @@
 import React from "react";
-import axios from "axios";
 import{ Form, Button } from "react-bootstrap"
 
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProfesional } from "../../../state/ducks/professionals/actions";
+import { useEffect } from "react";
 
 
 
 export default function SearchBar(){
     const dispatch = useDispatch();
     const [name, setName] = useState("")
+
+    
     
 
     function handleInputChange(e){
@@ -18,8 +20,8 @@ export default function SearchBar(){
         setName(e.target.value);
     }
 
-    //asdasdasdasdasadsd
-    async function handleSubmit(e){
+    
+    function handleSubmit(e){
         e.preventDefault();
         dispatch(getProfesional(name));
 
@@ -27,14 +29,9 @@ export default function SearchBar(){
 
 
     return(
-        <>
-        <style type= "text/css">{`
-            .form-sm{
-                width: 40px
-
-            }
-            `}</style>
-        <Form className="d-flex container-sm" size="sm">
+        
+        
+        <Form style={{width: "30%", display: "flex"}} className="d-flex container-sm" size="sm">
             
             <Form.Control
               type="search"
@@ -44,6 +41,6 @@ export default function SearchBar(){
               onChange={e => handleInputChange(e)} />
             <Button type="submit" variant="outline-success" onClick={e => handleSubmit(e)}>Search</Button>
           </Form>
-              </>
+              
     )
 }

@@ -1,6 +1,3 @@
-
-
-
 const initialState = {
     professionals: [],
     allProfessionals: []
@@ -19,10 +16,11 @@ function rootReducer(state=initialState, action){
         case 'GET_PROFESSIONALS': 
         return {
             ...state,
-            professionals: action.payload
+
+            allProfessionals: action.payload
         }
+        default: return state
     }
 
 }
 export default rootReducer;
-

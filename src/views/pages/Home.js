@@ -3,21 +3,21 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import SearchBar from "./components/SearchBar";
 import Card from "./components/Card";
+import CardsList from "./components/CardsLists";
 
 export default function Home(){
-    const dispatch = useDispatch()
-    const getProfessional = useSelector((state) => (state.professionals))
-    useEffect(() =>{
-        dispatch(getProfessional())
-    }, [dispatch])
+    // const dispatch = useDispatch()
+    // const getProfessional = useSelector((state) => (state.professionals))
+    // useEffect(() =>{
+    //     dispatch(getProfessional())
+    // }, [dispatch])
 
     return (
         <div>
-         <SearchBar/>
+         <CardsList/>
          
          </div>
         )
 }
-
    
  
