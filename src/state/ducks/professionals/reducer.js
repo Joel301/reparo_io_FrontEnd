@@ -21,6 +21,8 @@ function rootReducer(state=initialState, action){
             ...state,
             professionals: action.payload
         }
+        default:
+      return state;
     }
 
 }
