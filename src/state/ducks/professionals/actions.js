@@ -27,6 +27,18 @@ export function getProfesional(payload){
             console.log(error)
         }
     }
-
 }
 
+export function  postProfessional(payload){
+    return async function (dispatch){
+        try{
+            var info = await axios.post('https://reparoiobackend-develop.up.railway.app/home/professionals', payload)
+            return dispatch({
+                type: 'POST_PROFESSIONAL',
+                info    
+            })
+        } catch(error){
+        console.error(error);
+        }
+    }
+}
