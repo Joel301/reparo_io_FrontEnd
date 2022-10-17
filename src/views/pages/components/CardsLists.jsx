@@ -1,10 +1,11 @@
 import React from 'react'
-import { Container, Row,Col } from 'react-bootstrap'
+import { Container, Row,Col, Navbar } from 'react-bootstrap'
 import CardFormat from './CardFormat';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllProfessionals } from '../../../state/ducks/professionals/actions';
 import SearchBar from './SearchBar';
+
 
 
 function CardsList() {
