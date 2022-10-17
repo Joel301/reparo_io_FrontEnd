@@ -1,9 +1,8 @@
-
-
-
 const initialState = {
     professionals: [],
-    allProfessionals: []
+    allProfessionals: [],
+    professions: []
+
 };
 
 function rootReducer(state=initialState, action){
@@ -19,10 +18,32 @@ function rootReducer(state=initialState, action){
         case 'GET_PROFESSIONALS': 
         return {
             ...state,
-            professionals: action.payload
+            allProfessionals: action.payload
         }
+
+        case 'GET_PRFESSIONS_OF_PROFESSIONALS':
+            let allProfessionalsProfessions = state.allProfessionals;
+            allProfessionalsProfessions = action.payload === 'ALL'? 
+            allProfessionalsProfessions : 
+            allProfessionalsProfessions.filter(el => el.professions.includes(action.payload))
+        return {
+            ...state,
+            professionals: allProfessionalsProfessions
+        }
+
+        case 'GET_ALL_PROFESSIONS':
+            return {
+                ...state,
+                professions: action.payload
+            }
+
+
+
+            default: return state
     }
+
+
+
 
 }
 export default rootReducer;
-

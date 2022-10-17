@@ -16,20 +16,20 @@ function HeaderNavBar() {
           <Nav className="ms-auto">
             <NavDropdown title="Login" id="login-nav-dropdown">
               <NavDropdown.Item href="#login/client">
-                As Client
+                Cliente
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#login/worker">
-                As Worker
+                Profesional
               </NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Sign In" id="signin-nav-dropdown">
+            <NavDropdown title="Registrarse" id="signin-nav-dropdown">
               <NavDropdown.Item href="#signin/client">
-                As Client
+              Cliente
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#signin/worker">
-                As Worker
+              Profesional
               </NavDropdown.Item>
             </ NavDropdown>
             <SearchBar />

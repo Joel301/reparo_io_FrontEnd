@@ -92,6 +92,7 @@ let professionsHardCode = [
                     <img 
                         className="imgCarrito"
                         src={imgCarrito}
+                        alt="img"
                         />
                 </Button>
             

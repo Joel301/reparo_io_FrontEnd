@@ -2,12 +2,14 @@ import React from "react";
 
 //State
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"
+
+//redux
+import { getProfesional, getAllProfessionals } from "../../state/ducks/professionals/actions";
 
 //Components
 import HeaderNavBar from "../components/HeaderNavBar"
 import Professions from "../components/Professions"
-// import Card from "./components/Card";
 
 //Css Styles & imgs
 import "./landing.css"
@@ -29,7 +31,7 @@ export default function Landing () {
     const dispatch = useDispatch()
     const getProfessional = useSelector((state) => (state.professionals))
     useEffect(() =>{
-        dispatch(getProfessional())
+        dispatch(getProfesional())
     }, [dispatch])
 
     const onChangeClient = (e) => {
