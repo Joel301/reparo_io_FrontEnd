@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import logo from "./logo.svg";
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import "./App.css";
@@ -18,6 +19,24 @@ function App() {
     </Routes> */}
     </div>
   </BrowserRouter>
+=======
+
+import { Route, Routes } from "react-router-dom" 
+
+import Landing from "./views/pages/Landing"
+
+
+function App() {
+  return (
+
+    <>
+      <Routes>
+          
+          <Route path="/" element={<Landing />}/>
+
+      </Routes>
+    </>
+>>>>>>> c113411b9c69984c1c1c08b5e16f5cbb23fd1083
   );
 }
 
