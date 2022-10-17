@@ -5,6 +5,7 @@ export function getAllProfessionals(){
     return async function(dispatch){
         try {
             const getAll = await axios.get('https://reparoiobackend-develop.up.railway.app/home/professionals')
+            console.log(getAll.data, "get All dataa")
             return dispatch({
                 type: 'GET_ALL_PROFESSIONALS',
                 payload: getAll.data
@@ -50,4 +51,7 @@ export function getProfessionsOfProfessionals(payload){
         payload
     }
 }
+
+
+
 

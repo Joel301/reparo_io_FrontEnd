@@ -10,30 +10,28 @@ import { getProfesional } from "../../state/ducks/professionals/actions";
 export default function SearchBar(){
     const dispatch = useDispatch();
     const [name, setName] = useState("")
+
+    
     
 
     function handleInputChange(e){
         e.preventDefault(e);
         setName(e.target.value);
+        dispatch(getProfesional(name));
     }
 
-    //asdasdasdasdasadsd
-    async function handleSubmit(e){
+    
+    function handleSubmit(e){
         e.preventDefault();
-        dispatch(getProfesional(name));
+        
 
     }
 
 
     return(
-        <>
-        <style type= "text/css">{`
-            .form-sm{
-                width: 40px
-
-            }
-            `}</style>
-        <Form className="d-flex container-sm" size="sm">
+        
+        
+        <Form style={{width: "30%", display: "flex" }} className="d-flex container-sm" size="sm">
             
             <Form.Control
               type="search"
@@ -43,6 +41,6 @@ export default function SearchBar(){
               onChange={e => handleInputChange(e)} />
             <Button type="submit" variant="outline-success" onClick={e => handleSubmit(e)}>Buscar</Button>
           </Form>
-              </>
+              
     )
 }

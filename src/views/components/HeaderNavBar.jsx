@@ -1,18 +1,10 @@
 import React from "react";
-import { useState } from "react";
-import { Container, Nav, Navbar, NavDropdown,Offcanvas } from "react-bootstrap";
-import FormProfession from "./FormProfession";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 function HeaderNavBar() {
-  
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-   const handleShow = () => setShow(true);
   return (
     /////// esto es con react-bootstrap
     // desde el archivo ../../node_modules/bootstrap/_variables.scss cambio la paleta de colores
     //
-    
-  
 
     <Navbar sticky="top" expand="md" bg="primary" variant="dark">
       <Container>
@@ -21,34 +13,26 @@ function HeaderNavBar() {
         <Navbar.Collapse >
           <Nav className="ms-auto">
             <NavDropdown title="Login" id="login-nav-dropdown">
-              <NavDropdown.Item disabled href="#login/client">
+              <NavDropdown.Item href="#login/client">
                 As Client
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item >
+              <NavDropdown.Item href="#login/worker">
                 As Worker
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Sign In" id="signin-nav-dropdown">
-              <NavDropdown.Item disabled href="#signin/client">
+              <NavDropdown.Item href="#signin/client">
                 As Client
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item onClick={handleShow}>
+              <NavDropdown.Item href="#signin/worker">
                 As Worker
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
-      <Offcanvas bg="dark" show={show} onHide={handleClose} placement='end'>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Registrate</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          {/* <FormProfession/> */}
-        </Offcanvas.Body>
-      </Offcanvas>
     </Navbar>
   );
 }

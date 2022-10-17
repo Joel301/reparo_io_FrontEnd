@@ -29,9 +29,10 @@ export default function Landing () {
     const [client, setClient] = useState('client')
 
     const dispatch = useDispatch()
-    const getProfessional = useSelector((state) => (state.professionals))
+    // const profesionales = useSelector((state) => (state.professionals))
+
     useEffect(() =>{
-        dispatch(getProfesional())
+        dispatch(getAllProfessionals())
     }, [dispatch])
 
     const onChangeClient = (e) => {

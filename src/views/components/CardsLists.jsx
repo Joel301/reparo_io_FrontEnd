@@ -11,17 +11,17 @@ import SearchBar from './SearchBar';
 function CardsList() {
   const profesionales = useSelector((state) => (state.allProfessionals))
   const dispatch = useDispatch(); 
-
-
+  
+  
   useEffect(()=>{
     dispatch(getAllProfessionals())
 },[dispatch])
-
+  
 
  
 
   return (
-
+    
     <Container style={{width:'100%', justifyContent: "center", display: "flex", flexDirection: "column"}}>
       <SearchBar/>
         <Row style={{margin: "10px"}} xs={1} md={3} lg={4} className="g-4" >
