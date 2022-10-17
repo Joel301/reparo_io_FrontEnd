@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {store} from "./state/store"
+import store from "./state/store"
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
