@@ -8,8 +8,6 @@ import HeaderNavBar from "./views/pages/components/HeaderNavBar";
 import Home from "./views/pages/Home";
 
 
-import { Route, Routes } from "react-router-dom" 
-
 import Landing from "./views/pages/Landing"
 
 
