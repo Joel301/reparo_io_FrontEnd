@@ -2,22 +2,34 @@ import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import SearchBar from "./components/SearchBar";
-import Card from "./components/Card";
+import {getAllProfessions} from '../../state/ducks/professionals/actions';
+
 import CardsList from "./components/CardsLists";
 
 export default function Home(){
-    // const dispatch = useDispatch()
-    // const getProfessional = useSelector((state) => (state.professionals))
-    // useEffect(() =>{
-    //     dispatch(getProfessional())
-    // }, [dispatch])
+    const professiones = useSelector(state => state.professions)
+    console.log(professiones, "profesiones de home")
+    const dispatch = useDispatch()
 
+    useEffect(()=>{
+        dispatch(getAllProfessions())
+        
+    },[dispatch])
+    
     return (
         <div>
-         <CardsList/>
-         
-         </div>
-        )
+            <select>
+                {
+                    professiones?.map(p => {
+                        return (
+                            <option>{p.name}</option>
+                        )
+                        
+                    })
+                }
+            </select>
+        </div>
+    )
 }
    
  

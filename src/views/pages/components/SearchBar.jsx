@@ -18,12 +18,13 @@ export default function SearchBar(){
     function handleInputChange(e){
         e.preventDefault(e);
         setName(e.target.value);
+        dispatch(getProfesional(name));
     }
 
     
     function handleSubmit(e){
         e.preventDefault();
-        dispatch(getProfesional(name));
+        
 
     }
 
@@ -31,7 +32,7 @@ export default function SearchBar(){
     return(
         
         
-        <Form style={{width: "30%", display: "flex"}} className="d-flex container-sm" size="sm">
+        <Form style={{width: "30%", display: "flex" }} className="d-flex container-sm" size="sm">
             
             <Form.Control
               type="search"
