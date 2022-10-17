@@ -12,4 +12,5 @@ export function validateFormProfessional(currentInput) {
   if(!currentInput.address || currentInput.address === 0) errors.address = 'El campo dirección es obligatorio'
   if(!currentInput.professions || currentInput.professions.length === 0) errors.professions = 'Debe selleccionar al menos una prefesión'
 
+  return errors
 }

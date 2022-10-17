@@ -4,11 +4,13 @@ import Form from 'react-bootstrap/Form';
 import { useDispatch } from "react-redux";
 import { postProfessional, getAllProfessionals } from "../../state/ducks/professionals/actions.js";
 import { validateFormProfessional } from "./validation.js";
+import './estilos.css'
 
 
 
-function FormProfession() {
+export default function FormProfession() {
   const dispatch = useDispatch()
+
   const profesiones = [{ id: 2, name: "Electricista" }, { name: "Plomero", id: 1 }]
 
   //referencia de información del input para el post:
@@ -25,11 +27,12 @@ function FormProfession() {
 
 
   //Estado de mostrar contraseña
-  const [showPwd, setShowPwd] = useState(false)
+  const [showPwd, setShowPwd] = useState(false)// pendiente usar useEffect para no renderizar todo el componente
   const [confirmShowPwd, setConfirmShowPwd] = useState(false)// pendiente usar useEffect para no renderizar todo el componente
 
   // estados errores de Validación: 
   const [errors, setErrors] = useState({})
+ 
 
   // cambio de estado placeholder contraseña
   function handleShowPass(e) {
@@ -66,8 +69,16 @@ function FormProfession() {
       professions: professionsRef.current
     };
     console.log(input);
-    validateFormProfessional(input)
-    console.log(errors);
+    const formErrors = validateFormProfessional(input)
+    setErrors(formErrors)
+
+    if (Object.keys(errors).length > 0 || Object.keys(formErrors).length > 0) {
+      alert('Verifique que todos los campos esten diligenciados')
+      return
+    }
+
+    console.log(input);
+
     //dispatch(postProfessional(input))
   }
 
@@ -89,37 +100,42 @@ function FormProfession() {
           type="text"
           placeholder="Nombre" />
       </Form.Group>
+      {errors.firstName && <p className="errors">{errors.firstName}</p>}
       <Form.Group className="mb-3" >
         <Form.Control
           ref={lastNameRef}
           type="text"
           placeholder="Apellido" />
       </Form.Group>
+      {errors.lastName && <span className="errors"> {errors.lastName}</span>}
       <Form.Group className="mb-3" >
         <Form.Control
           ref={addressRef}
-          type="text" p
-          laceholder="Dirección" />
+          type="text"
+          placeholder="Dirección" />
       </Form.Group>
+      {errors.address && <span className="errors">{errors.address}</span>}
       <Form.Group className="mb-3" >
         <Form.Control
           ref={phoneNumberRef}
           type="text"
           placeholder="Telefono" />
       </Form.Group>
+      {errors.phoneNumber && <span className="errors">{errors.phoneNumber}</span>}
       <Form.Group className="mb-3" >
         <Form.Control
           ref={profileImgRef}
           type="text"
           placeholder="imagen" />
       </Form.Group>
+      {errors.profileImg && <span className="errors">{errors.profileImg}</span>}
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Control
           ref={emailRef}
           type="email"
           placeholder="nombre@example.com" />
       </Form.Group>
-
+      {errors.email && <span className="errors">{errors.email}</span>}
       <Form.Group
         className="mb-3"
         controlId="exampleForm.ControlTextarea1">
@@ -130,6 +146,7 @@ function FormProfession() {
           placeholder="Sobre mi"
           as="textarea" />
       </Form.Group>
+      {errors.aboutMe && <span className="errors">{errors.aboutMe}</span>}
       <Form.Group className="mb-3">
         <Form.Check>Profesiones:
           {
@@ -145,6 +162,7 @@ function FormProfession() {
           }
         </Form.Check>
       </Form.Group>
+      {errors.professions && <span className="errors">{errors.professions}</span>}
       <Form.Group className="mb-2" controlId="formBasicPassword">
         <Form.Control
           ref={passwordRef}
@@ -157,6 +175,7 @@ function FormProfession() {
           }
         </i>
       </Form.Group>
+      {errors.password && <span className="errors">{errors.password}</span>}
       <Form.Group className="mb-2" controlId="formBasicPassword">
         <Form.Control
           ref={confirmPasswordRef}
@@ -182,4 +201,3 @@ function FormProfession() {
   );
 }
 
-export default FormProfession;
