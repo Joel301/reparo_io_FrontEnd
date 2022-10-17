@@ -1,9 +1,13 @@
+import React from "react";
+
 //State
-import { useState } from 'react'
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 //Components
 import HeaderNavBar from "../components/HeaderNavBar"
 import Professions from "../components/Professions"
+// import Card from "./components/Card";
 
 //Css Styles & imgs
 import "./landing.css"
@@ -12,16 +16,21 @@ import imgPro from "./imgs/pro.png"
 import imfArrow from "./imgs/arrow.png"
 
 // Bootstrap
-import Accordion from 'react-bootstrap/Accordion';
+import Accordion from 'react-bootstrap/Accordion'
 import AboutUs from '../components/AboutUs'
 import { Button } from 'react-bootstrap'
-
 
 
 
 export default function Landing () {
 
     const [client, setClient] = useState('client')
+
+    const dispatch = useDispatch()
+    const getProfessional = useSelector((state) => (state.professionals))
+    useEffect(() =>{
+        dispatch(getProfessional())
+    }, [dispatch])
 
     const onChangeClient = (e) => {
         e.preventDefault()

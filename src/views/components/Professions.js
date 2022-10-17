@@ -57,7 +57,7 @@ let professionsHardCode = [
 
     return (
         <>
-        
+
             {/* Titulo componente profesiones  */}
             <div style={{marginTop: "70px", fontWeight: "bolder" }}>
                 <h3>

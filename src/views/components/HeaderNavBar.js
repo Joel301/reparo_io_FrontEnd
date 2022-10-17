@@ -1,5 +1,7 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import SearchBar from "./SearchBar.jsx"
+
 function HeaderNavBar() {
   return (
     /////// esto es con react-bootstrap
@@ -29,7 +31,8 @@ function HeaderNavBar() {
               <NavDropdown.Item href="#signin/worker">
                 As Worker
               </NavDropdown.Item>
-            </NavDropdown>
+            </ NavDropdown>
+            <SearchBar />
           </Nav>
         </Navbar.Collapse>
       </Container>
