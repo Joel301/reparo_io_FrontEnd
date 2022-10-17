@@ -2,9 +2,8 @@ import React from "react";
 import{ Form, Button } from "react-bootstrap"
 
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getProfesional } from "../../../state/ducks/professionals/actions";
-import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getProfesional } from "../../state/ducks/professionals/actions";
 
 
 
@@ -36,11 +35,11 @@ export default function SearchBar(){
             
             <Form.Control
               type="search"
-              placeholder="Search"
+              placeholder="Buscar..."
               className="me-2"
               aria-label="Search"
               onChange={e => handleInputChange(e)} />
-            <Button type="submit" variant="outline-success" onClick={e => handleSubmit(e)}>Search</Button>
+            <Button type="submit" variant="outline-success" onClick={e => handleSubmit(e)}>Buscar</Button>
           </Form>
               
     )

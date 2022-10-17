@@ -1,0 +1,24 @@
+.profesiones{
+    margin: 100px;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.dropdown {
+    display: flex;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    margin-top: 20px;
+    margin-left: 100px;
+    gap: 60rem;
+    /* justify-content: space-between; */
+    /* margin-right: 200px; */
+}
+
+.imgCarrito {
+    width: 50px;
+    justify-content: flex-end;
+
+}
+
+
