@@ -2,7 +2,7 @@
 import { useState } from 'react'
 
 //Components
-import HeaderNavBar from "./HeaderNavBar"
+import HeaderNavBar from "./components/HeaderNavBar"
 
 //Css Styles & imgs
 import "./landing.css"

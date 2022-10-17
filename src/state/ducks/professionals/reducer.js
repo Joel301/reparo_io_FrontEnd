@@ -34,6 +34,30 @@ function rootReducer(state=initialState, action){
                 ...state,
                 professions: action.payload
             }
+        
+        case 'ORDER_BY_NAME':
+                let sortOrder = action.payload === 'asc'?
+            state.allProfessionals.sort(function(a,b){
+                if(a.firstName > b.firstName){
+                    return 1
+                }
+                if(b.firstName > a.firstName){
+                    return -1
+                }
+                return 0
+            }): state.allProfessionals.sort(function(a,b){
+                if(a.firstName > b.firstName){
+                    return -1
+                }
+                if(b.firstName > a.firstName){
+                    return 1
+                }
+                return 0
+            })
+                return {
+                    ...state,
+                    professionals: sortOrder
+                }
             
        
     
