@@ -46,7 +46,7 @@ function HeaderNavBar() {
           <Offcanvas.Title>Registrate</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <FormProfession/>
+          {/* <FormProfession/> */}
         </Offcanvas.Body>
       </Offcanvas>
     </Navbar>
