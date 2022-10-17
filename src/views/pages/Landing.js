@@ -2,7 +2,8 @@
 import { useState } from 'react'
 
 //Components
-import HeaderNavBar from "./HeaderNavBar"
+import HeaderNavBar from "../components/HeaderNavBar"
+import Professions from "../components/Professions"
 
 //Css Styles & imgs
 import "./landing.css"
@@ -11,9 +12,10 @@ import imgPro from "./imgs/pro.png"
 import imfArrow from "./imgs/arrow.png"
 
 // Bootstrap
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import Accordion from 'react-bootstrap/Accordion';
+import AboutUs from '../components/AboutUs'
+import { Button } from 'react-bootstrap'
+
 
 
 
@@ -72,7 +74,7 @@ export default function Landing () {
 
             {/* TITULO */}
             <div>
-                <h2>
+                <h2 style={{paddingTop: "30px"}}>
                     ¿COMO FUNCIONA?
                 </h2>
                 <img
@@ -84,199 +86,151 @@ export default function Landing () {
 
             </div>
 
+            {/* Acordeon como funciona */}
             {
                 client === 'client' ?
-                <>
-                    <Row xs={1} md={2} className="g-4">
-                        <Col>
-                        <Card>
-                            {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                            <Card.Body>
-                            <Card.Title> (1)
-                            ¡COMPLETA TU REGISTRO DE CLIENTE!</Card.Title>
-                            </Card.Body>
-                        </Card>
-                        </Col>
-                        <Col>
-                        <Card>
-                            {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                            <Card.Body>
-                            <Card.Title> (2)
-                            ¡Hacé tu primera solicitud!</Card.Title>
-                            <Card.Text>
+                <div className='acordeon'>
+                <Accordion  alwaysOpen >
+                    <Accordion.Item eventKey="0">
+                        <Accordion.Header>(1)
+                            ¡COMPLETA TU REGISTRO DE CLIENTE!</Accordion.Header>
+                        <Accordion.Body>
+                        Registrate haciendo click aquí:  
+                        <br/>
+                        <Button>Registrate</Button>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="1">
+                        <Accordion.Header>(2)
+                            ¡Hacé tu primera solicitud!</Accordion.Header>
+                        <Accordion.Body>
                             ¡Es gratis! Hacé una solicitud indicando lo que necesitás, 
                             mientras más detalles incluyás más fácil será encontrar un profesional 
                             que se adapte a vos.
-                            </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        </Col>
-                        <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (3)
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="2">
+                        <Accordion.Header>(3)
                                 Elegí al
-                                profesional que más te convenza.</Card.Title>
-                                <Card.Text>
+                                profesional que más te convenza.</Accordion.Header>
+                        <Accordion.Body>
                                 Recordá que
                                 los profesionales con el certificado de 
                                 seguridad (sello debajo de la dirección) son 
                                 los más seguros.
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (4)
-                            Hablá con el profesional.</Card.Title>
-                                <Card.Text>
-                                Una vez que el profesional ha revisado tu solicitud 
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="3">
+                        <Accordion.Header>(4)
+                            Hablá con el profesional.</Accordion.Header>
+                        <Accordion.Body>
+                        Una vez que el profesional ha revisado tu solicitud 
                             se pondrá en contacto con vos a través del chat. 
                             Podrán usar el chat para aclarar dudas, enviar más 
                             información, concretar la fecha para la visita… 
                             ¡No te olvides de solicitar tu cotización desde el chat!
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (5)
-                                Pedí tu cotización desde el chat</Card.Title>
-                                <Card.Text>
-                                Pedí tu cotización desde el chat
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="4">
+                        <Accordion.Header>(5)
+                                Pedí tu cotización desde el chat</Accordion.Header>
+                        <Accordion.Body>
+                        Pedí tu cotización desde el chat
                             A la derecha del nombre del profesional podés ver el 
                             apartado de cotizaciones. En esta sección podés 
                             solicitar una cotización al profesional si este aun 
                             no la ha mandado. No te preocupes, se puede 
                             modificar en cualquier momento si no estás de acuerdo.
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (6)
-                            Paga a través de la pagina</Card.Title>
-                                <Card.Text>
-                                Ahora pagar por Reparo.io es más fácil que nunca.
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="5">
+                        <Accordion.Header>(6)
+                            Paga a través de la pagina</Accordion.Header>
+                        <Accordion.Body>
+                        Ahora pagar por Reparo.io es más fácil que nunca.
                                 Paga tus servicios contratados a través de la pagina 
                                 de manera más fácil, rápida y segura.
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (7)
-                            ¡Valorá al profesional!</Card.Title>
-                                <Card.Text>
-                                No olvidés valorar el trabajo del profesional para
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="6">
+                        <Accordion.Header>(7)
+                            ¡Valorá al profesional!</Accordion.Header>
+                        <Accordion.Body>
+                        No olvidés valorar el trabajo del profesional para
                              ayudar a otros usuarios a encontrar el mejor profesional del hogar.
                             ¡Juntos hacemos Reparo.io!
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
-                </>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion> 
+                </div>
                 :
-                <>
-                    <Row xs={1} md={2} className="g-4">
-                    <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (1)
-                                    ¡COMPLETA TU REGISTRO DE PROFESIONAL!</Card.Title>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (2)
-                            ¡Ya estás listo para recibir solicitudes!</Card.Title>
-                                <Card.Text>
-                                ¡Tené paciencia! las solicitudes llegarán... Respondé las solicitudes
+                <div className='acordeon'>
+                <Accordion  alwaysOpen>
+                    <Accordion.Item eventKey="0">
+                    <Accordion.Header>(1)
+                                    ¡COMPLETA TU REGISTRO DE PROFESIONAL!</Accordion.Header>
+                    <Accordion.Body>
+                    Registrate haciendo click aquí:  
+                        <br/>
+                        <Button>Registrate</Button>
+                    </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="1">
+                        <Accordion.Header>(2)
+                            ¡Ya estás listo para recibir solicitudes!</Accordion.Header>
+                            <Accordion.Body>
+                            ¡Tené paciencia! las solicitudes llegarán... Respondé las solicitudes
                              de trabajo cuando lleguen a tu perfil para ser el primero. El número
                               de solicitudes que recibas dependerá de tu actividad, la localización
                                y el rango en el cual te puedas desplazar.
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (3)
-                            Chateá y enviá cotizaciones a tus clientes</Card.Title>
-                                <Card.Text>
-                                Contestá rápido a tus clientes para conseguir el trabajo antes que otros
-                             profesionales. El cliente no podrá comunicarse con vos si no le hablás
-                              primero. Enviá tu cotización al cliente desde la sección de cotizaciones del chat.
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (4)
-                            Conseguí tu certificado de seguridad</Card.Title>
-                                <Card.Text>
-                                Conseguí el certificado de seguridad de Reparo.io, ¡es gratis! Esto te 
+                            </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="2">
+                        <Accordion.Header>(3)
+                            Chateá y enviá cotizaciones a tus clientes</Accordion.Header>
+                            <Accordion.Body>
+                            Contestá rápido a tus clientes para conseguir el trabajo antes que otros
+                            profesionales. El cliente no podrá comunicarse con vos si no le hablás
+                            primero. Enviá tu cotización al cliente desde la sección de cotizaciones del chat.
+                            </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="3">
+                        <Accordion.Header>(4)
+                            Conseguí tu certificado de seguridad</Accordion.Header>
+                            <Accordion.Body>
+                            Conseguí el certificado de seguridad de Reparo.io, ¡es gratis! Esto te 
                             ayudará a generar más confianza y conseguir más clientes. La seguridad
-                             es muy importante en la comunidad Reparo.io.
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (5)
-                            ¡Recibe pagos por Reparo.io!</Card.Title>
-                                <Card.Text>
-                                Configura tu cuenta para recibir pagos de manera segura cuando y donde
+                            es muy importante en la comunidad Reparo.io.
+                            </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="4">
+                        <Accordion.Header>(5)
+                            ¡Recibe pagos por Reparo.io!</Accordion.Header>
+                            <Accordion.Body>
+                            Configura tu cuenta para recibir pagos de manera segura cuando y donde
                              quieras, ofreciendo un servicio más completo a tus clientes.
                             ¡Es gratis!.
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Card>
-                                {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
-                                <Card.Body>
-                                <Card.Title> (6)
-                            Convertite en Premium</Card.Title>
-                                <Card.Text>
-                                ¡Conseguí más clientes! Convertite en profesional Premium para tener 
+                            </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="5">
+                        <Accordion.Header>(6)
+                            Convertite en Premium</Accordion.Header>
+                            <Accordion.Body>
+                            ¡Conseguí más clientes! Convertite en profesional Premium para tener 
                             acceso prioritario a solicitudes, ofrecer promociones, destacar tu 
                             ficha de profesional y revisar tus estadísticas.
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
-                </>
+                            </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
+                </div>
             }
+            
+            {/* Profesiones */}
+            <Professions />
 
+            {/* About Us */}
+            <AboutUs />
+        
         </div>
     )
 }
