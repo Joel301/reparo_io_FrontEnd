@@ -23,7 +23,6 @@ export default function Home(){
                     professiones?.map(p => {
                         return (
                             <option>{p.name}</option>
-
                         )
                         
                     })
