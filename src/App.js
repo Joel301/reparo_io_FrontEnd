@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import FormProfession from './views/components/FormProfession';
+import FormProfession from './views/Formularios/FormProfession';
 import SearchBar from "./views/pages/components/SearchBar";
 
 function App() {

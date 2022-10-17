@@ -2,37 +2,34 @@ import React, { useRef, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useDispatch } from "react-redux";
-import { postProfessional , getAllProfessionals} from "../../state/ducks/professionals/actions.js";
+import { postProfessional, getAllProfessionals } from "../../state/ducks/professionals/actions.js";
+import { validateFormProfessional } from "./validation.js";
 
 
 
 function FormProfession() {
-
   const dispatch = useDispatch()
-  
   const profesiones = [{ id: 2, name: "Electricista" }, { name: "Plomero", id: 1 }]
 
-  //referenia del input para el post
+  //referencia de información del input para el post:
   const nameRef = useRef('')
   const lastNameRef = useRef('')
   const phoneNumberRef = useRef('')
   const addressRef = useRef('')
   const profileImgRef = useRef('')
   const emailRef = useRef('')
-  const professionsRef = useRef([]) 
+  const professionsRef = useRef([])
   const passwordRef = useRef('')
   const confirmPasswordRef = useRef('')
   const aboutMeRef = useRef('')
 
-  console.log(professionsRef);
 
-  //console.log(passwordRef);
   //Estado de mostrar contraseña
   const [showPwd, setShowPwd] = useState(false)
-  const [confirmShowPwd, setConfirmShowPwd] = useState(false)
+  const [confirmShowPwd, setConfirmShowPwd] = useState(false)// pendiente usar useEffect para no renderizar todo el componente
 
   // estados errores de Validación: 
-  const [error, setErrors] = useState({})
+  const [errors, setErrors] = useState({})
 
   // cambio de estado placeholder contraseña
   function handleShowPass(e) {
@@ -44,29 +41,34 @@ function FormProfession() {
     setConfirmShowPwd(!confirmShowPwd)
   }
 
+  // Se llena el input de profesiones:
   function handleSelectProfession(e) {
     e.preventDefault()
-    if(professionsRef.current.includes(e.target.value)){
+    if (professionsRef.current.includes(e.target.value)) {
       professionsRef.current = professionsRef.current.filter(el => el !== e.target.value)
-    }else professionsRef.current.push(e.target.value)
-      
+    } else professionsRef.current.push(e.target.value)
+
   }
 
+  // se envia la informacion del formulario incluye la validación:
   function hedleOnSubmit(e) {
     e.preventDefault(e)
-    console.log(
-      {
-        firstName: nameRef.current.value,
-        lastName: lastNameRef.current.value,
-        phoneNumber: phoneNumberRef.current.value,
-        address: addressRef.current.value,
-        profileImg: profileImgRef.current.value,
-        email: emailRef.current.value,
-        professions: professionsRef.current,
-        password: passwordRef.current.value,
-        aboutMe: aboutMeRef.current.value
-      }
-    );
+
+    const input = {
+      firstName: nameRef.current.value,
+      lastName: lastNameRef.current.value,
+      password: passwordRef.current.value,
+      email: emailRef.current.value,
+      phoneNumber: phoneNumberRef.current.value,
+      profileImg: profileImgRef.current.value,
+      aboutMe: aboutMeRef.current.value,
+      address: addressRef.current.value,
+      professions: professionsRef.current
+    };
+    console.log(input);
+    validateFormProfessional(input)
+    console.log(errors);
+    //dispatch(postProfessional(input))
   }
 
 
@@ -82,34 +84,61 @@ function FormProfession() {
         alignItems: 'center'
       }}>
       <Form.Group className="mb-3 " >
-        <Form.Control ref={nameRef} type="text" placeholder="Nombre" />
+        <Form.Control
+          ref={nameRef}
+          type="text"
+          placeholder="Nombre" />
       </Form.Group>
       <Form.Group className="mb-3" >
-        <Form.Control ref={lastNameRef} type="text" placeholder="Apellido" />
+        <Form.Control
+          ref={lastNameRef}
+          type="text"
+          placeholder="Apellido" />
       </Form.Group>
       <Form.Group className="mb-3" >
-        <Form.Control ref={addressRef} type="text" placeholder="Dirección" />
+        <Form.Control
+          ref={addressRef}
+          type="text" p
+          laceholder="Dirección" />
       </Form.Group>
       <Form.Group className="mb-3" >
-        <Form.Control ref={phoneNumberRef} type="text" placeholder="Telefono" />
+        <Form.Control
+          ref={phoneNumberRef}
+          type="text"
+          placeholder="Telefono" />
       </Form.Group>
       <Form.Group className="mb-3" >
-        <Form.Control ref={profileImgRef} type="text" placeholder="imagen" />
+        <Form.Control
+          ref={profileImgRef}
+          type="text"
+          placeholder="imagen" />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Control ref={emailRef} type="email" placeholder="nombre@example.com" />
+        <Form.Control
+          ref={emailRef}
+          type="email"
+          placeholder="nombre@example.com" />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+      <Form.Group
+        className="mb-3"
+        controlId="exampleForm.ControlTextarea1">
         <Form.Label>Sobre mi</Form.Label>
-        <Form.Control ref={aboutMeRef} type="text" placeholder="Sobre mi" as="textarea"  />
+        <Form.Control
+          ref={aboutMeRef}
+          type="text"
+          placeholder="Sobre mi"
+          as="textarea" />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Check>Profesiones:
           {
             profesiones.map(profession =>
               <div key={profession.id}>
-                <Form.Check.Input type={'checkbox'} value={profession.name} isValid onChange={(e) => handleSelectProfession(e)} />
+                <Form.Check.Input
+                  type={'checkbox'}
+                  value={profession.name}
+                  isValid onChange={(e) => handleSelectProfession(e)} />
                 <Form.Check.Label>{profession.name}</Form.Check.Label>
               </div>
             )
