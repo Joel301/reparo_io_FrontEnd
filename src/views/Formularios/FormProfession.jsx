@@ -60,7 +60,8 @@ export default function FormProfession() {
     const input = {
       firstName: nameRef.current.value,
       lastName: lastNameRef.current.value,
-      password: passwordRef.current.value,
+      password: passwordRef.current.value === confirmPasswordRef.current.value ? 
+                passwordRef.current.value: "No coinciden",
       email: emailRef.current.value,
       phoneNumber: phoneNumberRef.current.value,
       profileImg: profileImgRef.current.value,
@@ -68,9 +69,13 @@ export default function FormProfession() {
       address: addressRef.current.value,
       professions: professionsRef.current
     };
-    console.log(input);
+
     const formErrors = validateFormProfessional(input)
+    console.log( input.password);
     setErrors(formErrors)
+
+
+    console.log(errors);
 
     if (Object.keys(errors).length > 0 || Object.keys(formErrors).length > 0) {
       alert('Verifique que todos los campos esten diligenciados')
@@ -181,13 +186,14 @@ export default function FormProfession() {
           ref={confirmPasswordRef}
           type={confirmShowPwd ? "text" : "password"}
           placeholder="Confirmar contraseña" />
-        <i onClick={(e) => handleConfirmShowPass(e)}>
+        <div  onClick={(e) => handleConfirmShowPass(e)}>
           {confirmShowPwd ?
             <i className="material-icons" >visibility</i> :
             <i className="material-icons" >visibility_off</i>
           }
-        </i>
+        </div>
       </Form.Group>
+      {errors.password && <span className="errors">{errors.password}</span>}
 
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Acepto términos y condiciones" />
