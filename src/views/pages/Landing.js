@@ -13,6 +13,7 @@ import {
 //Components
 import HeaderNavBar from "../components/HeaderNavBar";
 import Professions from "../components/Professions";
+import FormProfession from "../components/Formularios/FormProfession"
 
 //Css Styles & imgs
 import "./landing.css";
@@ -23,7 +24,7 @@ import imfArrow from "./imgs/arrow.png";
 // Bootstrap
 import Accordion from "react-bootstrap/Accordion";
 import AboutUs from "../components/AboutUs";
-import { Button } from "react-bootstrap";
+import { Button, Offcanvas } from "react-bootstrap";
 
 export default function Landing() {
   const [client, setClient] = useState("client");
@@ -48,6 +49,11 @@ export default function Landing() {
       setClient("pro");
     }
   };
+
+  // on offCanvas show
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <div className="landing">
@@ -90,7 +96,7 @@ export default function Landing() {
               <Accordion.Body>
                 Registrate haciendo click aquí:
                 <br />
-                <Button>Registrate</Button>
+                <Button>Regístrate</Button>
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
@@ -164,8 +170,16 @@ export default function Landing() {
               <Accordion.Body>
                 Registrate haciendo click aquí:
                 <br />
-                <Button>Registrate</Button>
+                <Button onClick={handleShow}>Regístrate</Button>
               </Accordion.Body>
+              <Offcanvas bg="dark" show={show} onHide={handleClose} placement='end'>
+                <Offcanvas.Header closeButton>
+                  <Offcanvas.Title>Regístrate</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                  <FormProfession />
+                </Offcanvas.Body>
+              </Offcanvas>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
               <Accordion.Header>

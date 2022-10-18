@@ -5,7 +5,6 @@ export function getAllProfessionals(){
     return async function(dispatch){
         try {
             const getAll = await axios.get('https://reparoiobackend-develop.up.railway.app/home/professionals')
-            console.log(getAll.data, "get All dataa")
             return dispatch({
                 type: 'GET_ALL_PROFESSIONALS',
                 payload: getAll.data
@@ -20,7 +19,6 @@ export function getProfesional(payload){
     return async function(dispatch){
         try {
             const prof = await axios.get(`https://reparoiobackend-develop.up.railway.app/home?search=${payload}`)
-            console.log(prof)
             return dispatch({
                 type: 'GET_PROFESSIONALS',
                 payload: prof.data
@@ -28,6 +26,14 @@ export function getProfesional(payload){
         } catch (error) {
             console.log(error)
         }
+    }
+}
+
+
+export function getProfessionsOfProfessionals(payload){
+    return {
+        type: 'GET_PRFESSIONS_OF_PROFESSIONALS',
+        payload
     }
 }
 
@@ -45,12 +51,20 @@ export function getAllProfessions(){
     }
 }
 
-export function getProfessionsOfProfessionals(payload){
-    return {
-        type: 'GET_PRFESSIONS_OF_PROFESSIONALS',
-        payload
+export function postProfessionals(payload){
+    return async function(dispatch){
+        try {
+            const postProfessionals = await axios.post('https://reparoiobackend-develop.up.railway.app/home/professionals', payload)
+            return dispatch({
+                type: 'POST_PROFESSIONAL',
+                postProfessionals
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
+
 
 export function orderByName(payload){
     return {
@@ -58,6 +72,7 @@ export function orderByName(payload){
         payload
     }
 }
+
 
 
 
