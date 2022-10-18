@@ -11,19 +11,19 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button';
-
+import { getAllProfessions } from "../../state/ducks/professionals/actions";
 import { getProfessions } from "../../state/ducks/professions/actions";
 
 export default function Professions () {
   const dispatch = useDispatch();
   const professions = useSelector((state) => state.professions);
   useEffect(() => {
-    dispatch(getProfessions());
+    dispatch(getAllProfessions());
   }, [dispatch]);
     return (
         <>
 
-            {console.log(professions)/* Titulo componente profesiones  */}
+            {/* Titulo componente profesiones  */}
             <div style={{marginTop: "70px", fontWeight: "bolder" }}>
                 <h3>
                 Elige una profesion:
@@ -39,27 +39,15 @@ export default function Professions () {
                     <Dropdown.Toggle variant="primary" id="dropdown-basic">
                         Profesiones
                     </Dropdown.Toggle>
-
+                    {console.log(professions)}
                     <Dropdown.Menu>
 
                     {professions?.map((p) => {
-                              <Dropdown.Item key={p.name}> 
-                                {" "}
+                              return <Dropdown.Item key={p.name} value={p.name}> 
                                 {p.name[0].toUpperCase() + p.name.slice(1)}
                                 </Dropdown.Item>}
                             )}
-
-                        {/* <Dropdown.Item href="#/action-1">Aire acondicionado</Dropdown.Item> 
-                        <Dropdown.Item href="#/action-2">Albañil</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Carpintero</Dropdown.Item>
-                        <Dropdown.Item href="#/action-4">Cerrajero</Dropdown.Item>
-                        <Dropdown.Item href="#/action-5">Electricista</Dropdown.Item>
-                        <Dropdown.Item href="#/action-6">Gasista</Dropdown.Item>
-                        <Dropdown.Item href="#/action-7">Herrero</Dropdown.Item>
-                        <Dropdown.Item href="#/action-8">Jardinero</Dropdown.Item>
-                        <Dropdown.Item href="#/action-9">Mecánico</Dropdown.Item>
-                        <Dropdown.Item href="#/action-10">Plomero</Dropdown.Item> */}
-                    </Dropdown.Menu>
+                          </Dropdown.Menu>
                 </Dropdown>
                 <Button>
                     <img 
@@ -85,7 +73,7 @@ export default function Professions () {
                             <Card>
                                 {/* <Card.Body> */}
                                     <Button variant="primary">
-                                        <Card.Title>{prof.name}</Card.Title>
+                                        <Card.Title>{prof.name[0].toUpperCase() + prof.name.slice(1)}</Card.Title>
                                     </Button>
                                 {/* </Card.Body> */}
                             </Card>
