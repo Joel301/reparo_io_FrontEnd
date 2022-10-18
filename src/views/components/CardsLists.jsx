@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getAllProfessionals, orderByName ,getProfessionsOfProfessionals } from '../../state/ducks/professionals/actions';
 import SearchBar from './SearchBar';
 import Paginado from './Paginado';
+import FormProfession from './Formularios/FormProfession';
 
 
 
@@ -50,6 +51,7 @@ function CardsList() {
 
   return (
     <Container style={{width:'100%', justifyContent: "center", display: "flex", flexDirection: "column"}}>
+        <FormProfession />
         <SearchBar/>
         <Paginado 
         professionalsPerPage={professionalsPerPage}
