@@ -1,7 +1,9 @@
 const initialState = {
-  professionals: [],
-  allProfessionals: [],
-  professions: [],
+    professionals: [],
+    allProfessionals: [],
+    professions: [],
+    detail: []
+    
 };
 
 function rootReducer(state = initialState, action) {
@@ -22,15 +24,15 @@ function rootReducer(state = initialState, action) {
 
     case "GET_PRFESSIONS_OF_PROFESSIONALS":
       let allProfessionalsProfessions = state.allProfessionals;
-      allProfessionalsProfessions =
-        action.payload === "ALL"
+      const filtrados = action.payload === "all"
           ? allProfessionalsProfessions
-          : allProfessionalsProfessions.filter((el) =>
-              el.professions.includes(action.payload)
-            );
+          : allProfessionalsProfessions.filter((el) =>{
+            el.professions.includes(action.payload)
+          }
+              )
       return {
         ...state,
-        professionals: allProfessionalsProfessions,
+        professionals: filtrados
       };
 
     case "GET_ALL_PROFESSIONS":
@@ -41,8 +43,7 @@ function rootReducer(state = initialState, action) {
 
     case "ORDER_BY_NAME":
       let sortOrder =
-        action.payload === "asc"
-          ? state.allProfessionals.sort(function (a, b) {
+        action.payload === "asc"? state.allProfessionals.sort(function (a, b) {
               if (a.firstName > b.firstName) {
                 return 1;
               }
@@ -50,8 +51,7 @@ function rootReducer(state = initialState, action) {
                 return -1;
               }
               return 0;
-            })
-          : state.allProfessionals.sort(function (a, b) {
+            }): state.allProfessionals.sort(function (a, b) {
               if (a.firstName > b.firstName) {
                 return -1;
               }
@@ -64,6 +64,37 @@ function rootReducer(state = initialState, action) {
         ...state,
         professionals: sortOrder,
       };
+
+      case 'GET_DETAIL':
+        return {
+            ...state,
+            detail: action.payload
+        }
+
+      case 'ORDER_REPUTATION':
+        let sortOrder2 =
+        action.payload === "asc"? state.allProfessionals.sort(function (a, b) {
+              if (a.review > b.review) {
+                return 1;
+              }
+              if (b.review > a.review) {
+                return -1;
+              }
+              return 0;
+            }): state.allProfessionals.sort(function (a, b) {
+              if (a.review > b.review) {
+                return -1;
+              }
+              if (b.review > a.review) {
+                return 1;
+              }
+              return 0;
+            });
+
+        return {
+            ...state,
+            professionals: sortOrder2
+        }
 
     default:
       return state;

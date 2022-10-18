@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from "react-redux";
-import { postProfessional, getAllProfessionals } from "../../../state/ducks/professionals/actions.js";
+import { postProfessionals } from "../../../state/ducks/professionals/actions";
 import { validateFormProfessional } from "./validation.js";
 import './estilos.css'
 
@@ -83,9 +83,7 @@ export default function FormProfession() {
       return
     }
 
-    console.log(input);
-
-    //dispatch(postProfessional(input))
+    dispatch(postProfessionals(input))
   }
 
 
@@ -154,15 +152,16 @@ export default function FormProfession() {
       </Form.Group>
       {errors.aboutMe && <span className="errors">{errors.aboutMe}</span>}
       <Form.Group className="mb-3">
-        <Form.Check>Profesiones:
+        <Form.Check style={{display:'grid', grid:'templateColums'}} >Profesiones:
           {
             profesiones.map(profession =>
               <div key={profession.id}>
                 <Form.Check.Input
+                  style={{borderColor:'#212529'}}
                   type={'checkbox'}
                   value={profession.name}
                   isValid onChange={(e) => handleSelectProfession(e)} />
-                <Form.Check.Label>{profession.name}</Form.Check.Label>
+                <Form.Check.Label  style={{marginLeft:'4px' , color:'#212529'}} >{profession.name}</Form.Check.Label>
               </div>
             )
           }
