@@ -63,14 +63,21 @@ export function orderByName(payload){
 export function getDetail(id){
     return async function(dispatch){
         try {
-            const detalle = axios.get('https://reparoiobackend-develop.up.railway.app/home/professionals/'+id)
+            var detalle = axios.get('https://reparoiobackend-develop.up.railway.app/home/professionals/'+id)
             return dispatch({
                 type: 'GET_DETAIL',
-                payload: Detail.data
+                payload: detalle.data
             })
         } catch (error) {
             console.log(error)
         }
+    }
+}
+
+export function getOrderReputation(payload){
+    return {
+        type: 'ORDER_REPUTATION',
+        payload
     }
 }
 
