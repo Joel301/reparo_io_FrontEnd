@@ -2,120 +2,102 @@ import React from "react";
 
 //State
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
 
 //redux
-import { getProfesional, getAllProfessionals } from "../../state/ducks/professionals/actions";
+import {
+  getProfesional,
+  getAllProfessionals,
+} from "../../state/ducks/professionals/actions";
 
 //Components
-import HeaderNavBar from "../components/HeaderNavBar"
-import Professions from "../components/Professions"
+import HeaderNavBar from "../components/HeaderNavBar";
+import Professions from "../components/Professions";
 
 //Css Styles & imgs
-import "./landing.css"
-import imgClient from "./imgs/client.png"
-import imgPro from "./imgs/pro.png"
-import imfArrow from "./imgs/arrow.png"
+import "./landing.css";
+import imgClient from "./imgs/client.png";
+import imgPro from "./imgs/pro.png";
+import imfArrow from "./imgs/arrow.png";
 
 // Bootstrap
-import Accordion from 'react-bootstrap/Accordion'
-import AboutUs from '../components/AboutUs'
-import { Button } from 'react-bootstrap'
+import Accordion from "react-bootstrap/Accordion";
+import AboutUs from "../components/AboutUs";
+import { Button } from "react-bootstrap";
 
+export default function Landing() {
+  const [client, setClient] = useState("client");
 
+  const dispatch = useDispatch();
+  // const profesionales = useSelector((state) => (state.professionals))
 
-export default function Landing () {
+  useEffect(() => {
+    dispatch(getAllProfessionals());
+  }, [dispatch]);
 
-    const [client, setClient] = useState('client')
-
-    const dispatch = useDispatch()
-    // const profesionales = useSelector((state) => (state.professionals))
-
-    useEffect(() =>{
-        dispatch(getAllProfessionals())
-    }, [dispatch])
-
-    const onChangeClient = (e) => {
-        e.preventDefault()
-        if(client === 'pro') {
-            setClient('client')
-        }
+  const onChangeClient = (e) => {
+    e.preventDefault();
+    if (client === "pro") {
+      setClient("client");
     }
+  };
 
-    const onChangePro = (e) => {
-        e.preventDefault()
-        if(client === 'client') {
-            setClient('pro')
-        }
+  const onChangePro = (e) => {
+    e.preventDefault();
+    if (client === "client") {
+      setClient("pro");
     }
+  };
 
-    return (
-        <div className="landing">
+  return (
+    <div className="landing">
+      {/* NAVBAR */}
+      <HeaderNavBar />
 
-            {/* NAVBAR */}
-            <HeaderNavBar />
+      {/* BUTTONS */}
+      <div className="alter-buttons">
+        <div className="btns">
+          <a onClick={onChangeClient} href="/">
+            <img className="img" src={imgClient} alt="imageClie" />
+            <br />
+            Necesito un servicio
+          </a>
+        </div>
 
-            {/* BUTTONS */}
-            <div className="alter-buttons">
-                <div className="btns">
-                    <a onClick={onChangeClient} href="/">
-                        <img 
-                        className='img' 
-                        src={imgClient}
-                        alt='imageClie'
-                        />
-                        <br/>
-                        Necesito un servicio
-                    </a>
-                </div>
+        <div className="btns">
+          <a onClick={onChangePro} href="/">
+            <img className="img2" src={imgPro} alt="imageProf" />
+            <br />
+            Soy Profesional
+          </a>
+        </div>
+      </div>
 
-                <div className="btns">
-                    <a onClick={onChangePro} href="/">
-                        <img 
-                        className='img2' 
-                        src={imgPro}
-                        alt='imageProf'
+      {/* TITULO */}
+      <div>
+        <h2 style={{ paddingTop: "30px" }}>¿COMO FUNCIONA?</h2>
+        <img className="img-arrow" src={imfArrow} alt="arrow" />
+      </div>
 
-                        />
-                        <br/>
-                        Soy Profesional
-                    </a>
-
-                </div>
-            </div>
-
-            {/* TITULO */}
-            <div>
-                <h2 style={{paddingTop: "30px"}}>
-                    ¿COMO FUNCIONA?
-                </h2>
-                <img
-                className='img-arrow'
-                src={imfArrow}
-                alt='arrow'
-
-                />
-
-            </div>
-
-            {/* Acordeon como funciona */}
-            {
-                client === 'client' ?
-                <div className='acordeon'>
-                <Accordion  alwaysOpen >
-                    <Accordion.Item eventKey="0">
-                        <Accordion.Header>(1)
-                            ¡COMPLETA TU REGISTRO DE CLIENTE!</Accordion.Header>
-                        <Accordion.Body>
-                        Registrate haciendo click aquí:  
-                        <br/>
-                        <Button>Registrate</Button>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="1">
-                        <Accordion.Header>(2)
-                            ¡Hacé tu primera solicitud!</Accordion.Header>
-                        <Accordion.Body>
+      {/* Acordeon como funciona */}
+      {client === "client" ? (
+        <div className="acordeon">
+          <Accordion alwaysOpen>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>
+                (1) ¡COMPLETA TU REGISTRO DE CLIENTE!
+              </Accordion.Header>
+              <Accordion.Body>
+                Registrate haciendo click aquí:
+                <br />
+                <Button>Registrate</Button>
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>
+                (2) ¡Hacé tu primera solicitud!
+              </Accordion.Header>
+              <Accordion.Body>
                             ¡Es gratis! Hacé una solicitud indicando lo que necesitás, 
                             mientras más detalles incluyás más fácil será encontrar un profesional 
                             que se adapte a vos.
@@ -236,15 +218,9 @@ export default function Landing () {
                 </Accordion>
                 </div>
             }
-            
-            {/* Profesiones */}
-            <Professions />
 
-            {/* About Us */}
-            <AboutUs />
-        
-        </div>
-    )
+      {/* About Us */}
+      <AboutUs />
+    </div>
+  );
 }
-
-
