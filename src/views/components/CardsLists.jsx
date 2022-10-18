@@ -12,8 +12,18 @@ import FormProfession from './Formularios/FormProfession';
 
 
 function CardsList() {
+  const [professionFilter,setProfessionFilter]= useState('')
   const profesionales = useSelector((state) => (state.allProfessionals))
-  const profesiones = useSelector(state => (state.professions)) 
+    .filter((professional)=>{
+       return professionFilter? professional.professions.map((p) => p.name)
+              
+              .includes(professionFilter)
+          : true
+  
+    })
+
+
+  
   const dispatch = useDispatch(); 
 
      const [orden, setOrden] = useState('')
@@ -28,6 +38,14 @@ function CardsList() {
    
      const currentProfessionals = profesionales.slice(indexOfFirstProfessional , indexOfLastProfessional)
 
+     const professionFilterHandleOnChange = (e) => {
+      setCurrentPage(1);
+      if (e.target.value === "all") return setProfessionFilter("");
+  
+      setProfessionFilter(e.target.value);
+    };
+    
+
      const paginado = (pageNum) => {
          setCurrentPage(pageNum)
      }
@@ -39,11 +57,7 @@ function CardsList() {
       setOrden(`Ordenado ${e.target.value}`)
      }
 
-     function handleFilterByProfession(e){
-      e.preventDefault();
-      dispatch(getProfessionsOfProfessionals(e.target.value));
-      
-     }
+  
 
      function handleOrderReputation(e){
       e.preventDefault();
@@ -68,7 +82,7 @@ function CardsList() {
         />
         <select onClick={e => handleOrderByName(e)}>
           <option value="asc">Ascending By Name</option>
-          <option value="desc">Descending</option>
+          <option value="desc">Descending By Name</option>
         </select>
 
         <select onClick={e => handleOrderReputation(e)}>
@@ -77,7 +91,7 @@ function CardsList() {
         </select>
 
 
-        <select onChange={e => handleFilterByProfession(e)}>
+        <select onChange={e => professionFilterHandleOnChange(e)}>
           <option value="all">All</option>
           <option value="electricista">Electricista</option>
           <option value="jardinero">Jardinero</option>
