@@ -26,7 +26,6 @@ export default function Paginado({professionalsPerPage, profesionales, paginado,
     }
 
     return(
-        //luego renderizo el arreglo de pageNum recorriendolos con un map y renderizando cada numero con un link y pasandole a cada numero un onClick para ir llevandolo al pagNumber correspondiente
         <nav>
             <ul>
                 <a onClick={e => handlePrevious(e)}>Previouos Page</a>

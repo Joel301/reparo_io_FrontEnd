@@ -17,18 +17,7 @@ export default function Home(){
     },[dispatch])
     
     return (
-        <div>
-            <select>
-                {
-                    professiones?.map(p => {
-                        return (
-                            <option>{p.name}</option>
-                        )
-                        
-                    })
-                }
-            </select>
-        </div>
+        <CardsList/>
     )
 }
    

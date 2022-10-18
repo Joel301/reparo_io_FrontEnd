@@ -13,10 +13,10 @@ import Paginado from './Paginado';
 function CardsList() {
   const profesionales = useSelector((state) => (state.allProfessionals))
   const dispatch = useDispatch(); 
-    
+  
      const [currentPage, setCurrentPage] = useState(1);
    
-     const professionalsPerPage = 8;
+     const professionalsPerPage = 3;
     
      const indexOfLastProfessional = currentPage * professionalsPerPage;
     
@@ -28,13 +28,6 @@ function CardsList() {
          setCurrentPage(pageNum)
      }
   
-  <Paginado 
-  professionalsPerPage={professionalsPerPage}
-  profesionales ={profesionales.length}
-  paginado ={paginado}
-  currentPage={currentPage}
-  />
-  
   useEffect(()=>{
     dispatch(getAllProfessionals())
 },[dispatch])
@@ -42,7 +35,13 @@ function CardsList() {
 
   return (
     <Container style={{width:'100%', justifyContent: "center", display: "flex", flexDirection: "column"}}>
-      <SearchBar/>
+        <SearchBar/>
+        <Paginado 
+        professionalsPerPage={professionalsPerPage}
+        profesionales ={profesionales.length}
+        paginado ={paginado}
+        currentPage={currentPage}
+        />
         <Row style={{margin: "10px"}} xs={1} md={3} lg={4} className="g-4" >
         {currentProfessionals?.map((e)=>{
             return (<Col key={e.id}style={{display:'flex',justifyContent:'center'}}><CardFormat worker ={e} key={e.id}/></Col>)
