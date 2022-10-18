@@ -3,27 +3,16 @@ import { Container, Row,Col } from 'react-bootstrap'
 import CardFormat from './CardFormat';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getAllProfessionals, orderByName ,getProfessionsOfProfessionals, getOrderReputation } from '../../state/ducks/professionals/actions';
+import { getAllProfessionals, orderByName ,getProfessionsOfProfessionals } from '../../../state/ducks/professionals/actions';
 import SearchBar from './SearchBar';
 import Paginado from './Paginado';
-import FormProfession from './Formularios/FormProfession';
 
 
 
 
 function CardsList() {
-  const [professionFilter,setProfessionFilter]= useState('')
   const profesionales = useSelector((state) => (state.allProfessionals))
-    .filter((professional)=>{
-       return professionFilter? professional.professions.map((p) => p.name)
-              
-              .includes(professionFilter)
-          : true
-  
-    })
-
-
-  
+  const profesiones = useSelector(state => (state.professions)) 
   const dispatch = useDispatch(); 
 
      const [orden, setOrden] = useState('')
@@ -38,14 +27,6 @@ function CardsList() {
    
      const currentProfessionals = profesionales.slice(indexOfFirstProfessional , indexOfLastProfessional)
 
-     const professionFilterHandleOnChange = (e) => {
-      setCurrentPage(1);
-      if (e.target.value === "all") return setProfessionFilter("");
-  
-      setProfessionFilter(e.target.value);
-    };
-    
-
      const paginado = (pageNum) => {
          setCurrentPage(pageNum)
      }
@@ -57,12 +38,9 @@ function CardsList() {
       setOrden(`Ordenado ${e.target.value}`)
      }
 
-  
-
-     function handleOrderReputation(e){
+     function handleFilterByProfession(e){
       e.preventDefault();
-      dispatch(getOrderReputation(e.target.value))
-      setOrden(`Ordenado ${e.target.value}`)
+      dispatch(getProfessionsOfProfessionals(e.target.value));
      }
   
   useEffect(()=>{
@@ -72,7 +50,6 @@ function CardsList() {
 
   return (
     <Container style={{width:'100%', justifyContent: "center", display: "flex", flexDirection: "column"}}>
-        <FormProfession />
         <SearchBar/>
         <Paginado 
         professionalsPerPage={professionalsPerPage}
@@ -81,17 +58,11 @@ function CardsList() {
         currentPage={currentPage}
         />
         <select onClick={e => handleOrderByName(e)}>
-          <option value="asc">Ascending By Name</option>
-          <option value="desc">Descending By Name</option>
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
         </select>
-
-        <select onClick={e => handleOrderReputation(e)}>
-          <option value="asc">Ascending By Reputation</option>
-          <option value="desc">Descending By Reputation</option>
-        </select>
-
-
-        <select onChange={e => professionFilterHandleOnChange(e)}>
+        {/* <select onChange={e => handleFilterByProfession(e)}>
+          
           <option value="all">All</option>
           <option value="electricista">Electricista</option>
           <option value="jardinero">Jardinero</option>
@@ -105,7 +76,7 @@ function CardsList() {
           <option value="gasista">Gasista</option>
           <option value="albañil">Albañil</option>
           <option value="herrero">Herrero</option>
-        </select>
+        </select> */}
         <Row style={{margin: "10px"}} xs={1} md={3} lg={4} className="g-4" >
         {currentProfessionals?.map((e)=>{
             return (<Col key={e.id}style={{display:'flex',justifyContent:'center'}}><CardFormat worker ={e} key={e.id}/></Col>)
