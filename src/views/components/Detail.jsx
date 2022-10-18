@@ -26,29 +26,6 @@ export default function Detail () {
         dispatch(getDetail(id))
     }, [])
 
-    // let detail = {
-    //     "id": "c8850a47-ab56-48bd-8eaa-58fcf6541850",
-    //     "firstName": "hiram",
-    //     "lastName": "rivero",
-    //     "phoneNumber": 111111111,
-    //     "address": "hola estoy aqui",
-    //     "aboutMe": "soy un pokemon",
-    //     "email": "juanito@reparo.io",
-    //     "password": "123",
-    //     "review": "3",
-    //     "profileImg": "https://img.icons8.com/fluency-systems-regular/96/000000/guest-male.png",
-    //     "professions": [
-    //       {
-    //         "id": 5,
-    //         "name": "electricista"
-    //       },
-    //       {
-    //         "id": 10,
-    //         "name": "plomero"
-    //       }
-    //     ]
-    //   }
-
 
     return (
 
