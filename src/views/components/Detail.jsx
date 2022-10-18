@@ -33,7 +33,7 @@ export default function Detail () {
             <div className='cardDetail'>
                 <div>
                     <img
-                        src="https://rapiplomeria.com/wp-content/uploads/2022/01/plomeros-guatemala.jpg"
+                        src={detail.profileImg}
                         style={{ width: "20%", marginLeft: "10%", marginBottom: "20px", marginTop: "30px" , border: "1px solid grey", borderRadius: "50%"}}
                     />
                     <div className="titleCard">
