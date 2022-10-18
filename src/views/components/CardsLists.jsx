@@ -3,7 +3,7 @@ import { Container, Row,Col } from 'react-bootstrap'
 import CardFormat from './CardFormat';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getAllProfessionals } from '../../../state/ducks/professionals/actions';
+import { getAllProfessionals } from '../../state/ducks/professionals/actions';
 import SearchBar from './SearchBar';
 import Paginado from './Paginado';
 

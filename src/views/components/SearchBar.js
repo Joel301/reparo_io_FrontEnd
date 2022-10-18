@@ -3,8 +3,7 @@ import { Form, Button } from "react-bootstrap";
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfesional } from "../../../state/ducks/professionals/actions";
-import { useEffect } from "react";
+import { getProfesional } from "../../state/ducks/professionals/actions";
 import Paginado from "./Paginado";
 
 export default function SearchBar() {
