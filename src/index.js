@@ -8,7 +8,6 @@ import { Provider } from "react-redux";
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import {store} from "./state/store"
 
 

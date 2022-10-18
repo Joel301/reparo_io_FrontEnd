@@ -51,6 +51,19 @@ export function getAllProfessions(){
     }
 }
 
+export function postProfessionals(payload){
+    return async function(dispatch){
+        try {
+            const postProfessionals = await axios.post('https://reparoiobackend-develop.up.railway.app/home/professionals', payload)
+            return dispatch({
+                type: 'POST_PROFESSIONAL',
+                postProfessionals
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
 
 
 export function orderByName(payload){
