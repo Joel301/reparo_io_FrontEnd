@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useDispatch } from "react-redux";
-import { postProfessional, getAllProfessionals } from "../../state/ducks/professionals/actions.js";
+import { postProfessional, getAllProfessionals } from "../../../state/ducks/professionals/actions.js";
 import { validateFormProfessional } from "./validation.js";
 import './estilos.css'
 
