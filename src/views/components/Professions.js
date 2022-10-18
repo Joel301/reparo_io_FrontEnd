@@ -12,7 +12,7 @@ import Row from 'react-bootstrap/Row'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button';
 import { getAllProfessions } from "../../state/ducks/professionals/actions";
-import { getProfessions } from "../../state/ducks/professions/actions";
+
 
 export default function Professions () {
   const dispatch = useDispatch();
