@@ -27,7 +27,7 @@ function rootReducer(state = initialState, action) {
       const filtrados = action.payload === "all"
           ? allProfessionalsProfessions
           : allProfessionalsProfessions.filter((el) =>{
-            return el.professions.includes(action.payload)
+            el.professions.includes(action.payload)
           }
               )
       return {
