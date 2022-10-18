@@ -1,4 +1,6 @@
-
+import React from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 //CSS Styles
 import "./Professions.css"
 import imgCarrito from "../pages/imgs/carrito.png"
@@ -9,52 +11,15 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button';
+import { getAllProfessions } from "../../state/ducks/professionals/actions";
+
 
 export default function Professions () {
-
-let professionsHardCode = [
-  {
-    "id": 8,
-    "name": "jardinero"
-  },
-  {
-    "id": 4,
-    "name": "cerrajero"
-  },
-  {
-    "id": 1,
-    "name": "aire acondicionado"
-  },
-  {
-    "id": 5,
-    "name": "electricista"
-  },
-  {
-    "id": 3,
-    "name": "carpintero"
-  },
-  {
-    "id": 10,
-    "name": "plomero"
-  },
-  {
-    "id": 9,
-    "name": "mecánico"
-  },
-  {
-    "id": 6,
-    "name": "gasista"
-  },
-  {
-    "id": 2,
-    "name": "albañil"
-  },
-  {
-    "id": 7,
-    "name": "herrero"
-  }
-]
-
+  const dispatch = useDispatch();
+  const professions = useSelector((state) => state.professions);
+  useEffect(() => {
+    dispatch(getAllProfessions());
+  }, [dispatch]);
     return (
         <>
 
@@ -74,19 +39,15 @@ let professionsHardCode = [
                     <Dropdown.Toggle variant="primary" id="dropdown-basic">
                         Profesiones
                     </Dropdown.Toggle>
-
+                    {console.log(professions)}
                     <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Aire acondicionado</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Albañil</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Carpintero</Dropdown.Item>
-                        <Dropdown.Item href="#/action-4">Cerrajero</Dropdown.Item>
-                        <Dropdown.Item href="#/action-5">Electricista</Dropdown.Item>
-                        <Dropdown.Item href="#/action-6">Gasista</Dropdown.Item>
-                        <Dropdown.Item href="#/action-7">Herrero</Dropdown.Item>
-                        <Dropdown.Item href="#/action-8">Jardinero</Dropdown.Item>
-                        <Dropdown.Item href="#/action-9">Mecánico</Dropdown.Item>
-                        <Dropdown.Item href="#/action-10">Plomero</Dropdown.Item>
-                    </Dropdown.Menu>
+
+                    {professions?.map((p) => {
+                              return <Dropdown.Item key={p.name} value={p.name}> 
+                                {p.name[0].toUpperCase() + p.name.slice(1)}
+                                </Dropdown.Item>}
+                            )}
+                          </Dropdown.Menu>
                 </Dropdown>
                 <Button>
                     <img 
@@ -107,12 +68,12 @@ let professionsHardCode = [
                     className="g-4"
                     style={{margin: "90px"}}>
                 {
-                    professionsHardCode.map((prof) => (
+                    professions.map((prof) => (
                         <Col>
                             <Card>
                                 {/* <Card.Body> */}
                                     <Button variant="primary">
-                                        <Card.Title>{prof.name}</Card.Title>
+                                        <Card.Title>{prof.name[0].toUpperCase() + prof.name.slice(1)}</Card.Title>
                                     </Button>
                                 {/* </Card.Body> */}
                             </Card>
