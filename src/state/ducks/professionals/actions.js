@@ -47,6 +47,7 @@ export function getAllProfessions(){
 }
 
 export function getProfessionsOfProfessionals(payload){
+    console.log(payload)
     return {
         type: 'GET_PRFESSIONS_OF_PROFESSIONALS',
         payload
@@ -57,6 +58,20 @@ export function orderByName(payload){
     return {
         type: 'ORDER_BY_NAME',
         payload
+    }
+}
+
+export function getDetail(id){
+    return async function(dispatch){
+        try {
+            const detalle = axios.get('https://reparoiobackend-develop.up.railway.app/home/professionals/'+id)
+            return dispatch({
+                type: 'GET_DETAIL',
+                payload: Detail.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 

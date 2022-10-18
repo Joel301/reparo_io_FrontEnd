@@ -1,7 +1,8 @@
 const initialState = {
     professionals: [],
     allProfessionals: [],
-    professions: []
+    professions: [],
+    detail: []
     
 };
 
@@ -23,10 +24,10 @@ function rootReducer(state=initialState, action){
 
         case 'GET_PRFESSIONS_OF_PROFESSIONALS':
             const allProfessionalsProfessions = state.allProfessionals;
-            allProfessionalsProfessions = action.payload === 'ALL'? allProfessionalsProfessions: allProfessionalsProfessions.filter(el => el.professions.includes(action.payload))
+            const statusFilt = action.payload === "all"? allProfessionalsProfessions: allProfessionalsProfessions.filter(el => el.professions.includes(action.payload))
         return {
             ...state,
-            professionals: allProfessionalsProfessions
+            professionals: statusFilt
         }
 
         case 'GET_ALL_PROFESSIONS':
@@ -57,6 +58,12 @@ function rootReducer(state=initialState, action){
                 return {
                     ...state,
                     professionals: sortOrder
+                }
+
+            case 'GET_DETAIL':
+                return {
+                    ...state,
+                    detail: action.payload
                 }
             
        
