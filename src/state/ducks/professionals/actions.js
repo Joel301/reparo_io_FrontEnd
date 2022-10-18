@@ -4,7 +4,7 @@ import axios from "axios";
 export function getAllProfessionals(){
     return async function(dispatch){
         try {
-            const getAll = await axios.get('http://localhost:3001/home')
+            const getAll = await axios.get('https://reparoiobackend-develop.up.railway.app/home/professionals')
             return dispatch({
                 type: 'GET_ALL_PROFESSIONALS',
                 payload: getAll.data
@@ -18,7 +18,7 @@ export function getAllProfessionals(){
 export function getProfesional(payload){
     return async function(dispatch){
         try {
-            const prof = await axios.get(`http://localhost:3001/home?search=${payload}`)
+            const prof = await axios.get(`https://reparoiobackend-develop.up.railway.app/home?search=${payload}`)
             return dispatch({
                 type: 'GET_PROFESSIONALS',
                 payload: prof.data
@@ -29,16 +29,38 @@ export function getProfesional(payload){
     }
 }
 
-export function  postProfessional(payload){
-    return async function (dispatch){
-        try{
-            var info = await axios.post('https://reparoiobackend-develop.up.railway.app/home/professionals', payload)
+
+export function getProfessionsOfProfessionals(payload){
+    return {
+        type: 'GET_PRFESSIONS_OF_PROFESSIONALS',
+        payload
+    }
+}
+
+export function getAllProfessions(){
+    return async function(dispatch){
+        try {
+            const allProfessions = await axios.get('https://reparoiobackend-develop.up.railway.app/home/professions')
             return dispatch({
-                type: 'POST_PROFESSIONAL',
-                info    
+                type: 'GET_ALL_PROFESSIONS',
+                payload: allProfessions.data
             })
-        } catch(error){
-        console.error(error);
+        } catch (error) {
+            console.log(error)
         }
     }
 }
+
+
+
+export function orderByName(payload){
+    return {
+        type: 'ORDER_BY_NAME',
+        payload
+    }
+}
+
+
+
+
+

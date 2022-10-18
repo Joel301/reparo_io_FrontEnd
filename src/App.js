@@ -1,19 +1,14 @@
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
-import FormProfession from "./views/components/Formularios/FormProfession";
-import SearchBar from "./views/pages/components/SearchBar";
+import Landing from "./views/pages/Landing";
+import Home from "./views/pages/Home";
 
 function App() {
   return (
-    <div>
-      <SearchBar />
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<FormProfession />}></Route>
-        </Routes>
-      </Router>
-    </div>
+    <Routes>
+      <Route exact path="/" element={<Landing />} />
+      <Route exact path="/home" element={<Home />} />
+    </Routes>
   );
 }
 

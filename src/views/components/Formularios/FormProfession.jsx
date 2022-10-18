@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postProfessional, getAllProfessionals } from "../../../state/ducks/professionals/actions.js";
 import { validateFormProfessional } from "./validation.js";
 import './estilos.css'
@@ -11,7 +11,8 @@ import './estilos.css'
 export default function FormProfession() {
   const dispatch = useDispatch()
 
-  const profesiones = [{ id: 2, name: "Electricista" }, { name: "Plomero", id: 1 }]
+  const profesiones = useSelector(state=>state.professions)
+ 
 
   //referencia de información del input para el post:
   const nameRef = useRef('')
@@ -32,7 +33,7 @@ export default function FormProfession() {
 
   // estados errores de Validación: 
   const [errors, setErrors] = useState({})
-
+ 
 
   // cambio de estado placeholder contraseña
   function handleShowPass(e) {
@@ -60,7 +61,8 @@ export default function FormProfession() {
     const input = {
       firstName: nameRef.current.value,
       lastName: lastNameRef.current.value,
-      password: passwordRef.current.value === confirmPasswordRef.current.value ? passwordRef.current.value : "No coinciden",
+      password: passwordRef.current.value === confirmPasswordRef.current.value ? 
+                passwordRef.current.value: "No coinciden",
       email: emailRef.current.value,
       phoneNumber: phoneNumberRef.current.value,
       profileImg: profileImgRef.current.value,
@@ -70,7 +72,7 @@ export default function FormProfession() {
     };
 
     const formErrors = validateFormProfessional(input)
-    console.log(input.password);
+    console.log( input.password);
     setErrors(formErrors)
 
 
@@ -102,20 +104,14 @@ export default function FormProfession() {
         <Form.Control
           ref={nameRef}
           type="text"
-          placeholder="Nombre"
-          size='60'
-          maxLength='40'
-        />
+          placeholder="Nombre" />
       </Form.Group>
       {errors.firstName && <p className="errors">{errors.firstName}</p>}
       <Form.Group className="mb-3" >
         <Form.Control
           ref={lastNameRef}
           type="text"
-          placeholder="Apellido"
-          size='60'
-          maxLength='40'
-        />
+          placeholder="Apellido" />
       </Form.Group>
       {errors.lastName && <span className="errors"> {errors.lastName}</span>}
       <Form.Group className="mb-3" >
@@ -191,7 +187,7 @@ export default function FormProfession() {
           ref={confirmPasswordRef}
           type={confirmShowPwd ? "text" : "password"}
           placeholder="Confirmar contraseña" />
-        <div onClick={(e) => handleConfirmShowPass(e)}>
+        <div  onClick={(e) => handleConfirmShowPass(e)}>
           {confirmShowPwd ?
             <i className="material-icons" >visibility</i> :
             <i className="material-icons" >visibility_off</i>
