@@ -7,7 +7,6 @@ const initialState = {
 };
 
 function rootReducer(state = initialState, action) {
-  console.log(action.payload, "action payload reducer");
   switch (action.type) {
     case "GET_ALL_PROFESSIONALS":
       return {

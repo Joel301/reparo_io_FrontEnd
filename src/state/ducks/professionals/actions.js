@@ -76,7 +76,8 @@ export function orderByName(payload) {
 export function getDetail(id) {
     return async function (dispatch) {
         try {
-            var detalle = axios.get('https://reparoiobackend-develop.up.railway.app/home/professionals/' + id)
+            var detalle = await axios.get('https://reparoiobackend-develop.up.railway.app/home/professionals/' + id)
+
             return dispatch({
                 type: 'GET_DETAIL',
                 payload: detalle.data
