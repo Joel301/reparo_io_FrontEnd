@@ -26,7 +26,7 @@ export default function Paginado({professionalsPerPage, profesionales, paginado,
         }
     }
 
-    
+    //pusheado
 
     return(
         <Pagination>
