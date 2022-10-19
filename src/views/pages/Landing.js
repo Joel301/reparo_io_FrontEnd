@@ -34,26 +34,26 @@ export default function Landing() {
 
   useEffect(() => {
     dispatch(getAllProfessionals());
-  }, [dispatch]);
+  }, [dispatch])
 
   const onChangeClient = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (client === "pro") {
-      setClient("client");
+      setClient("client")
     }
   };
 
   const onChangePro = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (client === "client") {
-      setClient("pro");
+      setClient("pro")
     }
-  };
+  }
 
   // on offCanvas show
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
 
   return (
     <div className="landing">
