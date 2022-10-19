@@ -2,15 +2,17 @@ import React, { useRef, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { postProfessionals } from "../../../state/ducks/professionals/actions";
 import { validateFormProfessional } from "./validation.js";
 import './estilos.css'
+import { Alert } from "bootstrap";
 
 
 
 export default function FormProfession() {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const profesiones = useSelector(state=>state.professions)
  
 
@@ -25,6 +27,8 @@ export default function FormProfession() {
   const passwordRef = useRef('')
   const confirmPasswordRef = useRef('')
   const aboutMeRef = useRef('')
+
+  
 
 
   //Estado de mostrar contraseña
@@ -83,7 +87,11 @@ export default function FormProfession() {
       return
     }
 
-    dispatch(postProfessionals(input))
+   dispatch(postProfessionals(input))
+
+   alert('Tu perfil ha sido creado')
+   navigate('/perfil')
+
   }
 
 
