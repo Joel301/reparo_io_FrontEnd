@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
 import { Pagination } from "react-bootstrap";
+
 
 
 
@@ -26,6 +26,8 @@ export default function Paginado({professionalsPerPage, profesionales, paginado,
         }
     }
 
+    
+
     return(
         <Pagination>
             
@@ -33,7 +35,7 @@ export default function Paginado({professionalsPerPage, profesionales, paginado,
                 {
                     pageNum && pageNum.map(number => (
                         
-                            <Pagination.Item onClick={()=> paginado(number)}>{number}</Pagination.Item>
+                            <Pagination.Item key={number} active={number === currentPage? true: false} onClick={()=> paginado(number)}>{number}</Pagination.Item>
                         
                     )
                     )

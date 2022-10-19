@@ -1,4 +1,4 @@
-.landing {
+ .landing {
     text-align: center;
 }
 
@@ -63,5 +63,5 @@
 
 .carrousel {
     justify-content: center;
-    /* display: flex; */
+     display: flex; 
 }
