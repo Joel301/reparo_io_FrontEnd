@@ -87,8 +87,12 @@ export default function Landing() {
 
       {/* Acordeon como funciona */}
       {client === "client" ? (
-        <div className="acordeon">
-          <Accordion alwaysOpen>
+          <Accordion alwaysOpen style={{
+            width: "70%",
+            justifyContent: "center",
+            marginLeft: "15%",
+            marginTop: "20px",
+          }}>
             <Accordion.Item eventKey="0">
               <Accordion.Header>
                 (1) ¡COMPLETA TU REGISTRO DE CLIENTE!
@@ -159,7 +163,6 @@ export default function Landing() {
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
-        </div>
       ) : (
         <div className="acordeon">
           <Accordion alwaysOpen>

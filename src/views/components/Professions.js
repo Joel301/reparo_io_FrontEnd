@@ -39,7 +39,7 @@ export default function Professions () {
                     <Dropdown.Toggle variant="primary" id="dropdown-basic">
                         Profesiones
                     </Dropdown.Toggle>
-                    {console.log(professions)}
+                    
                     <Dropdown.Menu>
 
                     {professions?.map((p) => {
