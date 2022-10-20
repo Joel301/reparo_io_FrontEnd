@@ -57,8 +57,8 @@ export default function Landing() {
 
   return (
     <div className="landing">
-      {/* NAVBAR */}
-      <HeaderNavBar />
+      
+    
 
       {/* BUTTONS */}
       <div className="alter-buttons">
