@@ -21,7 +21,7 @@ function HeaderNavBar() {
 
     <Navbar sticky="top" expand="md" bg="primary" variant="dark">
       <Container>
-        <Link to="/home">
+        <Link to="/">
           <Navbar.Brand>Reparo.io</Navbar.Brand>
         </Link>
         <Navbar.Toggle />
