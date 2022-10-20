@@ -11,8 +11,9 @@ import Paginado from './Paginado';
 
 
 function CardsList() {
-  const profesionales = useSelector((state) => (state.professionalsFiltered))
-     const professions = useSelector((state)=>(state.professions))
+  const profesionales = useSelector((state) => (state.professionals.professionalsFiltered))
+  console.log(profesionales)
+     const professions = useSelector((state)=>(state.professionals.professions))
 
   
   const dispatch = useDispatch(); 
