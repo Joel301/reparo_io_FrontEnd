@@ -2,9 +2,8 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getProfesional } from "../../state/ducks/professionals/actions";
-import Paginado from "./Paginado";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
