@@ -19,13 +19,11 @@ import Button from 'react-bootstrap/Button'
 
 export default function Professions () {
 
-    const professions = useSelector((state) => state.professions)
-    
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-      dispatch(getAllProfessions())
-    }, [dispatch])
+  const dispatch = useDispatch();
+  const professions = useSelector((state) => state.professionals.professions);
+  useEffect(() => {
+    dispatch(getAllProfessions());
+  }, [dispatch]);
 
     return (
         <>

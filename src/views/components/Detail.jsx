@@ -6,7 +6,7 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom"
 
 //Redux
-import { getDetail } from "../../state/ducks/professionals/actions"
+import { getDetail } from "../../state/ducks/detail/actions"
 
 //CSS Styles
 import "./Detail.css"
@@ -23,7 +23,6 @@ export default function Detail () {
     const { id } = useParams()
 
     const detalle = useSelector((state) => state.detail)
-    console.log(detalle, "detalle profesional")
 
     const dispatch = useDispatch()
 
