@@ -15,9 +15,6 @@ function CardsList() {
   const profesionales = useSelector((state) => (state.professionals.professionalsFiltered))
   
   const professions = useSelector((state)=>(state.professionals.professions))
-
-
-  const professions = useSelector((state)=>(state.professions))
   
   const dispatch = useDispatch(); 
 
