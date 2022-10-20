@@ -1,9 +1,9 @@
 import React from 'react'
-import { Container, Row,Col } from 'react-bootstrap'
+import { Container, Row,Col,Dropdown,Alert } from 'react-bootstrap'
 import CardFormat from './CardFormat';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { getAllProfessionals, orderByName ,getProfessionsOfProfessionals, getOrderReputation } from '../../state/ducks/professionals/actions';
+import {  useState } from 'react';
+import {  orderByName , getOrderReputation, filterByProfession } from '../../state/ducks/professionals/actions';
 import SearchBar from './SearchBar';
 import Paginado from './Paginado';
 import FormProfession from './Formularios/FormProfession';
@@ -12,16 +12,8 @@ import FormProfession from './Formularios/FormProfession';
 
 
 function CardsList() {
-  const [professionFilter,setProfessionFilter]= useState('')
-  const profesionales = useSelector((state) => (state.allProfessionals))
-    .filter((professional)=>{
-       return professionFilter? professional.professions.map((p) => p.name)
-              
-              .includes(professionFilter)
-          : true
-  
-    })
-
+  const profesionales = useSelector((state) => (state.professionalsFiltered))
+     const professions = useSelector((state)=>(state.professions))
 
   
   const dispatch = useDispatch(); 
@@ -30,7 +22,7 @@ function CardsList() {
 
      const [currentPage, setCurrentPage] = useState(1);
    
-     const professionalsPerPage = 3;
+     const professionalsPerPage = 8;
     
      const indexOfLastProfessional = currentPage * professionalsPerPage;
     
@@ -38,11 +30,14 @@ function CardsList() {
    
      const currentProfessionals = profesionales.slice(indexOfFirstProfessional , indexOfLastProfessional)
 
+   
+
      const professionFilterHandleOnChange = (e) => {
       setCurrentPage(1);
-      if (e.target.value === "all") return setProfessionFilter("");
+     
   
-      setProfessionFilter(e.target.value);
+
+      dispatch(filterByProfession(e.target.innerText))
     };
     
 
@@ -52,64 +47,87 @@ function CardsList() {
 
      function handleOrderByName(e){
       e.preventDefault();
-      dispatch(orderByName(e.target.value));
+      dispatch(orderByName(e.target.innerText));
       setCurrentPage(1);
-      setOrden(`Ordenado ${e.target.value}`)
+      setOrden(`Ordenado ${e.target.innerText}`)
      }
 
   
 
      function handleOrderReputation(e){
       e.preventDefault();
-      dispatch(getOrderReputation(e.target.value))
-      setOrden(`Ordenado ${e.target.value}`)
+      dispatch(getOrderReputation(e.target.innerText))
+      setOrden(`Ordenado ${e.target.innerText}`)
      }
   
-  useEffect(()=>{
-    dispatch(getAllProfessionals())
-},[dispatch])
-  
+ 
 
   return (
-    <Container style={{width:'100%', justifyContent: "center", display: "flex", flexDirection: "column"}}>
-        <FormProfession />
-        <SearchBar/>
-        <Paginado 
+    <Container style={{width:'100%', justifyContent: "center", display: "flex", flexDirection: "column",height:'max-content'}}>
+       <Container expand='md'style={{display:'flex',alignItems:'end'}}>
+        
+        <Dropdown style={{height:'2.5rem'}} >
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        Profesion
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item onClick={e => professionFilterHandleOnChange(e)}>All</Dropdown.Item>
+        {
+          professions.map((prof)=>{
+            return (<Dropdown.Item onClick={e => professionFilterHandleOnChange(e)}>{prof.name}</Dropdown.Item>)
+          })
+        }
+      </Dropdown.Menu>
+    </Dropdown>
+
+    <Dropdown style={{height:'2.5rem'}}>
+      <Dropdown.Toggle>
+        Orden por Nombre
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+      <Dropdown.Item onClick={e => handleOrderByName(e)}>asc</Dropdown.Item>
+      <Dropdown.Item onClick={e => handleOrderByName(e)}>desc</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+    <Dropdown style={{height:'2.5rem'}}>
+      <Dropdown.Toggle>
+        Orden por Reputa
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+      <Dropdown.Item onClick={e => handleOrderReputation(e)}>asc</Dropdown.Item>
+      <Dropdown.Item onClick={e => handleOrderReputation(e)}>desc</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+    <SearchBar/>
+ </Container>
+
+   
+
+       { currentProfessionals.length>0?
+        (<Row style={{margin: "5%",marginTop:'0.5%'}} xs={1} md={3} lg={4} className="g-4" >
+
+        {currentProfessionals?.map((e)=>{
+            return (<Col key={e.id}style={{display:'flex',justifyContent:'center'}}><CardFormat worker ={e} key={e.id}/></Col>)
+        })}</Row>
+        ):( <Alert style={{margin:'5%',marginTop:'5%',textAlign:'center'}} variant="danger">
+        <Alert.Heading>No se ha encontrado ningun Profesional</Alert.Heading>
+        <p style={{paddingBottom:'9rem'}}>
+          Puede ser que debido a tus opciones de filtrado, y nuestra actual cantidad de profesionales no concuerden con dicha busqueda.
+        </p>
+        <hr />
+        <p className="mb-0">
+          Prueba  con otras opciones ;D
+        </p>
+      </Alert>)}
+      { profesionales.length>8?
+      <Paginado 
         professionalsPerPage={professionalsPerPage}
         profesionales ={profesionales.length}
         paginado ={paginado}
         currentPage={currentPage}
-        />
-        <select onClick={e => handleOrderByName(e)}>
-          <option value="asc">Ascending By Name</option>
-          <option value="desc">Descending By Name</option>
-        </select>
-
-        <select onClick={e => handleOrderReputation(e)}>
-          <option value="asc">Ascending By Reputation</option>
-          <option value="desc">Descending By Reputation</option>
-        </select>
-
-
-        <select onChange={e => professionFilterHandleOnChange(e)}>
-          <option value="all">All</option>
-          <option value="electricista">Electricista</option>
-          <option value="jardinero">Jardinero</option>
-          <option value="cerrajero">Cerrajero</option>
-          <option value="aire acondicionado">Aire Acondicionado</option>
-          <option value="plomero">Plomero</option>
-          <option value="carpintero">Carpintero</option>
-          <option value="pintor">Pintor</option>
-          <option value="técnico PC">Tecnico PC</option>
-          <option value="mecánico">Mecanico</option>
-          <option value="gasista">Gasista</option>
-          <option value="albañil">Albañil</option>
-          <option value="herrero">Herrero</option>
-        </select>
-        <Row style={{margin: "10px"}} xs={1} md={3} lg={4} className="g-4" >
-        {currentProfessionals?.map((e)=>{
-            return (<Col key={e.id}style={{display:'flex',justifyContent:'center'}}><CardFormat worker ={e} key={e.id}/></Col>)
-        })}</Row>
+        style={{flex:'flex-end'}}
+        />:null}
     </Container>
   )
 }

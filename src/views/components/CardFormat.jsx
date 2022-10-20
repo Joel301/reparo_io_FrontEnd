@@ -5,21 +5,21 @@ import { Card,Button } from "react-bootstrap";
 
 
 function CardFormat({worker}) {
-    // let profToString =worker.professions?.map((e)=>e.name)
+    let profToString =worker.professions?.map((e)=>e.name)
 
   return (
     <Card bg="light" style={{ width: '18rem',height:'22rem' }}>
-      <Card.Img variant="top" src={worker.img} style={{maxHeight:"10rem"}} />
+      <Card.Img variant="top" src={worker.profileImg} style={{maxHeight:"10rem"}} />
       <Card.Body >
         <Card.Title>{`${worker.firstName} ${worker.lastName}`}</Card.Title>
       
       <Card.Text>
         { 
-                    // profToString.join(', ')
+                     profToString.join(', ')
         }
       </Card.Text>
       <Card.Subtitle>
-         Reputacion: {worker.reputation}
+         Reputacion: {worker.review}
       </Card.Subtitle>
       
       </Card.Body><Card.Footer style={{display:"flex",

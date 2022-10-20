@@ -1,10 +1,20 @@
 import axios from "axios";
 
 
+export function filterByProfession(payload){
+    return {
+        type:'FILTER_BY_PROFESSION',
+        payload:payload.toLowerCase()
+    }
+} 
+
+
 export function getAllProfessionals() {
     return async function (dispatch) {
         try {
-            const getAll = await axios.get('https://reparoiobackend-develop.up.railway.app/home/professionals')
+            const getAll = await axios.get('/home/professionals')
+
+
             return dispatch({
                 type: 'GET_ALL_PROFESSIONALS',
                 payload: getAll.data
@@ -18,7 +28,7 @@ export function getAllProfessionals() {
 export function getProfesional(payload) {
     return async function (dispatch) {
         try {
-            const prof = await axios.get(`https://reparoiobackend-develop.up.railway.app/home?search=${payload}`)
+            const prof = await axios.get(`/home?search=${payload}`)
             return dispatch({
                 type: 'GET_PROFESSIONALS',
                 payload: prof.data
@@ -30,17 +40,17 @@ export function getProfesional(payload) {
 }
 
 
-export function getProfessionsOfProfessionals(payload) {
-    return {
-        type: 'GET_PRFESSIONS_OF_PROFESSIONALS',
-        payload
-    }
-}
+// export function getProfessionsOfProfessionals(payload) {
+//     return {
+//         type: 'GET_PRFESSIONS_OF_PROFESSIONALS',
+//         payload
+//     }
+// }
 
 export function getAllProfessions() {
     return async function (dispatch) {
         try {
-            const allProfessions = await axios.get('https://reparoiobackend-develop.up.railway.app/home/professions')
+            const allProfessions = await axios.get('/home/professions')
             return dispatch({
                 type: 'GET_ALL_PROFESSIONS',
                 payload: allProfessions.data
@@ -54,7 +64,7 @@ export function getAllProfessions() {
 export function postProfessionals(payload){
     return async function(dispatch){
         try {
-            const postProfessionals = await axios.post('https://reparoiobackend-develop.up.railway.app/home/professionals', payload)
+            const postProfessionals = await axios.post('/home/professionals', payload)
             return dispatch({
                 type: 'POST_PROFESSIONAL',
                 postProfessionals
@@ -76,7 +86,7 @@ export function orderByName(payload) {
 export function getDetail(id) {
     return async function (dispatch) {
         try {
-            var detalle = await axios.get('https://reparoiobackend-develop.up.railway.app/home/professionals/' + id)
+            var detalle = await axios.get('/home/professionals/' + id)
 
             return dispatch({
                 type: 'GET_DETAIL',

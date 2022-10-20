@@ -29,7 +29,7 @@ export default function Paginado({professionalsPerPage, profesionales, paginado,
     //pusheado
 
     return(
-        <Pagination>
+        <Pagination style={{display:'flex',justifyContent:'center'}}>
             
                 <Pagination.Prev onClick={e => handlePrevious(e)}/>
                 {

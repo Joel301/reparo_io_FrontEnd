@@ -11,7 +11,9 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button';
-import { getAllProfessions } from "../../state/ducks/professionals/actions";
+import { getAllProfessions,filterByProfession } from "../../state/ducks/professionals/actions";
+import { Link } from "react-router-dom";
+
 
 
 export default function Professions () {
@@ -32,32 +34,7 @@ export default function Professions () {
 
             {/* Boton Carrito y Selecion profesiones */}
 
-            <div className='dropdown'>
-                
-                    <Dropdown>
-
-                    <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                        Profesiones
-                    </Dropdown.Toggle>
-                    
-                    <Dropdown.Menu>
-
-                    {professions?.map((p) => {
-                              return <Dropdown.Item key={p.name} value={p.name}> 
-                                {p.name[0].toUpperCase() + p.name.slice(1)}
-                                </Dropdown.Item>}
-                            )}
-                          </Dropdown.Menu>
-                </Dropdown>
-                <Button>
-                    <img 
-                        className="imgCarrito"
-                        src={imgCarrito}
-                        alt="img"
-                        />
-                </Button>
-            
-            </div>
+          
 
             {/* Listado de profesiones  */}
             <div className='profesiones'>
@@ -71,22 +48,27 @@ export default function Professions () {
                     professions.map((prof) => (
                         <Col>
                             <Card>
-                                {/* <Card.Body> */}
-                                    <Button variant="primary">
-                                        <Card.Title>{prof.name[0].toUpperCase() + prof.name.slice(1)}</Card.Title>
-                                    </Button>
-                                {/* </Card.Body> */}
+                                <Link to='/home'>
+                                  <Button value={prof.name[0].toUpperCase() + prof.name.slice(1)} variant="primary" onClick={(e)=>{
+                                    dispatch(filterByProfession(e.target.value))
+                                  }}>
+
+                                        {prof.name[0].toUpperCase() + prof.name.slice(1)}
+                                         </Button> </Link>
+                                
                             </Card>
                         </Col>
                     ))
                 }
                     <Col>
                         <Card>
-                            {/* <Card.Body> */}
-                                <Button variant="primary">
+                                
+                                <Button  variant="primary" onClick={(e)=>{
+                                    dispatch(filterByProfession('all'))
+                                  }} >
                                 <Card.Title>Todas las profesiones</Card.Title>
                                 </Button>
-                            {/* </Card.Body> */}
+                            
                         </Card>
                     </Col>
                 </Row>
