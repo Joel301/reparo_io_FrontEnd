@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 
 export default function Professions () {
   const dispatch = useDispatch();
-  const professions = useSelector((state) => state.professions);
+  const professions = useSelector((state) => state.professionals.professions);
   useEffect(() => {
     dispatch(getAllProfessions());
   }, [dispatch]);
