@@ -1,12 +1,17 @@
-import React from "react";
-import { useState } from "react";
-import { Container, Nav, Navbar, NavDropdown,Offcanvas } from "react-bootstrap";
-import FormProfession from "./Formularios/FormProfession";
+import React from "react"
+import { useState } from "react"
+import { Container, Nav, Navbar, NavDropdown,Offcanvas } from "react-bootstrap"
+import FormProfession from "./Formularios/FormProfession"
+import { Link } from "react-router-dom"
+
+
+
 function HeaderNavBar() {
   
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-   const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+  
   return (
     /////// esto es con react-bootstrap
     // desde el archivo ../../node_modules/bootstrap/_variables.scss cambio la paleta de colores
@@ -16,7 +21,9 @@ function HeaderNavBar() {
 
     <Navbar sticky="top" expand="md" bg="primary" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Reparo.io</Navbar.Brand>
+        <Link to="/home">
+          <Navbar.Brand>Reparo.io</Navbar.Brand>
+        </Link>
         <Navbar.Toggle />
         <Navbar.Collapse >
           <Nav className="ms-auto">

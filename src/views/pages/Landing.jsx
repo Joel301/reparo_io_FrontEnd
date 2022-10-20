@@ -2,16 +2,12 @@ import React from "react";
 
 //State
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 //redux
-import {
-  getProfesional,
-  getAllProfessionals,
-} from "../../state/ducks/professionals/actions";
+import { getAllProfessionals } from "../../state/ducks/professionals/actions";
 
 //Components
-import HeaderNavBar from "../components/HeaderNavBar";
 import Professions from "../components/Professions";
 import FormProfession from "../components/Formularios/FormProfession"
 

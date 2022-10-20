@@ -1,27 +1,32 @@
-import React from "react";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+
+//React Redux
+import React from "react"
+import { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { Link } from "react-router-dom"
+import { getAllProfessions, filterByProfession } from "../../state/ducks/professionals/actions"
+
 //CSS Styles
 import "./Professions.css"
-import imgCarrito from "../pages/imgs/carrito.png"
 
 //Botstrap
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import Dropdown from 'react-bootstrap/Dropdown'
-import Button from 'react-bootstrap/Button';
-import { getAllProfessions,filterByProfession } from "../../state/ducks/professionals/actions";
-import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button'
 
 
 
 export default function Professions () {
-  const dispatch = useDispatch();
-  const professions = useSelector((state) => state.professions);
-  useEffect(() => {
-    dispatch(getAllProfessions());
-  }, [dispatch]);
+
+    const professions = useSelector((state) => state.professions)
+    
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+      dispatch(getAllProfessions())
+    }, [dispatch])
+
     return (
         <>
 
@@ -31,10 +36,6 @@ export default function Professions () {
                 Elige una profesion:
                 </h3>
             </div>
-
-            {/* Boton Carrito y Selecion profesiones */}
-
-          
 
             {/* Listado de profesiones  */}
             <div className='profesiones'>
@@ -49,30 +50,33 @@ export default function Professions () {
                         <Col>
                             <Card>
                                 <Link to='/home'>
-                                  <Button value={prof.name[0].toUpperCase() + prof.name.slice(1)} variant="primary" onClick={(e)=>{
-                                    dispatch(filterByProfession(e.target.value))
-                                  }}>
+                                  <Button 
+                                    value={prof.name[0].toUpperCase() + prof.name.slice(1)} 
+                                    variant="primary" 
+                                    onClick={(e)=>{dispatch(filterByProfession(e.target.value))}}>
 
                                         {prof.name[0].toUpperCase() + prof.name.slice(1)}
-                                         </Button> </Link>
-                                
+
+                                  </Button> 
+                                </Link>
                             </Card>
                         </Col>
                     ))
                 }
                     <Col>
                         <Card>
-                                
-                                <Button  variant="primary" onClick={(e)=>{
-                                    dispatch(filterByProfession('all'))
-                                  }} >
-                                <Card.Title>Todas las profesiones</Card.Title>
+                            <Link to='/home'>
+                                <Button 
+                                    variant="primary" 
+                                    onClick={(e)=>{ dispatch(filterByProfession('all')) }} >
+
+                                    <Card.Title>Todas las profesiones</Card.Title>
+
                                 </Button>
-                            
+                            </Link>
                         </Card>
                     </Col>
                 </Row>
-
             </div>
          </>
     )
