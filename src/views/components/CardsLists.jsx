@@ -6,7 +6,6 @@ import {  useState } from 'react';
 import {  orderByName , getOrderReputation, filterByProfession } from '../../state/ducks/professionals/actions';
 import SearchBar from './SearchBar';
 import Paginado from './Paginado';
-import FormProfession from './Formularios/FormProfession';
 
 
 
@@ -68,41 +67,40 @@ function CardsList() {
        <Container expand='md'style={{display:'flex',alignItems:'end'}}>
         
         <Dropdown style={{height:'2.5rem'}} >
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Profesion
-      </Dropdown.Toggle>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Profesion
+        </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item onClick={e => professionFilterHandleOnChange(e)}>All</Dropdown.Item>
-        {
-          professions.map((prof)=>{
-            return (<Dropdown.Item onClick={e => professionFilterHandleOnChange(e)}>{prof.name}</Dropdown.Item>)
-          })
-        }
-      </Dropdown.Menu>
-    </Dropdown>
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={e => professionFilterHandleOnChange(e)}>All</Dropdown.Item>
+          {
+            professions.map((prof)=>{
+              return (<Dropdown.Item onClick={e => professionFilterHandleOnChange(e)}>{prof.name}</Dropdown.Item>)
+            })
+          }
+        </Dropdown.Menu>
+        </Dropdown>
 
-    <Dropdown style={{height:'2.5rem'}}>
-      <Dropdown.Toggle>
-        Orden por Nombre
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-      <Dropdown.Item onClick={e => handleOrderByName(e)}>asc</Dropdown.Item>
-      <Dropdown.Item onClick={e => handleOrderByName(e)}>desc</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-    <Dropdown style={{height:'2.5rem'}}>
-      <Dropdown.Toggle>
-        Orden por Reputa
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-      <Dropdown.Item onClick={e => handleOrderReputation(e)}>asc</Dropdown.Item>
-      <Dropdown.Item onClick={e => handleOrderReputation(e)}>desc</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-    <SearchBar/>
- </Container>
-
+        <Dropdown style={{height:'2.5rem'}}>
+          <Dropdown.Toggle>
+            Orden por Nombre
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+          <Dropdown.Item onClick={e => handleOrderByName(e)}>asc</Dropdown.Item>
+          <Dropdown.Item onClick={e => handleOrderByName(e)}>desc</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        <Dropdown style={{height:'2.5rem'}}>
+          <Dropdown.Toggle>
+            Orden por Reputa
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+          <Dropdown.Item onClick={e => handleOrderReputation(e)}>asc</Dropdown.Item>
+          <Dropdown.Item onClick={e => handleOrderReputation(e)}>desc</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        <SearchBar/>
+      </Container>
    
 
        { currentProfessionals.length>0?
@@ -114,7 +112,7 @@ function CardsList() {
         ):( <Alert style={{margin:'5%',marginTop:'5%',textAlign:'center'}} variant="danger">
         <Alert.Heading>No se ha encontrado ningun Profesional</Alert.Heading>
         <p style={{paddingBottom:'9rem'}}>
-          Puede ser que debido a tus opciones de filtrado, y nuestra actual cantidad de profesionales no concuerden con dicha busqueda.
+          Puede ser que debido a tus opciones de filtrado y nuestra actual cantidad de profesionales no concuerden con dicha busqueda.
         </p>
         <hr />
         <p className="mb-0">

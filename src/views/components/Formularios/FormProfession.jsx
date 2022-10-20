@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { postProfessionals } from "../../../state/ducks/professionals/actions";
 import { validateFormProfessional } from "./validation.js";
 import './estilos.css'
-import { Alert } from "bootstrap";
 
 
 
