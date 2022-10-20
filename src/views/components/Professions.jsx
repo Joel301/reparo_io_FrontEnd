@@ -53,6 +53,7 @@ export default function Professions () {
                                   <Button 
                                     value={prof.name[0].toUpperCase() + prof.name.slice(1)} 
                                     variant="primary" 
+                                    style={{width: "100%"}}
                                     onClick={(e)=>{dispatch(filterByProfession(e.target.value))}}>
 
                                         {prof.name[0].toUpperCase() + prof.name.slice(1)}
@@ -68,6 +69,7 @@ export default function Professions () {
                             <Link to='/home'>
                                 <Button 
                                     variant="primary" 
+                                    style={{width: "100%"}}
                                     onClick={(e)=>{ dispatch(filterByProfession('all')) }} >
 
                                     <Card.Title>Todas las profesiones</Card.Title>

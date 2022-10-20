@@ -161,7 +161,12 @@ export default function Landing() {
           </Accordion>
       ) : (
         <div className="acordeon">
-          <Accordion alwaysOpen>
+          <Accordion alwaysOpen style={{
+            width: "70%",
+            justifyContent: "center",
+            marginLeft: "15%",
+            marginTop: "20px",
+          }}>
             <Accordion.Item eventKey="0">
               <Accordion.Header>
                 (1) ¡COMPLETA TU REGISTRO DE PROFESIONAL!

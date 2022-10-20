@@ -1,65 +1,60 @@
-import React from 'react'
-import { Container, Row,Col,Dropdown,Alert } from 'react-bootstrap'
-import CardFormat from './CardFormat';
-import { useSelector, useDispatch } from 'react-redux';
-import {  useState } from 'react';
-import {  orderByName , getOrderReputation, filterByProfession } from '../../state/ducks/professionals/actions';
-import SearchBar from './SearchBar';
-import Paginado from './Paginado';
+import React, { useEffect } from 'react'
+import { Container, Row, Col, Dropdown, Alert } from 'react-bootstrap'
+import { useSelector, useDispatch } from 'react-redux'
+import {  useState } from 'react'
+import {  orderByName , getOrderReputation, filterByProfession, getAllProfessionals } from '../../state/ducks/professionals/actions';
 
-
+//Componentes
+import CardFormat from './CardFormat'
+import SearchBar from './SearchBar'
+import Paginado from './Paginado'
 
 
 function CardsList() {
-  const profesionales = useSelector((state) => (state.professionalsFiltered))
-     const professions = useSelector((state)=>(state.professions))
 
+  const profesionales = useSelector((state) => (state.professionalsFiltered))
+
+  const professions = useSelector((state)=>(state.professions))
   
   const dispatch = useDispatch(); 
 
-     const [orden, setOrden] = useState('')
+  const [orden, setOrden] = useState('')
 
-     const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
    
-     const professionalsPerPage = 8;
+  const professionalsPerPage = 8;
     
-     const indexOfLastProfessional = currentPage * professionalsPerPage;
+  const indexOfLastProfessional = currentPage * professionalsPerPage;
     
-     const indexOfFirstProfessional = indexOfLastProfessional - professionalsPerPage;
+  const indexOfFirstProfessional = indexOfLastProfessional - professionalsPerPage;
    
-     const currentProfessionals = profesionales.slice(indexOfFirstProfessional , indexOfLastProfessional)
-
+  const currentProfessionals = profesionales.slice(indexOfFirstProfessional , indexOfLastProfessional)
    
 
-     const professionFilterHandleOnChange = (e) => {
-      setCurrentPage(1);
-     
-  
+  const professionFilterHandleOnChange = (e) => {
+   setCurrentPage(1)
 
-      dispatch(filterByProfession(e.target.innerText))
-    };
+   dispatch(filterByProfession(e.target.innerText))
+  }
     
 
-     const paginado = (pageNum) => {
-         setCurrentPage(pageNum)
-     }
+  const paginado = (pageNum) => {
+      setCurrentPage(pageNum)
+  }
 
-     function handleOrderByName(e){
-      e.preventDefault();
-      dispatch(orderByName(e.target.innerText));
-      setCurrentPage(1);
-      setOrden(`Ordenado ${e.target.innerText}`)
-     }
+  function handleOrderByName(e){
+   e.preventDefault();
+   dispatch(orderByName(e.target.innerText));
+   setCurrentPage(1);
+   setOrden(`Ordenado ${e.target.innerText}`)
+  }
 
+  function handleOrderReputation(e){
+   e.preventDefault();
+   dispatch(getOrderReputation(e.target.innerText))
+   setOrden(`Ordenado ${e.target.innerText}`)
+  }
   
-
-     function handleOrderReputation(e){
-      e.preventDefault();
-      dispatch(getOrderReputation(e.target.innerText))
-      setOrden(`Ordenado ${e.target.innerText}`)
-     }
-  
- 
 
   return (
     <Container style={{width:'100%', justifyContent: "center", display: "flex", flexDirection: "column",height:'max-content'}}>
@@ -102,13 +97,15 @@ function CardsList() {
       </Container>
    
 
-       { currentProfessionals.length>0?
-        (<Row style={{margin: "5%",marginTop:'0.5%'}} xs={1} md={3} lg={4} className="g-4" >
+       { currentProfessionals.length > 0 ?
+        ( <Row style={{margin: "5%",marginTop:'0.5%'}} xs={1} md={3} lg={4} className="g-4" >
 
         {currentProfessionals?.map((e)=>{
             return (<Col key={e.id}style={{display:'flex',justifyContent:'center'}}><CardFormat worker ={e} key={e.id}/></Col>)
-        })}</Row>
-        ):( <Alert style={{margin:'5%',marginTop:'5%',textAlign:'center'}} variant="danger">
+        })}
+        </Row>)
+        :
+        ( <Alert style={{margin:'5%',marginTop:'5%',textAlign:'center'}} variant="danger">
         <Alert.Heading>No se ha encontrado ningun Profesional</Alert.Heading>
         <p style={{paddingBottom:'9rem'}}>
           Puede ser que debido a tus opciones de filtrado y nuestra actual cantidad de profesionales no concuerden con dicha busqueda.
@@ -117,15 +114,20 @@ function CardsList() {
         <p className="mb-0">
           Prueba  con otras opciones ;D
         </p>
-      </Alert>)}
-      { profesionales.length>8?
-      <Paginado 
-        professionalsPerPage={professionalsPerPage}
-        profesionales ={profesionales.length}
-        paginado ={paginado}
-        currentPage={currentPage}
-        style={{flex:'flex-end'}}
-        />:null}
+      </Alert>)
+      }
+
+      { 
+        profesionales.length > 8 ?
+
+        <Paginado 
+          professionalsPerPage={professionalsPerPage}
+          profesionales ={profesionales.length}
+          paginado ={paginado}
+          currentPage={currentPage}
+          style={{flex:'flex-end'}}
+          /> : null
+        }
     </Container>
   )
 }
