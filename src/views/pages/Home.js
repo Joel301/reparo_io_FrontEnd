@@ -10,7 +10,6 @@ import CardsList from "../components/CardsLists";
 
 export default function Home() {
   const professiones = useSelector((state) => state.professions);
-  console.log(professiones, "profesiones de home");
   const dispatch = useDispatch();
 
   useEffect(() => {

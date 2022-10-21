@@ -41,9 +41,36 @@ function rootReducer(state = initialState, action) {
       }
       return {
         ...state,
-        professionalsFiltered: state.allProfessionals
+
+        professionalsFiltered: filtered,
+      };
+}
+return{...state,
+  professionalsFiltered:state.allProfessionals
+}
+    case "FILTER_BY_REPUTATION":
+
+      let arrayFiltrados = []
+
+      if(action.payload === "Todas") {
+        return{
+          ...state,
+          professionalsFiltered: state.allProfessionals
+        }
+      } else { 
+        let filtrados = state.allProfessionals.map(profe => {
+
+          if(profe.review > parseInt(action.payload) || profe.review === parseInt(action.payload)) {
+            arrayFiltrados.push(profe)
+          } 
+        })
       }
 
+      return {
+        ...state,
+        professionalsFiltered: arrayFiltrados,
+      }
+      
 
     case "GET_ALL_PROFESSIONS":
       return {
