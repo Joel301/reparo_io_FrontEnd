@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { postProfessionals, getAllProfessions } from "../../../state/ducks/professionals/actions";
+import { postProfessionals } from "../../../state/ducks/professionals/actions";
 import { validateFormProfessional } from "./validation.js";
 import './estilos.css'
 
@@ -12,7 +12,7 @@ import './estilos.css'
 export default function FormProfession() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const professions = useSelector(state=>state.professionals.professions)
+  const profesiones = useSelector(state=>state.professions)
  
 
   //referencia de información del input para el post:
@@ -48,8 +48,7 @@ export default function FormProfession() {
     setConfirmShowPwd(!confirmShowPwd)
   }
 
- 
-  // Se llena el input de professions:
+  // Se llena el input de profesiones:
   function handleSelectProfession(e) {
     e.preventDefault()
     if (professionsRef.current.includes(e.target.value)) {
@@ -60,7 +59,7 @@ export default function FormProfession() {
 
   // se envia la informacion del formulario incluye la validación:
   function hedleOnSubmit(e) {
-    e.preventDefault()
+    e.preventDefault(e)
 
     const input = {
       firstName: nameRef.current.value,
@@ -76,11 +75,11 @@ export default function FormProfession() {
     };
 
     const formErrors = validateFormProfessional(input)
-    
+    console.log( input.password);
     setErrors(formErrors)
 
 
-   
+    console.log(errors);
 
     if (Object.keys(errors).length > 0 || Object.keys(formErrors).length > 0) {
       alert('Verifique que todos los campos esten diligenciados')
@@ -90,7 +89,7 @@ export default function FormProfession() {
    dispatch(postProfessionals(input))
 
    alert('Tu perfil ha sido creado')
-   navigate('/Home')
+   navigate('/perfil')
 
   }
 
@@ -138,7 +137,7 @@ export default function FormProfession() {
         <Form.Control
           ref={profileImgRef}
           type="text"
-          placeholder="Foto de perfil" />
+          placeholder="imagen" />
       </Form.Group>
       {errors.profileImg && <span className="errors">{errors.profileImg}</span>}
       <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -160,9 +159,9 @@ export default function FormProfession() {
       </Form.Group>
       {errors.aboutMe && <span className="errors">{errors.aboutMe}</span>}
       <Form.Group className="mb-3">
-        <Form.Check>Profesiones:
+        <Form.Check style={{display:'grid', grid:'templateColums'}} >Profesiones:
           {
-            professions.map(profession =>
+            profesiones.map(profession =>
               <div key={profession.id}>
                 <Form.Check.Input
                   style={{borderColor:'#212529'}}
