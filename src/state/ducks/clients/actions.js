@@ -1,22 +1,3 @@
-import axios from "axios";
+import { createAction } from "@reduxjs/toolkit";
 
-
-export function postProfessionals(payload){
-    return async function(dispatch){
-        try {
-            const postProfessionals = await axios.post('/home/client', payload)
-            return dispatch({
-                type: 'POST_CLIENT',
-                postProfessionals
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-}
-
-
-
-
-
-
+export const getClient = createAction("GET_CLIENT"); // getClient a data lo toma como payload
