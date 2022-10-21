@@ -23,25 +23,40 @@ function rootReducer(state = initialState, action) {
     case "FILTER_BY_PROFESSION":
      
 
- if(action.payload!=='all'){  
-     let professionFilter = state.professions.filter((profesion) => {
-        return profesion.name.toLowerCase() === action.payload;
-      });
-
-      let filtered = state.allProfessionals.filter((profesional) => {
+ if(action.payload.length!==0&&action.payload[0]!== undefined){  //['albanil','herrero']
+  let filtered
+  action.payload.forEach((e)=>e.toLowerCase())
+  console.log(action.payload);
+  for (let i = 0; i < action.payload.length; i++) {
+    if(i===0){ 
+      
+     filtered = state.allProfessionals.filter((profesional) => {
         return profesional.professions
-          .map((e) => e.id)
-          .includes(professionFilter[0].id);
-      });
+          .map((e) =>{ 
+            return e.name})
+          .includes(action.payload[i]);
+      })
+      console.log(filtered);
+     
+    }else{
+        filtered = filtered.filter((profesional) => {
+          return profesional.professions
+            .map((e) => e.name)
+            .includes(action.payload[i]);
+      })
+  }}
+     
+/*   console.log(filtered) */
+     
       
       return {
         ...state,
-        professionalsFiltered: filtered,
+        professionalsFiltered:filtered,
       };
 }
 return{...state,
   professionalsFiltered:state.allProfessionals
-}
+};
   
 
     case "GET_ALL_PROFESSIONS":

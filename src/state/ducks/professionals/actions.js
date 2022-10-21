@@ -2,9 +2,10 @@ import axios from "axios";
 
 
 export function filterByProfession(payload){
+    console.log(payload);
     return {
         type:'FILTER_BY_PROFESSION',
-        payload:payload.toLowerCase()
+        payload
     }
 } 
 

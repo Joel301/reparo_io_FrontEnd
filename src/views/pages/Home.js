@@ -9,7 +9,7 @@ import { getAllProfessionals, getAllProfessions } from "../../state/ducks/profes
 import CardsList from "../components/CardsLists";
 
 export default function Home() {
-  const professiones = useSelector((state) => state.professions);
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
