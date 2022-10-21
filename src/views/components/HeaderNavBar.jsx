@@ -5,6 +5,8 @@ import FormProfession from "./Formularios/FormProfession"
 import FormClient from "./Formularios/FormClient"
 import { Link } from "react-router-dom"
 
+import logoReparoio from "../pages/imgs/logo-reparoio.png"
+
 
 
 function HeaderNavBar() {
@@ -33,12 +35,18 @@ function HeaderNavBar() {
 
     <Navbar sticky="top" expand="md" bg="primary" variant="dark">
       <Container>
-        <Link to="/">
-          <Navbar.Brand>Reparo.io</Navbar.Brand>
-        </Link>
-        <Link to="/home">
-          <Navbar.Brand>Home</Navbar.Brand>
-        </Link>
+        <Container>
+          <Link to="/">
+            <img
+            style={{width: "5%"}}
+              src={logoReparoio}
+            />
+            <Navbar.Brand>Reparo.io</Navbar.Brand>
+          </Link>
+          <Link to="/home">
+            <Navbar.Brand>Home</Navbar.Brand>
+          </Link>
+        </Container>
         <Navbar.Toggle />
         <Navbar.Collapse >
           <Nav className="ms-auto">

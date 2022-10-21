@@ -15,7 +15,7 @@ export default function AboutUs () {
                 About Admins:
             </h4>
 
-            <div style={{display: "flex",justifyContent: "space-around",marginLeft: "20%", marginRight: "20%" ,border: " 2px solid rgb(224, 224, 224)", borderRadius: "10px", marginBottom: "20%", padding:" 10px"}}>
+            <div style={{backgroundColor: "rgb(234, 234, 234)",display: "flex",justifyContent: "space-around",marginLeft: "20%", marginRight: "20%" ,border: " 2px solid rgb(224, 224, 224)", borderRadius: "10px", marginBottom: "20%", padding:" 10px"}}>
                 
                 <a href="https://www.linkedin.com/in/lucas-ca%C3%B1o-0a5406223/" >
                         <img
