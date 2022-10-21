@@ -161,7 +161,7 @@ export default function FormProfession() {
       <Form.Group className="mb-3">
         <Form.Check style={{display:'grid', grid:'templateColums'}} >Profesiones:
           {
-            profesiones.map(profession =>
+            profesiones?.map(profession =>
               <div key={profession.id}>
                 <Form.Check.Input
                   style={{borderColor:'#212529'}}
