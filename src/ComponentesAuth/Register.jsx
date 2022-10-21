@@ -9,7 +9,7 @@ function Register(props) {
         password: ""
     })
 
-    const { signup } = useAuth();
+    const { signup,loginWithGoogle } = useAuth();
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
@@ -22,7 +22,6 @@ function Register(props) {
             console.log(error)
         }
     };
-
     const handleInputChange = (e) => setUser({ ...user, [e.target.name]: e.target.value })
 
     return (
@@ -33,6 +32,7 @@ function Register(props) {
                 <br /> contraseña: <input name={`password`} type="password" onChange={handleInputChange} />
                 <button>Registrar</button>
             </form>
+            <button onClick={loginWithGoogle}>google login </button>
             <br /> <Rutas />
         </div>
     );
