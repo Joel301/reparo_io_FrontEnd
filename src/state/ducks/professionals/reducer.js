@@ -21,28 +21,29 @@ function rootReducer(state = initialState, action) {
       };
 
     case "FILTER_BY_PROFESSION":
-     
 
- if(action.payload!=='all'){  
-     let professionFilter = state.professions.filter((profesion) => {
-        return profesion.name.toLowerCase() === action.payload;
-      });
 
-      let filtered = state.allProfessionals.filter((profesional) => {
-        return profesional.professions
-          .map((e) => e.id)
-          .includes(professionFilter[0].id);
-      });
-      
+      if (action.payload !== 'all') {
+        let professionFilter = state.professions.filter((profesion) => {
+          return profesion.name.toLowerCase() === action.payload;
+        });
+
+        let filtered = state.allProfessionals.filter((profesional) => {
+          return profesional.professions
+            .map((e) => e.id)
+            .includes(professionFilter[0].id);
+        });
+
+        return {
+          ...state,
+          professionalsFiltered: filtered,
+        };
+      }
       return {
         ...state,
-        professionalsFiltered: filtered,
-      };
-}
-return{...state,
-  professionalsFiltered:state.allProfessionals
-}
-  
+        professionalsFiltered: state.allProfessionals
+      }
+
 
     case "GET_ALL_PROFESSIONS":
       return {
@@ -54,28 +55,28 @@ return{...state,
       let sortOrder =
         action.payload === "asc"
           ? state.professionalsFiltered.sort(function (a, b) {
-              if (a.firstName > b.firstName) {
-                return 1;
-              }
-              if (b.firstName > a.firstName) {
-                return -1;
-              }
-              return 0;
-            })
+            if (a.firstName > b.firstName) {
+              return 1;
+            }
+            if (b.firstName > a.firstName) {
+              return -1;
+            }
+            return 0;
+          })
           : state.professionalsFiltered.sort(function (a, b) {
-              if (a.firstName > b.firstName) {
-                return -1;
-              }
-              if (b.firstName > a.firstName) {
-                return 1;
-              }
-              return 0;
-            });
+            if (a.firstName > b.firstName) {
+              return -1;
+            }
+            if (b.firstName > a.firstName) {
+              return 1;
+            }
+            return 0;
+          });
       return {
         ...state,
         professionals: sortOrder,
       };
-     // se saco detail
+    // se saco detail
     case "GET_DETAIL":
       return {
         ...state,
@@ -86,23 +87,23 @@ return{...state,
       let sortOrder2 =
         action.payload === "asc"
           ? state.professionalsFiltered.sort(function (a, b) {
-              if (a.review > b.review) {
-                return 1;
-              }
-              if (b.review > a.review) {
-                return -1;
-              }
-              return 0;
-            })
+            if (a.review > b.review) {
+              return 1;
+            }
+            if (b.review > a.review) {
+              return -1;
+            }
+            return 0;
+          })
           : state.professionalsFiltered.sort(function (a, b) {
-              if (a.review > b.review) {
-                return -1;
-              }
-              if (b.review > a.review) {
-                return 1;
-              }
-              return 0;
-            });
+            if (a.review > b.review) {
+              return -1;
+            }
+            if (b.review > a.review) {
+              return 1;
+            }
+            return 0;
+          });
 
       return {
         ...state,

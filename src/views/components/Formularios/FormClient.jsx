@@ -1,20 +1,11 @@
 import React, { useRef, useState } from "react";
 import Button from 'react-bootstrap/Button';
+import { useDispatch } from 'react-router-dom'
 import Form from 'react-bootstrap/Form';
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { postProfessionals, getAllProfessions } from "../../../state/ducks/professionals/actions";
-import { validateFormProfessional } from "./validation.js";
-import './estilos.css'
+import { validateFormClient } from "./validation";
 
 
-
-export default function FormProfession() {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const professions = useSelector(state=>state.professionals.professions)
- 
-
+export default function FormClient() {
   //referencia de información del input para el post:
   const nameRef = useRef('')
   const lastNameRef = useRef('')
@@ -22,21 +13,14 @@ export default function FormProfession() {
   const addressRef = useRef('')
   const profileImgRef = useRef('')
   const emailRef = useRef('')
-  const professionsRef = useRef([])
   const passwordRef = useRef('')
   const confirmPasswordRef = useRef('')
-  const aboutMeRef = useRef('')
 
-  
 
 
   //Estado de mostrar contraseña
   const [showPwd, setShowPwd] = useState(false)// pendiente usar useEffect para no renderizar todo el componente
   const [confirmShowPwd, setConfirmShowPwd] = useState(false)// pendiente usar useEffect para no renderizar todo el componente
-
-  // estados errores de Validación: 
-  const [errors, setErrors] = useState({})
- 
 
   // cambio de estado placeholder contraseña
   function handleShowPass(e) {
@@ -48,17 +32,9 @@ export default function FormProfession() {
     setConfirmShowPwd(!confirmShowPwd)
   }
 
- 
-  // Se llena el input de professions:
-  function handleSelectProfession(e) {
-    e.preventDefault()
-    if (professionsRef.current.includes(e.target.value)) {
-      professionsRef.current = professionsRef.current.filter(el => el !== e.target.value)
-    } else professionsRef.current.push(e.target.value)
+  // estados errores de Validación: 
+  const [errors, setErrors] = useState({})
 
-  }
-
-  // se envia la informacion del formulario incluye la validación:
   function hedleOnSubmit(e) {
     e.preventDefault()
 
@@ -70,32 +46,15 @@ export default function FormProfession() {
       email: emailRef.current.value,
       phoneNumber: phoneNumberRef.current.value,
       profileImg: profileImgRef.current.value,
-      aboutMe: aboutMeRef.current.value,
-      address: addressRef.current.value,
-      professions: professionsRef.current
+      address: addressRef.current.value
     };
 
-    const formErrors = validateFormProfessional(input)
-    
-    setErrors(formErrors)
+    const currentError = validateFormClient(input)
+    setErrors(currentError)
 
-
-   
-
-    if (Object.keys(errors).length > 0 || Object.keys(formErrors).length > 0) {
-      alert('Verifique que todos los campos esten diligenciados')
-      return
-    }
-
-   dispatch(postProfessionals(input))
-
-   alert('Tu perfil ha sido creado')
-   navigate('/Home')
-
+    console.log(input)
   }
 
-
-  // se renderiza componente
   return (
     <Form
       onSubmit={(e) => (hedleOnSubmit(e))}
@@ -138,7 +97,7 @@ export default function FormProfession() {
         <Form.Control
           ref={profileImgRef}
           type="text"
-          placeholder="Foto de perfil" />
+          placeholder="imagen" />
       </Form.Group>
       {errors.profileImg && <span className="errors">{errors.profileImg}</span>}
       <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -148,34 +107,6 @@ export default function FormProfession() {
           placeholder="nombre@example.com" />
       </Form.Group>
       {errors.email && <span className="errors">{errors.email}</span>}
-      <Form.Group
-        className="mb-3"
-        controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Sobre mi</Form.Label>
-        <Form.Control
-          ref={aboutMeRef}
-          type="text"
-          placeholder="Sobre mi"
-          as="textarea" />
-      </Form.Group>
-      {errors.aboutMe && <span className="errors">{errors.aboutMe}</span>}
-      <Form.Group className="mb-3">
-        <Form.Check>Profesiones:
-          {
-            professions.map(profession =>
-              <div key={profession.id}>
-                <Form.Check.Input
-                  style={{borderColor:'#212529'}}
-                  type={'checkbox'}
-                  value={profession.name}
-                  isValid onChange={(e) => handleSelectProfession(e)} />
-                <Form.Check.Label  style={{marginLeft:'4px' , color:'#212529'}} >{profession.name}</Form.Check.Label>
-              </div>
-            )
-          }
-        </Form.Check>
-      </Form.Group>
-      {errors.professions && <span className="errors">{errors.professions}</span>}
       <Form.Group className="mb-2" controlId="formBasicPassword">
         <Form.Control
           ref={passwordRef}
@@ -194,7 +125,7 @@ export default function FormProfession() {
           ref={confirmPasswordRef}
           type={confirmShowPwd ? "text" : "password"}
           placeholder="Confirmar contraseña" />
-        <div  onClick={(e) => handleConfirmShowPass(e)}>
+        <div onClick={(e) => handleConfirmShowPass(e)}>
           {confirmShowPwd ?
             <i className="material-icons" >visibility</i> :
             <i className="material-icons" >visibility_off</i>
@@ -203,15 +134,10 @@ export default function FormProfession() {
       </Form.Group>
       {errors.password && <span className="errors">{errors.password}</span>}
 
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Acepto términos y condiciones" />
-      </Form.Group>
-
       <Button variant="primary" type="submit">
         Registrame
       </Button>
 
     </Form >
   );
-}
-
+} 
