@@ -2,13 +2,13 @@ import React from 'react';
 import { useAuth } from '../Context/AuthContext';
 
 function CredentialBar(props) {
-    const { user, logout } = useAuth()
+    const { usersimple, logout } = useAuth()
     return (
         <div>
-            {user
+            {usersimple
                 ? <div>Usuario Logeado <button onClick={logout}>LogOut</button></div>
                 : <div>No Logeado</div>}
-            {console.log(user)}
+            {console.log(usersimple)}
             this is a credentialbar
         </div>
     );
