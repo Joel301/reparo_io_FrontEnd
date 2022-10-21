@@ -7,6 +7,7 @@ import RutaProtegitaCliente from "./ComponentesAuth/RutaProtegitaCliente";
 import RutaProtegitaProfesional from "./ComponentesAuth/RutaProtegitaProfesional";
 import Rutas from "./ComponentesAuth/Rutas";
 import Login from "./ComponentesAuth/Login";
+import Register from "./ComponentesAuth/Register";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/cliente" element={<RutaProtegitaCliente />} />
             <Route path="/profesional" element={<RutaProtegitaProfesional />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
         </Routes>
     );
 }
