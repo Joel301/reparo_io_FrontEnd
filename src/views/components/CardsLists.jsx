@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Container, Row, Col, Dropdown, Alert } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import {  useState } from 'react'
-import {  orderByName , getOrderReputation, filterByProfession, getAllProfessionals } from '../../state/ducks/professionals/actions';
+import {  orderByName , getOrderReputation,filterByReputation , filterByProfession, getAllProfessionals } from '../../state/ducks/professionals/actions';
 
 //Componentes
 import CardFormat from './CardFormat'
@@ -15,12 +15,22 @@ function CardsList() {
   const profesionales = useSelector((state) => (state.professionals.professionalsFiltered))
   
   const professions = useSelector((state)=>(state.professionals.professions))
+
+  const reputacion = useSelector((state) => (state.professionals.reputacion))
+
+  // const [profesionalesRevies, setProfesionalesRevies] = useState([])
   
   const dispatch = useDispatch(); 
 
   const [orden, setOrden] = useState('')
 
   const [currentPage, setCurrentPage] = useState(1);
+
+  const reputations = [{id:"1", name:"★"},
+                      {id:"2", name:"★★"},
+                      {id:"3", name:"★★★"}, 
+                      {id:"4", name:"★★★★"}, 
+                      {id:"5", name:"★★★★★"}]
    
   const professionalsPerPage = 8;
     
@@ -28,7 +38,7 @@ function CardsList() {
     
   const indexOfFirstProfessional = indexOfLastProfessional - professionalsPerPage;
    
-  const currentProfessionals = profesionales.slice(indexOfFirstProfessional , indexOfLastProfessional)
+  let currentProfessionals = profesionales.slice(indexOfFirstProfessional , indexOfLastProfessional)
    
 
   const professionFilterHandleOnChange = (e) => {
@@ -37,6 +47,14 @@ function CardsList() {
    dispatch(filterByProfession(e.target.innerText))
   }
     
+  const reputationFilterHandleOnChange = (repId) => {
+    console.log(repId, "repId filter") // "1", "2", "3"
+
+    setCurrentPage(1)
+    // setProfesionalesRevies(profesionales)
+ 
+    dispatch(filterByReputation(repId))
+   }
 
   const paginado = (pageNum) => {
       setCurrentPage(pageNum)
@@ -59,21 +77,39 @@ function CardsList() {
   return (
     <Container style={{width:'100%', justifyContent: "center", display: "flex", flexDirection: "column",height:'max-content'}}>
        <Container expand='md'style={{display:'flex',alignItems:'end'}}>
+
+        {/* Dropdown Reputacion */}
+        <Dropdown style={{height:'2.5rem'}} >
+          <Dropdown.Toggle variant="success" id="dropdown-basic2">
+            Reputacion
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={e => reputationFilterHandleOnChange("Todas")}>Todas</Dropdown.Item>
+            {
+              reputations.map((rep) => {
+                return (<Dropdown.Item onClick={e => reputationFilterHandleOnChange(rep.id)}>{rep.name}</Dropdown.Item>)
+              })
+            }
+          </Dropdown.Menu>
+        </Dropdown>
         
         <Dropdown style={{height:'2.5rem'}} >
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Profesion
-        </Dropdown.Toggle>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            Profesion
+          </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={e => professionFilterHandleOnChange(e)}>All</Dropdown.Item>
-          {
-            professions.map((prof)=>{
-              return (<Dropdown.Item onClick={e => professionFilterHandleOnChange(e)}>{prof.name}</Dropdown.Item>)
-            })
-          }
-        </Dropdown.Menu>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={e => professionFilterHandleOnChange(e)}>All</Dropdown.Item>
+            {
+              professions.map((prof)=>{
+                return (<Dropdown.Item onClick={e => professionFilterHandleOnChange(e)}>{prof.name}</Dropdown.Item>)
+              })
+            }
+          </Dropdown.Menu>
         </Dropdown>
+        
+        
 
         <Dropdown style={{height:'2.5rem'}}>
           <Dropdown.Toggle>
