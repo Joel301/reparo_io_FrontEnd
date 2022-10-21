@@ -1,17 +1,16 @@
-import { createReducer } from "@reduxjs/toolkit";
-import { getClient } from "./actions";
-
 const initialState = {
   clients: [],
   client: [],
 };
 
-const clientReducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(getClient.type, (state, action) => {
-      return state.client.splice(0, state.client.length, action.payload);
-    })
-    .addDefaultCase(null);
-});
+const clientReducer = (state = initialState , action) => {
+  switch (state) {
+  
+  
+    default:
+      return state;
+  }
+ 
+}
 
-export default clientReducer;
+export default clientReducer; 
