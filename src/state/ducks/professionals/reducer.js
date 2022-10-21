@@ -52,7 +52,7 @@ return{...state,
           professionalsFiltered: state.allProfessionals
         }
       } else { 
-        let filtrados = state.allProfessionals.map(profe => {
+        state.allProfessionals.map(profe => {
 
           if(profe.review > parseInt(action.payload) || profe.review === parseInt(action.payload)) {
             arrayFiltrados.push(profe)

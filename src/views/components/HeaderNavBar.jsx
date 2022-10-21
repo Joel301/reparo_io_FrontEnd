@@ -24,6 +24,9 @@ function HeaderNavBar() {
         <Link to="/">
           <Navbar.Brand>Reparo.io</Navbar.Brand>
         </Link>
+        <Link to="/home">
+          <Navbar.Brand>Home</Navbar.Brand>
+        </Link>
         <Navbar.Toggle />
         <Navbar.Collapse >
           <Nav className="ms-auto">

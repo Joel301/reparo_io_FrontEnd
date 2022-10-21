@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Container, Row, Col, Dropdown, Alert } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import {  useState } from 'react'
-import {  orderByName , getOrderReputation,filterByReputation , filterByProfession, getAllProfessionals } from '../../state/ducks/professionals/actions';
+import {  orderByName , getOrderReputation,filterByReputation , filterByProfession } from '../../state/ducks/professionals/actions';
 
 //Componentes
 import CardFormat from './CardFormat'
@@ -15,10 +15,6 @@ function CardsList() {
   const profesionales = useSelector((state) => (state.professionals.professionalsFiltered))
   
   const professions = useSelector((state)=>(state.professionals.professions))
-
-  const reputacion = useSelector((state) => (state.professionals.reputacion))
-
-  // const [profesionalesRevies, setProfesionalesRevies] = useState([])
   
   const dispatch = useDispatch(); 
 
@@ -48,16 +44,14 @@ function CardsList() {
   }
     
   const reputationFilterHandleOnChange = (repId) => {
-    console.log(repId, "repId filter") // "1", "2", "3"
 
     setCurrentPage(1)
-    // setProfesionalesRevies(profesionales)
  
     dispatch(filterByReputation(repId))
-   }
+  }
 
   const paginado = (pageNum) => {
-      setCurrentPage(pageNum)
+    setCurrentPage(pageNum)
   }
 
   function handleOrderByName(e){
@@ -93,7 +87,8 @@ function CardsList() {
             }
           </Dropdown.Menu>
         </Dropdown>
-        
+
+        {/* Dropdown Profesion */}
         <Dropdown style={{height:'2.5rem'}} >
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             Profesion
