@@ -26,11 +26,11 @@ export default function Professions () {
   }, [dispatch]);
 
     return (
-        <>
+        <div style={{marginTop:"2rem"}}>
 
             {/* Titulo componente profesiones  */}
-            <div style={{marginTop: "70px", fontWeight: "bolder" }}>
-                <h3>
+            <div style={{marginTop: "70px", fontWeight: "bolder",display:'flex',justifyContent:'center' }}>
+                <h3 style={{backgroundColor: "black",borderRadius:"0.6rem",color:'whitesmoke',width:'20rem',paddingBottom:'2px'}}>
                 Elige una profesion:
                 </h3>
             </div>
@@ -40,30 +40,32 @@ export default function Professions () {
 
                 <Row 
                     xs={1} 
-                    md={4} 
+                    md={3}
+                    lg={4}
                     className="g-4"
-                    style={{margin: "90px"}}>
+                   
+                    >
                 {
                     professions.map((prof) => (
-                        <Col>
-                            <Card>
-                                <Link to='/home'>
+                        <Col classname='g-1'>
+                            
+                                <Link style={{}} to= {`/home/${prof.name}`}>
                                   <Button 
                                     value={prof.name[0].toUpperCase() + prof.name.slice(1)} 
                                     variant="primary" 
-                                    style={{width: "100%"}}
-                                    onClick={(e)=>{dispatch(filterByProfession(e.target.value))}}>
+                                    style={{width: "10rem",height:'10rem'}}
+                                    onClick={(e)=>{dispatch(filterByProfession([e.target.value]))}}>
 
                                         {prof.name[0].toUpperCase() + prof.name.slice(1)}
 
                                   </Button> 
                                 </Link>
-                            </Card>
+                            
                         </Col>
                     ))
                 }
-                    <Col>
-                        <Card>
+                    
+                        
                             <Link to='/home'>
                                 <Button 
                                     variant="primary" 
@@ -74,10 +76,10 @@ export default function Professions () {
 
                                 </Button>
                             </Link>
-                        </Card>
-                    </Col>
+                        
+                    
                 </Row>
             </div>
-         </>
+         </div>
     )
 }
