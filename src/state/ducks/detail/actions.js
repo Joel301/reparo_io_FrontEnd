@@ -10,6 +10,7 @@ export function getDetail(id) {
                 type: 'GET_DETAIL',
                 payload: detalle.data
             })
+            
         } catch (error) {
             console.log(error)
         }

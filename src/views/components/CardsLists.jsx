@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import {
   Container,
@@ -9,6 +10,12 @@ import {
   Button,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import React from 'react'
+import { Container, Row, Col, Dropdown, Alert } from 'react-bootstrap'
+import { useSelector, useDispatch } from 'react-redux'
+import {  useState } from 'react'
+import {  orderByName , getOrderReputation,filterByReputation , filterByProfession } from '../../state/ducks/professionals/actions';
+
 
 import {
   orderByName,
@@ -37,21 +44,27 @@ function CardsList() {
 
   const [currentPage, setCurrentPage] = useState(1);
 
+
   const [filterByProf, setFilterByProf] = useState([]);
 
     const navigate = useNavigate()
 
+  const reputations = [{id:"1", name:"★"},
+                      {id:"2", name:"★★"},
+                      {id:"3", name:"★★★"}, 
+                      {id:"4", name:"★★★★"}, 
+                      {id:"5", name:"★★★★★"}]
+   
+
   const professionalsPerPage = 8;
 
   const indexOfLastProfessional = currentPage * professionalsPerPage;
+    
+  const indexOfFirstProfessional = indexOfLastProfessional - professionalsPerPage;
+   
+  let currentProfessionals = profesionales.slice(indexOfFirstProfessional , indexOfLastProfessional)
 
-  const indexOfFirstProfessional =
-    indexOfLastProfessional - professionalsPerPage;
-
-  const currentProfessionals = profesionales.slice(
-    indexOfFirstProfessional,
-    indexOfLastProfessional
-  );
+  
   function shouldRender() {
     if (
       currentProfessionals.length === 0 ||
@@ -84,18 +97,21 @@ function CardsList() {
       setFilterByProf([...filterByProf, e.target.innerText]);
     }
     
-    
+  const reputationFilterHandleOnChange = (repId) => {
 
-
-  };
+    setCurrentPage(1)
+ 
+    dispatch(filterByReputation(repId))
+    };
 
   const deleteFilter = (prof) => {
     let arr = filterByProf.filter((e) => e !== prof);
     setFilterByProf(arr);
   };
   const paginado = (pageNum) => {
-    setCurrentPage(pageNum);
-  };
+    setCurrentPage(pageNum)
+  }
+
 
   function handleOrderByName(e) {
     e.preventDefault();
@@ -121,6 +137,7 @@ function CardsList() {
   }, [filterByProf]);
  
   return (
+
     <Container
       style={{
         width: "100%",
@@ -132,12 +149,31 @@ function CardsList() {
       }}
     >
       <Container expand="md" style={{ display: "flex", alignItems: "end" }}>
-        <Dropdown style={{ height: "2.5rem" }}>
+         {/* Dropdown Reputacion */}
+        <Dropdown style={{height:'2.5rem'}} >
+          <Dropdown.Toggle variant="success" id="dropdown-basic2">
+            Reputacion
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={e => reputationFilterHandleOnChange("Todas")}>Todas</Dropdown.Item>
+            {
+              reputations.map((rep) => {
+                return (<Dropdown.Item onClick={e => reputationFilterHandleOnChange(rep.id)}>{rep.name}</Dropdown.Item>)
+              })
+            }
+          </Dropdown.Menu>
+        </Dropdown>
+
+        {/* Dropdown Profesion */}
+        <Dropdown style={{height:'2.5rem'}} >
+
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             Profesion
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
+
             <Dropdown.Item onClick={(e) => professionFilterHandleOnChange(e)}>
               All
             </Dropdown.Item>
@@ -153,6 +189,8 @@ function CardsList() {
             })}
           </Dropdown.Menu>
         </Dropdown>
+        
+        
 
         <Dropdown style={{ height: "2.5rem" }}>
           <Dropdown.Toggle>Orden por Nombre</Dropdown.Toggle>

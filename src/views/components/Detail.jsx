@@ -38,11 +38,11 @@ export default function Detail () {
             detalle ?
            
                 <Card style={{ width: '80%', marginLeft: "10%", fontWeight: "500", marginTop: "2.5%", marginBottom: "10%"}}>
-                    <Card.Img variant="top" src={detalle.profileImg} style={{marginTop: "2.5%", marginLeft: "2.5%" ,maxWidth: "300px", borderRadius: "50%", minHeight: "300px" , maxHeight: "300px", border: "1px solid grey"}} />
+                    <Card.Img variant="top" src={detalle.profileImg} style={{marginTop: "2.5%", marginLeft: "2.5%" ,maxWidth: "250px", borderRadius: "30%", minHeight: "200px" , maxHeight: "200px", border: "1px solid grey"}} />
                     <Card.Body style={{justifyContent: "center"}}>
                         
                         <Card.Title style={{textTransform: "uppercase", justifyContent: "center", display: "flex "}}>
-                            <Badge bg="primary" style={{ width: "30%", fontSize: "30px"}}>{detalle.lastName} {detalle.firstName}</Badge>
+                            <Badge bg="primary" style={{ width: "30%", fontSize: "30px"}}> {detalle.firstName} {detalle.lastName}</Badge>
                             
                         </Card.Title>
 
