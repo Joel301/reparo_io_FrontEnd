@@ -10,17 +10,12 @@ import {
   Button,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import React from 'react'
-import { Container, Row, Col, Dropdown, Alert } from 'react-bootstrap'
-import { useSelector, useDispatch } from 'react-redux'
-import {  useState } from 'react'
-import {  orderByName , getOrderReputation,filterByReputation , filterByProfession } from '../../state/ducks/professionals/actions';
-
 
 import {
   orderByName,
   getOrderReputation,
   filterByProfession,
+  filterByReputation,
   getAllProfessionals,
 } from "../../state/ducks/professionals/actions";
 
@@ -96,7 +91,7 @@ function CardsList() {
     if (!filterByProf.includes(e.target.innerText)) {
       setFilterByProf([...filterByProf, e.target.innerText]);
     }
-    
+  }
   const reputationFilterHandleOnChange = (repId) => {
 
     setCurrentPage(1)
