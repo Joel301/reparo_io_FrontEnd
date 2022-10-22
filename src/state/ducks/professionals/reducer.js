@@ -25,29 +25,29 @@ function rootReducer(state = initialState, action) {
 
  if(action.payload.length!==0&&action.payload[0]!== undefined){  //['albanil','herrero']
   let filtered
-  action.payload.forEach((e)=>e.toLowerCase())
-  console.log(action.payload);
-  for (let i = 0; i < action.payload.length; i++) {
+  let payloadToLower = action.payload.map((e)=>e.toLowerCase())
+ 
+  for (let i = 0; i < payloadToLower.length; i++) {
     if(i===0){ 
       
      filtered = state.allProfessionals.filter((profesional) => {
         return profesional.professions
           .map((e) =>{ 
             return e.name})
-          .includes(action.payload[i]);
+          .includes(payloadToLower[i]);
       })
-      console.log(filtered);
+     
      
     }else{
         filtered = filtered.filter((profesional) => {
           return profesional.professions
             .map((e) => e.name)
-            .includes(action.payload[i]);
+            .includes(payloadToLower[i]);
       })
   }}
      
 /*   console.log(filtered) */
-     
+    
       
       return {
         ...state,

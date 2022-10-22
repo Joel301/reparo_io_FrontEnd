@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getAllProfessions());
-    dispatch(getAllProfessionals())
+   
   }, [dispatch]);
 
   return <CardsList />;
