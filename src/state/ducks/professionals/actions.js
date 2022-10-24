@@ -1,20 +1,20 @@
 import axios from "axios";
 
 
-export function filterByProfession(payload){
-    console.log(payload);
+export function filterByProfession(payload) {
+    // console.log(payload);
     return {
-        type:'FILTER_BY_PROFESSION',
+        type: 'FILTER_BY_PROFESSION',
         payload
     }
-} 
+}
 
-export function filterByReputation(payload){
+export function filterByReputation(payload) {
     return {
         type: 'FILTER_BY_REPUTATION',
         payload
     }
-} 
+}
 
 
 export function getAllProfessionals() {
@@ -69,10 +69,13 @@ export function getAllProfessions() {
     }
 }
 
-export function postProfessionals(payload){
-    return async function(dispatch){
+export function postProfessionals(payload) {
+    const POSTURL = "/home/test"
+    // const POSTURL = "/home/professionals"
+    return async function (dispatch) {
         try {
-            const postProfessionals = await axios.post('/home/professionals', payload)
+            const postProfessionals = await axios.post(
+                POSTURL, payload)
             return dispatch({
                 type: 'POST_PROFESSIONAL',
                 postProfessionals

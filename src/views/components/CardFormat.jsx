@@ -5,7 +5,7 @@ import { Card, Button } from "react-bootstrap";
 
 function CardFormat({ worker }) {
   let profToString = worker.professions?.map((e) => e.name);
-  console.log(worker);
+  // console.log(worker);
   return (
     <Card bg="light" style={{ width: "18rem", height: "22rem" }}>
       <Card.Img

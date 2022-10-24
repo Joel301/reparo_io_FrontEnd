@@ -16,7 +16,7 @@ function HeaderNavBar() {
 
   const handleShow = (e) => {
 
-    console.log(e.target.textContent);
+    // console.log(e.target.textContent);
     if (e.target.textContent === "Cliente") setshowFormClient(true)
     if (e.target.textContent === "Profesional") setshowFormprof(true)
   }

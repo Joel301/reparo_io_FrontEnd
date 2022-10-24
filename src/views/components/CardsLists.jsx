@@ -128,7 +128,7 @@ function CardsList() {
     
     dispatch(filterByProfession(filterByProf));
 
-    console.log(filterByProf);
+    // console.log(filterByProf);
   }, [filterByProf]);
  
   return (

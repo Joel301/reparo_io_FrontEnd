@@ -52,7 +52,7 @@ export default function FormClient() {
     const currentError = validateFormClient(input)
     setErrors(currentError)
 
-    console.log(input)
+    // console.log(input)
   }
 
   return (
