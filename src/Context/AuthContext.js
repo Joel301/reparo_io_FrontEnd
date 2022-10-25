@@ -61,6 +61,8 @@ export function AuthProvider({ children }) {
                     (response) => setUsersimple({ ...response.data })
                 )
 
+            } else {
+                setUsersimple(currentUser)
             }
             setLoading(false);
         });

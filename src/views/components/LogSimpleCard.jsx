@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 
 
 function LogSimpleCard(props) {
-    const { usersimple, logout } = useAuth()
+    const { user, usersimple, logout } = useAuth()
     const navigate = useNavigate()
 
     const handleLogout = (e) => {
@@ -12,9 +12,10 @@ function LogSimpleCard(props) {
         logout()
         navigate('/')
     }
+    useEffect(() => { }, [user])
 
     return (
-        usersimple && <div>
+        usersimple && usersimple.email && <div>
             {console.log(usersimple)}
             soy una simple carta de logeo mi email es {usersimple.email}
             <button onClick={handleLogout}>Cerrar Sesion</button>

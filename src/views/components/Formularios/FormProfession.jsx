@@ -16,7 +16,7 @@ export default function FormProfession() {
   const profesiones = useSelector(state => state.professionals.professions)
 
   // auth hooks 
-  const { signup, usersimple, loading } = useAuth()
+  const { signup, user, usersimple, loading, loginWithGoogle } = useAuth()
 
   //referencia de información del input para el post:
   const nameRef = useRef('')
@@ -86,30 +86,46 @@ export default function FormProfession() {
       alert('Verifique que todos los campos esten diligenciados')
       return
     }
-    // aqui se da de alta en firebase
-    signup(input.email, input.password)
-      // .then(r => r)
-      .then((r) => {
-        const { email, uid } = r.user
-        console.log(r)
-        dispatch(postProfessionals({ ...input, email, authid: uid }))
-        // console.log(usersimple, loading)
-      }
-      ).catch(error => {
-        //aqui se pueden manejar los errores de auth con correo y usuario, 
-        if (error.code === "auth/email-already-in-use") { console.log("correo en uso") }
-        else { console.log(error) }
-      })
+
+    if (user.email && !usersimple.email) {
+      // aqui se da de alta en firebase
+      const { email, uid } = user
+      console.log(user)
+      dispatch(postProfessionals({ ...input, email, authid: uid }))
+      navigate('/')
+    } else {
+      signup(input.email, input.password)
+        // .then(r => r)
+        .then((r) => {
+          const { email, uid } = r.user
+          console.log(r)
+          dispatch(postProfessionals({ ...input, email, authid: uid }))
+          navigate('/')
+          // esto de abajo esta bueno pero no puede ser un mensaje que no sea alert?
+          // alert('Tu perfil ha sido creado')
+        }
+        ).catch(error => {
+          //aqui se pueden manejar los errores de auth con correo y usuario, 
+          if (error.code === "auth/email-already-in-use") { console.log("correo en uso") }
+          else { console.log(error) }
+        })
+
+    }
 
     //auth
 
     // dispatch(postProfessionals(input))
 
-    // alert('Tu perfil ha sido creado')
     // navigate('/Home')
 
   }
 
+  function logwithgoogle(e) {
+    e.preventDefault()
+    loginWithGoogle().then(() => {
+      emailRef.current = `${user.email}`
+    }).catch(error => { console.log(error) })
+  }
 
   // se renderiza componente
   return (
@@ -122,6 +138,50 @@ export default function FormProfession() {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
+      {/* #########logwithfirebasezone######### */}
+      {/* esta parte me falta:
+      -que cuando user.email exista y usersimple.email no exista:
+      ----desactive los campos de email y ambos passwords
+      ----el valor de email sea el de user.email
+      ----los campos de contraseña no importen tal vez muestre "****"
+
+      tal vez que lo invite a continuar con sus datos o que cancele el logeo con google? no se no dormi bien.
+       */}
+      <Button onClick={logwithgoogle}>boton feo para google 🤣</Button>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Control
+          ref={emailRef}
+          type="email"
+          placeholder="nombre@example.com" />
+      </Form.Group>
+      {errors.email && <span className="errors">{errors.email}</span>}
+      <Form.Group className="mb-2" controlId="formBasicPassword">
+        <Form.Control
+          ref={passwordRef}
+          type={showPwd ? "text" : "password"}
+          placeholder="Crear Contraseña" />
+        <i onClick={(e) => handleShowPass(e)}>
+          {showPwd ?
+            <i className="material-icons" >visibility</i> :
+            <i className="material-icons" >visibility_off</i>
+          }
+        </i>
+      </Form.Group>
+      {errors.password && <span className="errors">{errors.password}</span>}
+      <Form.Group className="mb-2" controlId="formBasicPassword_confirm">
+        <Form.Control
+          ref={confirmPasswordRef}
+          type={confirmShowPwd ? "text" : "password"}
+          placeholder="Confirmar contraseña" />
+        <div onClick={(e) => handleConfirmShowPass(e)}>
+          {confirmShowPwd ?
+            <i className="material-icons" >visibility</i> :
+            <i className="material-icons" >visibility_off</i>
+          }
+        </div>
+      </Form.Group>
+      {errors.password && <span className="errors">{errors.password}</span>}
+      {/* #########logwithfirebasezone######### */}
       <Form.Group className="mb-3 " >
         <Form.Control
           ref={nameRef}
@@ -157,13 +217,6 @@ export default function FormProfession() {
           placeholder="imagen" />
       </Form.Group>
       {errors.profileImg && <span className="errors">{errors.profileImg}</span>}
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Control
-          ref={emailRef}
-          type="email"
-          placeholder="nombre@example.com" />
-      </Form.Group>
-      {errors.email && <span className="errors">{errors.email}</span>}
       <Form.Group
         className="mb-3"
         controlId="exampleForm.ControlTextarea1">
@@ -192,32 +245,7 @@ export default function FormProfession() {
         </Form.Check>
       </Form.Group>
       {errors.professions && <span className="errors">{errors.professions}</span>}
-      <Form.Group className="mb-2" controlId="formBasicPassword">
-        <Form.Control
-          ref={passwordRef}
-          type={showPwd ? "text" : "password"}
-          placeholder="Crear Contraseña" />
-        <i onClick={(e) => handleShowPass(e)}>
-          {showPwd ?
-            <i className="material-icons" >visibility</i> :
-            <i className="material-icons" >visibility_off</i>
-          }
-        </i>
-      </Form.Group>
-      {errors.password && <span className="errors">{errors.password}</span>}
-      <Form.Group className="mb-2" controlId="formBasicPassword_confirm">
-        <Form.Control
-          ref={confirmPasswordRef}
-          type={confirmShowPwd ? "text" : "password"}
-          placeholder="Confirmar contraseña" />
-        <div onClick={(e) => handleConfirmShowPass(e)}>
-          {confirmShowPwd ?
-            <i className="material-icons" >visibility</i> :
-            <i className="material-icons" >visibility_off</i>
-          }
-        </div>
-      </Form.Group>
-      {errors.password && <span className="errors">{errors.password}</span>}
+
 
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Acepto términos y condiciones" />
