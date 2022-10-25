@@ -10,11 +10,8 @@ import {
   Button,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import React from 'react'
-import { Container, Row, Col, Dropdown, Alert } from 'react-bootstrap'
-import { useSelector, useDispatch } from 'react-redux'
-import {  useState } from 'react'
-import {  orderByName , getOrderReputation,filterByReputation , filterByProfession } from '../../state/ducks/professionals/actions';
+
+
 
 
 import {
@@ -22,6 +19,7 @@ import {
   getOrderReputation,
   filterByProfession,
   getAllProfessionals,
+  filterByReputation
 } from "../../state/ducks/professionals/actions";
 
 //Componentes
@@ -95,7 +93,7 @@ function CardsList() {
     }
     if (!filterByProf.includes(e.target.innerText)) {
       setFilterByProf([...filterByProf, e.target.innerText]);
-    }
+    }}
     
   const reputationFilterHandleOnChange = (repId) => {
 
@@ -127,7 +125,7 @@ function CardsList() {
   }
 
   useEffect(() => {
-    if (firstRender) {
+    if (firstRender && prof) {
       setFilterByProf([prof]);
     }
     
@@ -148,9 +146,9 @@ function CardsList() {
         alignItems: "center",
       }}
     >
-      <Container expand="md" style={{ display: "flex", alignItems: "end" }}>
+      <Container expand="md" style={{ display: "flex",justifyContent:'space-around', alignItems: "center",padding:'2rem' }}>
          {/* Dropdown Reputacion */}
-        <Dropdown style={{height:'2.5rem'}} >
+        <Dropdown style={{ display:'flex',height:'2.5rem'}} >
           <Dropdown.Toggle variant="success" id="dropdown-basic2">
             Reputacion
           </Dropdown.Toggle>

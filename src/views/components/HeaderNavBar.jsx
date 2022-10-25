@@ -1,19 +1,18 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useState } from "react"
-import { Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap"
+import { Button,Badge, Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap"
 import FormProfession from "./Formularios/FormProfession"
 import FormClient from "./Formularios/FormClient"
 import { Link } from "react-router-dom"
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logoReparoio from "../pages/imgs/logo-reparoio.png"
-
-
-
+import { useDispatch,useSelector } from "react-redux"
+import { getAllProfessionals } from "../../state/ducks/professionals/actions"
 function HeaderNavBar() {
-
+  const dispatch = useDispatch()
   const [showFormprof, setshowFormprof] = useState(false)
   const [showFormClient, setshowFormClient] = useState(false)
-
+  const profesionales = useSelector((state)=> state.professionals.allProfessionals)
   const handleShow = (e) => {
 
     console.log(e.target.textContent);
@@ -25,6 +24,12 @@ function HeaderNavBar() {
     setshowFormClient(false)
     setshowFormprof(false)
   }
+  useEffect(()=>{
+    console.log(profesionales.length)
+    if(profesionales[0]=== undefined){
+      dispatch(getAllProfessionals())
+    }
+  },[])
 
   return (
     /////// esto es con react-bootstrap
@@ -49,7 +54,7 @@ function HeaderNavBar() {
         </Container>
         <Navbar.Toggle />
         <Navbar.Collapse >
-          <Nav className="ms-auto">
+          <Nav className="ms-auto" style={{display:'flex',justifyContent:'space-around'}}>
             <NavDropdown title="Login" id="login-nav-dropdown">
               <NavDropdown.Item disabled href="#login/client">
                 Cliente
@@ -57,7 +62,7 @@ function HeaderNavBar() {
               <NavDropdown.Divider />
               <NavDropdown.Item >
                 Profesional
-              </NavDropdown.Item>
+              </NavDropdown.Item > 
             </NavDropdown>
             <NavDropdown title="Regístrate" id="signin-nav-dropdown">
               <NavDropdown.Item defaultValue='cliente' onClick={handleShow}>
@@ -68,6 +73,10 @@ function HeaderNavBar() {
                 Profesional
               </NavDropdown.Item>
             </NavDropdown>
+            <Link to='/cart'>
+            <Button  style={{display:'flex',height:'2rem',alignItems:'center'}}>
+             <ShoppingCartIcon/><Badge  bg='danger'>5</Badge>
+            </Button></Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

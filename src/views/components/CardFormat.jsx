@@ -8,10 +8,12 @@ function CardFormat({ worker }) {
   console.log(worker);
   return (
     <Card bg="light" style={{ width: "18rem", height: "22rem" }}>
-      <Card.Img
+      <div
         variant="top"
-        src={worker.profileImg}
-        style={{ maxHeight: "10rem" }}
+        
+        style={{ height: "10rem",width:'16.5rem',backgroundImage:`url(${worker.profileImg})`,  backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",borderRadius:'0.5rem',
+        backgroundPosition: "center"}}
       />
       <Card.Body>
         <Card.Title>{`${worker.firstName} ${worker.lastName}`}</Card.Title>
@@ -22,7 +24,7 @@ function CardFormat({ worker }) {
       <Card.Footer
         style={{ display: "flex", gap: "2rem", justifyContent: "center" }}
       >
-        <Button>Reservan</Button>
+        <Button >Reservar</Button>
         <Link to={`/detail/${worker.id}`}>
           <Button bg="primary">Ver Mas...</Button>
         </Link>
