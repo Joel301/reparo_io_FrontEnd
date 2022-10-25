@@ -1,5 +1,7 @@
 import axios from "axios";
 
+//authentincation :P
+
 
 export function filterByProfession(payload) {
     // console.log(payload);
@@ -21,8 +23,6 @@ export function getAllProfessionals() {
     return async function (dispatch) {
         try {
             const getAll = await axios.get('/home/professionals')
-
-
             return dispatch({
                 type: 'GET_ALL_PROFESSIONALS',
                 payload: getAll.data
@@ -70,12 +70,13 @@ export function getAllProfessions() {
 }
 
 export function postProfessionals(payload) {
-    const POSTURL = "/home/test"
+    const POSTURL = "http://localhost:3001/home/test"
     // const POSTURL = "/home/professionals"
+    console.log(payload)
     return async function (dispatch) {
         try {
             const postProfessionals = await axios.post(
-                POSTURL, payload)
+                POSTURL, { ...payload, isProfessional: true })
             return dispatch({
                 type: 'POST_PROFESSIONAL',
                 postProfessionals

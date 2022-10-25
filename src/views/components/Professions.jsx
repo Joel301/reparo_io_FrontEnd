@@ -47,7 +47,7 @@ export default function Professions () {
                     >
                 {
                     professions.map((prof) => (
-                        <Col classname='g-1'>
+                        <Col className='g-1' key={`listado_de_profesiones_${prof.name}`}>
                             
                                 <Link style={{}} to= {`/home/${prof.name}`}>
                                   <Button 

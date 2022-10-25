@@ -6,6 +6,7 @@ import FormClient from "./Formularios/FormClient"
 import { Link } from "react-router-dom"
 
 import logoReparoio from "../pages/imgs/logo-reparoio.png"
+import LogSimpleCard from "./LogSimpleCard"
 
 
 
@@ -38,7 +39,7 @@ function HeaderNavBar() {
         <Container>
           <Link to="/">
             <img
-            style={{width: "5%"}}
+              style={{ width: "5%" }}
               src={logoReparoio}
             />
             <Navbar.Brand>Reparo.io</Navbar.Brand>
@@ -46,6 +47,7 @@ function HeaderNavBar() {
           <Link to="/home">
             <Navbar.Brand>Home</Navbar.Brand>
           </Link>
+          <LogSimpleCard />
         </Container>
         <Navbar.Toggle />
         <Navbar.Collapse >
