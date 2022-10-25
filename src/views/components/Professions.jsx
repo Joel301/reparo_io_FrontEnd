@@ -69,7 +69,7 @@ export default function Professions () {
                             <Link to='/home'>
                                 <Button 
                                     variant="primary" 
-                                    style={{width: "100%"}}
+                                    style={{width: "10rem",height:'10rem'}}
                                     onClick={(e)=>{ dispatch(filterByProfession('all')) }} >
 
                                     <Card.Title>Todas las profesiones</Card.Title>

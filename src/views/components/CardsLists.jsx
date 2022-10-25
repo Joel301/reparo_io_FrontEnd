@@ -11,13 +11,11 @@ import {
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 
-
-
-
 import {
   orderByName,
   getOrderReputation,
   filterByProfession,
+  filterByReputation,
   getAllProfessionals,
   filterByReputation
 } from "../../state/ducks/professionals/actions";
@@ -93,8 +91,10 @@ function CardsList() {
     }
     if (!filterByProf.includes(e.target.innerText)) {
       setFilterByProf([...filterByProf, e.target.innerText]);
-    }}
-    
+
+    }
+  }
+
   const reputationFilterHandleOnChange = (repId) => {
 
     setCurrentPage(1)
