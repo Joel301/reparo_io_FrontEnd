@@ -11,7 +11,7 @@ import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {store} from "./state/store"
-axios.defaults.baseURL = "https://reparoiobackend-production.up.railway.app" || "http://localhost:3001/"
+axios.defaults.baseURL = "https://reparoiobackend-main.up.railway.app" || "http://localhost:3001/"
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
