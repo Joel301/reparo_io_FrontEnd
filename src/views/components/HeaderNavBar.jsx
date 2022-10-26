@@ -8,10 +8,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logoReparoio from "../pages/imgs/logo-reparoio.png"
 import { useDispatch,useSelector } from "react-redux"
 import { getAllProfessionals } from "../../state/ducks/professionals/actions"
+import CartOffCanvas from "./CartOffCanvas"
 function HeaderNavBar() {
   const dispatch = useDispatch()
   const [showFormprof, setshowFormprof] = useState(false)
   const [showFormClient, setshowFormClient] = useState(false)
+  
   const profesionales = useSelector((state)=> state.professionals.allProfessionals)
   const handleShow = (e) => {
 
@@ -23,6 +25,7 @@ function HeaderNavBar() {
   const handleClose = () => {
     setshowFormClient(false)
     setshowFormprof(false)
+ 
   }
   useEffect(()=>{
     console.log(profesionales.length)
@@ -96,6 +99,7 @@ function HeaderNavBar() {
           <FormClient />
         </Offcanvas.Body>
       </Offcanvas>
+      
     </Navbar>
   );
 }
