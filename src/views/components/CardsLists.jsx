@@ -16,9 +16,7 @@ import {
   getOrderReputation,
   filterByProfession,
   filterByReputation,
-  getAllProfessionals,
-  filterByReputation,
- 
+  getAllProfessionals, 
 } from "../../state/ducks/professionals/actions";
 
 //Componentes
