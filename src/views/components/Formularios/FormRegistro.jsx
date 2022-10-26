@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { postProfessionals } from "../../../state/ducks/professionals/actions";
+import { postlClient, postProfessionals } from "../../../state/ducks/professionals/actions";
 import { validateFormProfessional, validateFormClient } from "./validation.js";
 import './estilos.css'
 import { useAuth } from "../../../Context/AuthContext"
@@ -101,7 +101,9 @@ export default function FormRegistro({ isClient = false }) {
             // aqui se da de alta en firebase
             const { email, uid } = user
             // console.log(user)
-            dispatch(postProfessionals({ ...input, email, authid: uid }))
+            isclient
+                ? dispatch(postlClient({ ...input, email, authid: uid }))
+                : dispatch(postProfessionals({ ...input, email, authid: uid }))
             navigate('/')
         } else {
             signup(input.email, input.password)
@@ -109,7 +111,9 @@ export default function FormRegistro({ isClient = false }) {
                 .then((r) => {
                     const { email, uid } = r.user
                     console.log(r)
-                    dispatch(postProfessionals({ ...input, email, authid: uid }))
+                    isclient
+                        ? dispatch(postlClient({ ...input, email, authid: uid }))
+                        : dispatch(postProfessionals({ ...input, email, authid: uid }))
                     navigate('/')
                     // esto de abajo esta bueno pero no puede ser un mensaje que no sea alert?
                     // alert('Tu perfil ha sido creado')
