@@ -4,7 +4,7 @@
     padding-top: 0px;
 }
 
-.dropdown {
+/* .dropdown {
     display: flex;
     margin-bottom: 0px;
     padding-bottom: 0px;
@@ -13,7 +13,6 @@
     gap: 60rem;
     /* justify-content: space-between; */
     /* margin-right: 200px; */
-}
 
 .imgCarrito {
     width: 50px;

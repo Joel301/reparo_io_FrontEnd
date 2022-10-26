@@ -16,14 +16,15 @@ import {
   getOrderReputation,
   filterByProfession,
   filterByReputation,
-  getAllProfessionals,
+  getAllProfessionals
+
 } from "../../state/ducks/professionals/actions";
 
 //Componentes
 import CardFormat from "./CardFormat";
 import SearchBar from "./SearchBar";
 import Paginado from "./Paginado";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function CardsList() {
   const { prof } = useParams();
@@ -42,24 +43,24 @@ function CardsList() {
 
   const [filterByProf, setFilterByProf] = useState([]);
 
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
-  const reputations = [{id:"1", name:"★"},
-                      {id:"2", name:"★★"},
-                      {id:"3", name:"★★★"}, 
-                      {id:"4", name:"★★★★"}, 
-                      {id:"5", name:"★★★★★"}]
-   
+  const reputations = [{ id: "1", name: "★" },
+  { id: "2", name: "★★" },
+  { id: "3", name: "★★★" },
+  { id: "4", name: "★★★★" },
+  { id: "5", name: "★★★★★" }]
+
 
   const professionalsPerPage = 8;
 
   const indexOfLastProfessional = currentPage * professionalsPerPage;
-    
-  const indexOfFirstProfessional = indexOfLastProfessional - professionalsPerPage;
-   
-  let currentProfessionals = profesionales.slice(indexOfFirstProfessional , indexOfLastProfessional)
 
-  
+  const indexOfFirstProfessional = indexOfLastProfessional - professionalsPerPage;
+
+  let currentProfessionals = profesionales.slice(indexOfFirstProfessional, indexOfLastProfessional)
+
+
   function shouldRender() {
     if (
       currentProfessionals.length === 0 ||
@@ -90,14 +91,16 @@ function CardsList() {
     }
     if (!filterByProf.includes(e.target.innerText)) {
       setFilterByProf([...filterByProf, e.target.innerText]);
+
     }
   }
+
   const reputationFilterHandleOnChange = (repId) => {
 
     setCurrentPage(1)
- 
+
     dispatch(filterByReputation(repId))
-    };
+  };
 
   const deleteFilter = (prof) => {
     let arr = filterByProf.filter((e) => e !== prof);
@@ -122,15 +125,15 @@ function CardsList() {
   }
 
   useEffect(() => {
-    if (firstRender) {
+    if (firstRender && prof) {
       setFilterByProf([prof]);
     }
-    
+
     dispatch(filterByProfession(filterByProf));
 
     console.log(filterByProf);
   }, [filterByProf]);
- 
+
   return (
 
     <Container
@@ -143,9 +146,9 @@ function CardsList() {
         alignItems: "center",
       }}
     >
-      <Container expand="md" style={{ display: "flex", alignItems: "end" }}>
-         {/* Dropdown Reputacion */}
-        <Dropdown style={{height:'2.5rem'}} >
+      <Container expand="md" style={{ display: "flex", justifyContent: 'space-around', alignItems: "center", padding: '2rem' }}>
+        {/* Dropdown Reputacion */}
+        <Dropdown style={{ display: 'flex', height: '2.5rem' }} >
           <Dropdown.Toggle variant="success" id="dropdown-basic2">
             Reputacion
           </Dropdown.Toggle>
@@ -161,7 +164,7 @@ function CardsList() {
         </Dropdown>
 
         {/* Dropdown Profesion */}
-        <Dropdown style={{height:'2.5rem'}} >
+        <Dropdown style={{ height: '2.5rem' }} >
 
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             Profesion
@@ -184,8 +187,8 @@ function CardsList() {
             })}
           </Dropdown.Menu>
         </Dropdown>
-        
-        
+
+
 
         <Dropdown style={{ height: "2.5rem" }}>
           <Dropdown.Toggle>Orden por Nombre</Dropdown.Toggle>
