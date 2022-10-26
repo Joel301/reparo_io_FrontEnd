@@ -12,7 +12,7 @@ function LogSimpleCard(props) {
         logout()
         navigate('/')
     }
-    useEffect(() => { }, [user])
+    useEffect(() => { }, [user,usersimple])
 
     return (
         usersimple && usersimple.email && <div>

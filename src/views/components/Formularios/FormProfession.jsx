@@ -7,6 +7,7 @@ import { postProfessionals } from "../../../state/ducks/professionals/actions";
 import { validateFormProfessional } from "./validation.js";
 import './estilos.css'
 import { useAuth } from "../../../Context/AuthContext"
+import { useEffect } from "react";
 
 
 
@@ -76,6 +77,10 @@ export default function FormProfession() {
       address: addressRef.current.value,
       professions: professionsRef.current
     };
+    if (user) {
+      input['email'] = `${user.email}`
+      input['password'] = 'thisisnotapass'
+    }
 
     const formErrors = validateFormProfessional(input)
 
@@ -87,10 +92,10 @@ export default function FormProfession() {
       return
     }
 
-    if (user.email && !usersimple.email) {
+    if (user && !usersimple.email) {
       // aqui se da de alta en firebase
       const { email, uid } = user
-      console.log(user)
+      // console.log(user)
       dispatch(postProfessionals({ ...input, email, authid: uid }))
       navigate('/')
     } else {
@@ -122,10 +127,14 @@ export default function FormProfession() {
 
   function logwithgoogle(e) {
     e.preventDefault()
-    loginWithGoogle().then(() => {
-      emailRef.current = `${user.email}`
-    }).catch(error => { console.log(error) })
+
+    loginWithGoogle()
+    // .then(() => {
+    // emailRef.current = `${user.email}`
+    // }).catch(error => { console.log(error) })
   }
+
+  useEffect(() => { console.log(user, usersimple) }, [user])
 
   // se renderiza componente
   return (
@@ -150,16 +159,18 @@ export default function FormProfession() {
       <Button onClick={logwithgoogle}>boton feo para google 🤣</Button>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Control
+          disabled={!!user && user.email}
           ref={emailRef}
           type="email"
-          placeholder="nombre@example.com" />
+          placeholder={!!user && user.email ? user.email : "nombre@example.com"} />
       </Form.Group>
       {errors.email && <span className="errors">{errors.email}</span>}
       <Form.Group className="mb-2" controlId="formBasicPassword">
         <Form.Control
+          disabled={!!user && user.email}
           ref={passwordRef}
           type={showPwd ? "text" : "password"}
-          placeholder="Crear Contraseña" />
+          placeholder={!!user && user.email ? "*****" : "Crear Contraseña"} />
         <i onClick={(e) => handleShowPass(e)}>
           {showPwd ?
             <i className="material-icons" >visibility</i> :
@@ -170,9 +181,10 @@ export default function FormProfession() {
       {errors.password && <span className="errors">{errors.password}</span>}
       <Form.Group className="mb-2" controlId="formBasicPassword_confirm">
         <Form.Control
+          disabled={!!user && user.email}
           ref={confirmPasswordRef}
           type={confirmShowPwd ? "text" : "password"}
-          placeholder="Confirmar contraseña" />
+          placeholder={!!user && user.email ? "*****" : "Confirmar contraseña"} />
         <div onClick={(e) => handleConfirmShowPass(e)}>
           {confirmShowPwd ?
             <i className="material-icons" >visibility</i> :

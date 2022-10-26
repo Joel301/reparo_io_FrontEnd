@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 
 import logoReparoio from "../pages/imgs/logo-reparoio.png"
 import LogSimpleCard from "./LogSimpleCard"
+import FormRegistro from "./Formularios/FormRegistro"
 
 
 
@@ -78,7 +79,8 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como prodesional</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <FormProfession />
+          {/* <FormProfession /> */}
+          <FormRegistro />
         </Offcanvas.Body>
       </Offcanvas>
       <Offcanvas bg="dark" show={showFormClient} onHide={handleClose} placement='end'>
@@ -86,7 +88,8 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como cliente</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <FormClient />
+          {/* <FormClient /> */}
+          <FormRegistro isClient={true} />
         </Offcanvas.Body>
       </Offcanvas>
     </Navbar>
