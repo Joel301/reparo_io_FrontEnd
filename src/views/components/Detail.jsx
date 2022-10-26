@@ -18,6 +18,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Alert from 'react-bootstrap/Alert';
 import Badge from 'react-bootstrap/Badge';
 
+
 export default function Detail () {
 
     const { id } = useParams()

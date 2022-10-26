@@ -11,12 +11,11 @@ import {
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 
-
-
 import {
   orderByName,
   getOrderReputation,
   filterByProfession,
+  filterByReputation,
   getAllProfessionals,
   filterByReputation,
  
@@ -98,8 +97,10 @@ function CardsList() {
     }
     if (!filterByProf.includes(e.target.innerText)) {
       setFilterByProf([...filterByProf, e.target.innerText]);
-    }}
-    
+
+    }
+  }
+
   const reputationFilterHandleOnChange = (repId) => {
 
     setCurrentPage(1)
