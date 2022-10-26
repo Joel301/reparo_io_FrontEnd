@@ -13,16 +13,17 @@ import { useSelector, useDispatch } from "react-redux";
 
 
 
-
 import {
   orderByName,
   getOrderReputation,
   filterByProfession,
   getAllProfessionals,
-  filterByReputation
+  filterByReputation,
+ 
 } from "../../state/ducks/professionals/actions";
 
 //Componentes
+import CartOffCanvas from "./CartOffCanvas";
 import CardFormat from "./CardFormat";
 import SearchBar from "./SearchBar";
 import Paginado from "./Paginado";
@@ -45,7 +46,11 @@ function CardsList() {
 
   const [filterByProf, setFilterByProf] = useState([]);
 
-    const navigate = useNavigate()
+  const [estado,setEstado]= useState(false)
+
+  const estadoBoolean = (state)=> setEstado(state)
+  
+  const navigate = useNavigate()
 
   const reputations = [{id:"1", name:"★"},
                       {id:"2", name:"★★"},
@@ -123,6 +128,7 @@ function CardsList() {
     dispatch(getOrderReputation(e.target.innerText));
     setOrden(`Ordenado ${e.target.innerText}`);
   }
+
 
   useEffect(() => {
     if (firstRender && prof) {
@@ -259,7 +265,7 @@ function CardsList() {
                   width: "18rem",
                 }}
               >
-                <CardFormat worker={e} key={e.id} />
+                <CardFormat estado={estado} estadoBoolean={estadoBoolean} worker={e} key={e.id} />
               </Col>
             );
           })}
@@ -288,6 +294,7 @@ function CardsList() {
           style={{ flex: "flex-end" }}
         />
       ) : null}
+      <CartOffCanvas estado={estado} estadoBoolean={estadoBoolean} />
     </Container>
   );
 }

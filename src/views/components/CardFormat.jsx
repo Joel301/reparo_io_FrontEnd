@@ -1,11 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Card, Button } from "react-bootstrap";
-
-function CardFormat({ worker }) {
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../state/ducks/cart/actions";
+function CardFormat({ worker,estado,estadoBoolean}) {
   let profToString = worker.professions?.map((e) => e.name);
-  console.log(worker);
+ 
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const reserveOnClick =()=>{
+    dispatch(addToCart(worker))
+   
+    estadoBoolean(estado=true)
+  
+   
+    
+  }
   return (
     <Card bg="light" style={{ width: "18rem", height: "22rem" }}>
       <div
@@ -24,7 +35,7 @@ function CardFormat({ worker }) {
       <Card.Footer
         style={{ display: "flex", gap: "2rem", justifyContent: "center" }}
       >
-        <Button >Reservar</Button>
+        <Button onClick={()=> reserveOnClick()}>Reservar</Button>
         <Link to={`/detail/${worker.id}`}>
           <Button bg="primary">Ver Mas...</Button>
         </Link>
