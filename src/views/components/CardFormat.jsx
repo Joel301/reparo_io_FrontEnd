@@ -2,14 +2,18 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Card, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../state/ducks/cart/actions";
-function CardFormat({ worker,estado,estadoBoolean}) {
+function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert}) {
   let profToString = worker.professions?.map((e) => e.name);
- 
-  const navigate = useNavigate()
+  const reservedProf = useSelector(state=>state.cart.list)
+  
   const dispatch = useDispatch()
   const reserveOnClick =()=>{
+    if(reservedProf.find((item)=>item.professional === worker)){
+        return setRepeatedAlert(repeatedAlert=true)
+    }
+
     dispatch(addToCart(worker))
    
     estadoBoolean(estado=true)

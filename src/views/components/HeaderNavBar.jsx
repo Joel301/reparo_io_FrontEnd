@@ -13,7 +13,8 @@ function HeaderNavBar() {
   const dispatch = useDispatch()
   const [showFormprof, setshowFormprof] = useState(false)
   const [showFormClient, setshowFormClient] = useState(false)
-  
+  const totalReserved = useSelector(state=>state.cart.list)
+  const total = useSelector(state=>state.cart.total)
   const profesionales = useSelector((state)=> state.professionals.allProfessionals)
   const handleShow = (e) => {
 
@@ -28,7 +29,8 @@ function HeaderNavBar() {
  
   }
   useEffect(()=>{
-    console.log(profesionales.length)
+    console.log(total)
+    console.log(totalReserved.length)
     if(profesionales[0]=== undefined){
       dispatch(getAllProfessionals())
     }
@@ -78,7 +80,7 @@ function HeaderNavBar() {
             </NavDropdown>
             <Link to='/cart'>
             <Button  style={{display:'flex',height:'2rem',alignItems:'center'}}>
-             <ShoppingCartIcon/><Badge  bg='danger'>5</Badge>
+             <ShoppingCartIcon/><Badge  bg='danger'>{totalReserved.length>0?totalReserved.length:null}</Badge>
             </Button></Link>
           </Nav>
         </Navbar.Collapse>

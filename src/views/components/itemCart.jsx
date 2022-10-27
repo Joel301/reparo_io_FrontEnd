@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 
 //Actions
-import { deleteItemCart, addDaysToProf, deleteDaysToProf } from "../../state/ducks/cart/actions"
+import { deleteItemCart,  addDayToProf,  removeDayFromProf } from "../../state/ducks/cart/actions"
 
 //Bootstrap
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -28,11 +28,11 @@ export default function ItemCart () {
     }
 
     const deleteDay = ( id, day ) => {
-        dispatch(deleteDaysToProf( id, day ))
+        dispatch(removeDayFromProf( id, day ))
     }
 
     const selectDays = (id, day) => {
-        dispatch(addDaysToProf(id, day))
+        dispatch(addDayToProf(id, day))
     }
 
     const totalDays = (items) => {

@@ -8,6 +8,8 @@ import { Link } from "react-router-dom"
 //Redux
 import { getDetail } from "../../state/ducks/detail/actions"
 
+
+
 //Bootstrap
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
