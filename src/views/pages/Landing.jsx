@@ -13,9 +13,6 @@ import FormProfession from "../components/Formularios/FormProfession";
 
 //Css Styles & imgs
 import "./landing.css";
-import imgClient from "./imgs/client.png";
-import imgPro from "./imgs/pro.png";
-import imfArrow from "./imgs/arrow.png";
 
 // Bootstrap
 import Accordion from "react-bootstrap/Accordion";
