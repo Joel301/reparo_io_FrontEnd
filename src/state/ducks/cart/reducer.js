@@ -10,7 +10,8 @@ export default function cartReducer (state=initialState, action) {
                         ...state,
                         list: [...state.list, action.payload]
                     }
-}
+        }
+
         case 'DELETE_ITEM_CART':{
                     let updatedList = state.list.filter((item)=>item.professional.id !== action.payload)
                     return {
