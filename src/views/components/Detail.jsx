@@ -8,9 +8,6 @@ import { Link } from "react-router-dom"
 //Redux
 import { getDetail } from "../../state/ducks/detail/actions"
 
-//CSS Styles
-import "./Detail.css"
-
 //Bootstrap
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
