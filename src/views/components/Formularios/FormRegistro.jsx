@@ -73,7 +73,7 @@ export default function FormRegistro({ isClient = false }) {
                 passwordRef.current.value : "No coinciden",
             email: emailRef.current.value,
             phoneNumber: phoneNumberRef.current.value,
-            profileImg: profileImgRef.current.value,
+            profileImg: profileImgRef.current.value || user.photoURL || "",
             aboutMe: aboutMeRef.current.value,
             address: addressRef.current.value,
         };
@@ -96,8 +96,8 @@ export default function FormRegistro({ isClient = false }) {
             alert('Verifique que todos los campos esten llenos')
             return
         }
-
-        if (user && !usersimple.email) {
+        console.log(!!user && !usersimple )
+        if (user && !usersimple) {
             // aqui se da de alta en firebase
             const { email, uid } = user
             // console.log(user)

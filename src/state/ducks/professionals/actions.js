@@ -70,8 +70,7 @@ export function getAllProfessions() {
 }
 
 export function postProfessionals(payload) {
-    const POSTURL = "http://localhost:3001/home/user"
-    // const POSTURL = "/home/professionals"
+    const POSTURL = "/home/user"
     console.log(payload)
     return async function (dispatch) {
         try {
@@ -87,8 +86,8 @@ export function postProfessionals(payload) {
     }
 }
 export function postlClient(payload) {
-    const POSTURL = "http://localhost:3001/home/user"
-    console.log(payload)
+    const POSTURL = "/home/user"
+    console.log({ ...payload, isClient: true })
     return async function (dispatch) {
         try {
             const postClients = await axios.post(

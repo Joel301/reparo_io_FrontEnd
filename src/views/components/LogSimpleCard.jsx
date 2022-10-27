@@ -12,11 +12,21 @@ function LogSimpleCard(props) {
         logout()
         navigate('/')
     }
-    useEffect(() => { }, [user,usersimple])
+    useEffect(() => { }, [user, usersimple])
 
     return (
         usersimple && usersimple.email && <div>
-            {console.log(usersimple)}
+            <div>
+                {usersimple.client ? "es cliente" : ""}
+                {usersimple.professional ? "es professional" : ""}
+                {usersimple.admin ? "es admin" : ""}
+            </div>
+            Datos en usersimple:
+            <div>
+                {!!usersimple.client && JSON.stringify(usersimple.client)}
+                {!!usersimple.professional && JSON.stringify(usersimple.professional)}
+                {!!usersimple.admin && JSON.stringify(usersimple.admin)}
+            </div>
             soy una simple carta de logeo mi email es {usersimple.email}
             <button onClick={handleLogout}>Cerrar Sesion</button>
         </div>

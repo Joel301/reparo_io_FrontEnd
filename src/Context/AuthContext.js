@@ -57,7 +57,7 @@ export function AuthProvider({ children }) {
             setUser(currentUser);
             if (currentUser) {
                 const { email, uid } = currentUser
-                axios.get("http://localhost:3001/home/test", { params: { id: uid } }).then(
+                axios.get("/home/user", { params: { id: uid } }).then(
                     (response) => setUsersimple({ ...response.data })
                 )
 
