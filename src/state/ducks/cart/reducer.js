@@ -1,7 +1,6 @@
 const initialState ={
     list:[],
-    total: 0,
-    showCart:false
+    
 }
 export default function cartReducer (state=initialState, action) {
     switch (action.type) {
@@ -20,11 +19,15 @@ export default function cartReducer (state=initialState, action) {
                     }}
 
         case 'ADD_DAY_TO_PROF':{
+            console.log(action.payload)
             let updatedList = state.list.map((item)=>{
                 if( item.professional.id === action.payload.id){
-                    return item.days.push(action.payload.day)
+                    item.days.push(action.payload.day)
                 }
+                 return item
                 })
+                console.log('Updated List :',updatedList)
+
             return {
                 ...state,
                 list:[...updatedList]
@@ -36,6 +39,18 @@ export default function cartReducer (state=initialState, action) {
             //     quantity:()=>{
             //         return this.days.length
             //     },
+            case 'REMOVE_DAY_FROM_PROF':{
+
+                let updatedList = state.list.map((item)=>{
+                    if( item.professional.id === action.payload.id){
+                       item.days =  item.days.filter((day)=>day!==action.payload.day)
+                    }
+                return item})
+                     return {
+                        ...state,
+                        list:[...updatedList]
+                    }
+            }
               
         default:return state
     }

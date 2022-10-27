@@ -5,7 +5,7 @@
             const itemDeCompra = {
                 professional:worker,
                 days:[],
-                quantity:()=>{
+                get quantity(){
                     return this.days.length
                 },
               
@@ -35,7 +35,7 @@ export function deleteItemCart(id){
     }
 }
 
-export function addDaysToProf(id,day){
+export function addDayToProf(id,day){
 return async function(dispatch){
     try {
         return dispatch({
@@ -48,6 +48,22 @@ return async function(dispatch){
         
     } catch (error) {
         console.log(error)
+    }
+}
+
+}
+export function removeDayFromProf(id,day){
+return async function (dispatch){
+    try {
+        return dispatch({
+            type:'REMOVE_DAY_FROM_PROF',
+            payload:{
+                id,
+                day
+            }
+        })         
+    } catch (error) {
+        console.log(error);
     }
 }
 
