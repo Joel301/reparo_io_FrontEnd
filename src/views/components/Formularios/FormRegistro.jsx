@@ -18,7 +18,7 @@ export default function FormRegistro({ isClient = false }) {
     const profesiones = useSelector(state => state.professionals.professions)
 
     // auth hooks 
-    const { signup, user, usersimple, loading, loginWithGoogle } = useAuth()
+    const { signup, user, usersimple, login, loginWithGoogle, logout } = useAuth()
 
     //referencia de información del input para el post:
     const nameRef = useRef('')
@@ -97,8 +97,14 @@ export default function FormRegistro({ isClient = false }) {
             return
         }
         console.log(!!user && !usersimple)
-        if (user && !usersimple) {
+        console.log("esta en firebase: ", !!user)
+        console.log("esta en base de datos?: : ", usersimple && !usersimple.email)
+        console.log("es, admin: ", usersimple && !!usersimple.adminId)
+        console.log("es, client: ", usersimple && !!usersimple.clientId)
+        console.log("es, professional: ", usersimple && !!usersimple.professionalId)
+        if (user && usersimple && !usersimple.email) {
             // aqui se da de alta en firebase
+            console.log("en firebase")
             const { email, uid } = user
             // console.log(user)
             isclient
@@ -106,6 +112,7 @@ export default function FormRegistro({ isClient = false }) {
                 : dispatch(postProfessionals({ ...input, email, authid: uid }))
             navigate('/')
         } else {
+            console.log("sin firebase")
             signup(input.email, input.password)
                 // .then(r => r)
                 .then((r) => {
@@ -120,7 +127,9 @@ export default function FormRegistro({ isClient = false }) {
                 }
                 ).catch(error => {
                     //aqui se pueden manejar los errores de auth con correo y usuario, 
-                    if (error.code === "auth/email-already-in-use") { console.log("correo en uso") }
+                    if (error.code === "auth/email-already-in-use") { 
+                        login(input.email, input.password)
+                    }
                     else { console.log(error) }
                 })
 
@@ -135,6 +144,11 @@ export default function FormRegistro({ isClient = false }) {
         // .then(() => {
         // emailRef.current = `${user.email}`
         // }).catch(error => { console.log(error) })
+    }
+
+    const otherAccount = (e) => {
+        e.preventDefault();
+        logout()
     }
 
     useEffect(() => { console.log(user, usersimple) }, [user])
@@ -167,6 +181,8 @@ export default function FormRegistro({ isClient = false }) {
                     type="email"
                     placeholder={!!user && user.email ? user.email : "nombre@example.com"} />
             </Form.Group>
+            {!!user && user.email ? <div onClick={otherAccount}>Usar Otra Cuenta</div> : ""}
+            {console.log(user, usersimple)}
             {errors.email && <span className="errors">{errors.email}</span>}
             <Form.Group className="mb-2" controlId="formBasicPassword">
                 <Form.Control
