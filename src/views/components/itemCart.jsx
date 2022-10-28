@@ -11,6 +11,8 @@ import { deleteItemCart,  addDayToProf,  removeDayFromProf } from "../../state/d
 import Dropdown from 'react-bootstrap/Dropdown'
 import CloseButton from 'react-bootstrap/CloseButton'
 import Badge from 'react-bootstrap/Badge'
+import Button from 'react-bootstrap/Button'
+import { Container } from 'react-bootstrap'
 
 
 
@@ -20,8 +22,14 @@ export default function ItemCart () {
 
     const dispatch = useDispatch()
 
-    const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
-
+    // const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
+    const days = [{name: 'Lunes', id: 1},
+                  {name: 'Martes', id: 2},
+                  {name: 'Miercoles', id: 3},
+                  {name: 'Jueves', id: 4},
+                  {name: 'Viernes', id: 5},
+                  {name: 'Sabado', id: 6},
+                ]
 
     const deleteItem = (id) => {
         dispatch(deleteItemCart(id))
@@ -35,13 +43,23 @@ export default function ItemCart () {
         dispatch(addDayToProf(id, day))
     }
 
-    const totalDays = (items) => {
+    const costoTotal = (items) => {
+        let costo = 2000
         let counter = 0
 
-        items.map((item) => {
-            counter = counter + item.days.length
+        items.forEach((item) => {
+            counter = counter + (costo * item.quantity)
         })
         return counter
+    }
+
+    const precioPorItem = (item) => {
+        let total = 0
+        let costo = 2000
+
+        total = item.days.length * costo
+
+        return total
     }
 
     return (
@@ -53,7 +71,9 @@ export default function ItemCart () {
                 <>
                 <tbody>
                     <tr>
-                    <td>1</td>
+                    <td>
+                        1
+                    </td>
                     <td>{item.professional.firstName} {item.professional.lastName}</td>    
                     <td>{
                         item.professional.professions?.map((p) => {
@@ -64,9 +84,6 @@ export default function ItemCart () {
                         })
                         }
                     </td>
-                    <td style={{fontSize: "20px"}}>
-                        {item.quantity}
-                    </td>
                     <td>
                         <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -76,7 +93,8 @@ export default function ItemCart () {
                             <Dropdown.Menu>
                                 {
                                     days.map((day) => {
-                                       return (<Dropdown.Item onClick={() => selectDays(item.professional.id, day)}>{day}</Dropdown.Item>)
+                                        console.log(day, "day")
+                                       return (<Dropdown.Item onClick={() => selectDays(item.professional.id, day.name)}>{day.name}</Dropdown.Item>)
                                     })
                                 }
                             </Dropdown.Menu>
@@ -96,6 +114,12 @@ export default function ItemCart () {
                             })
                         }
                     </td>
+                    <td style={{fontSize: "20px"}}>
+                        {item.quantity}
+                    </td>
+                    <td>
+                        ${precioPorItem(item)}
+                    </td>
                     <td>
                         <CloseButton variant="white" onClick={() => deleteItem(item.professional.id)} />
                     </td>
@@ -108,10 +132,15 @@ export default function ItemCart () {
 
             <></>
             }
-            <Badge pill bg="warning" text="dark" style={{width: "100px", height: "40px", fontSize: "20px"}}>
-                        Total: {totalDays(items)}
+            <Badge pill bg="warning" text="dark" style={{width: "150px", height: "40px", fontSize: "15px"}}>
+                        Costo Total: ${costoTotal(items)}
             </Badge>{' '}
-            
+
+            <Container >
+                <Button variant="success">
+                    Pasarela de Pago
+                </Button> 
+            </Container>
         </>
     )
 }

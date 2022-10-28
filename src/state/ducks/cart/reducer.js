@@ -22,7 +22,7 @@ export default function cartReducer (state=initialState, action) {
         case 'ADD_DAY_TO_PROF':{
             console.log(action.payload)
             let updatedList = state.list.map((item)=>{
-                if( item.professional.id === action.payload.id){
+                if( item.professional.id === action.payload.id && !item.days.includes(action.payload.day)){
                     item.days.push(action.payload.day)
                 }
                  return item
