@@ -10,7 +10,7 @@ import axios from 'axios';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {store} from "./state/store"
+import store from "./state/store"
 
 axios.defaults.baseURL = "https://reparoiobackend-main.up.railway.app" || "http://localhost:3001/"
 
