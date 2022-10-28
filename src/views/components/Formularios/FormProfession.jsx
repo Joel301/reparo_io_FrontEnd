@@ -9,7 +9,9 @@ import './estilos.css'
 
 
 
-export default function FormProfession() {
+
+
+export default function FormProfession({showProf, state}) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const profesiones = useSelector(state=>state.professionals.professions)
@@ -87,7 +89,9 @@ export default function FormProfession() {
    dispatch(postProfessionals(input))
 
    alert('Tu perfil ha sido creado')
-   navigate('/Home')
+   showProf(state=false)
+   navigate('/')
+
 
   }
 

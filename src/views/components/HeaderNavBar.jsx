@@ -36,6 +36,8 @@ function HeaderNavBar() {
     }
   },[])
 
+  const showProf = (boolean) => setshowFormprof(boolean)
+
   return (
     /////// esto es con react-bootstrap
     // desde el archivo ../../node_modules/bootstrap/_variables.scss cambio la paleta de colores
@@ -90,7 +92,7 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como prodesional</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <FormProfession />
+          <FormProfession showProf={showProf} state={showFormprof} />
         </Offcanvas.Body>
       </Offcanvas>
       <Offcanvas bg="dark" show={showFormClient} onHide={handleClose} placement='end'>

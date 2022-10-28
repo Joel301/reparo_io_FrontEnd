@@ -10,7 +10,10 @@ function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert
   
   const dispatch = useDispatch()
   const reserveOnClick =()=>{
-    if(reservedProf.find((item)=>item.professional === worker)){
+    
+    console.log(worker.id)
+    if(reservedProf.find((item)=>item.professional.id === worker.id)){
+      console.log("hola")
         return setRepeatedAlert(repeatedAlert=true)
     }
 
