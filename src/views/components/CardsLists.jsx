@@ -85,7 +85,7 @@ function CardsList() {
     }
   }
   ///  Necesitaba saber el primer render para poder filtrar apartir de los botones y
-  ///  que no se me quede el filtrado clavado con la prof que viene de params
+  ///  que no se me quede el filtrado clavado con la prof que viene de paramss
   function useDetectFirstRender() {
     const firstRender = useRef(true);
 
