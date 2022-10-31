@@ -8,8 +8,6 @@ import { Link } from "react-router-dom"
 //Redux
 import { getDetail } from "../../state/ducks/detail/actions"
 
-
-
 //Bootstrap
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
@@ -55,7 +53,7 @@ export default function Detail () {
                         </Card.Text>
 
                         <Card.Title style={{display: "flex", justifyContent: "center", fontSize: "30px"}}>
-                            Reseñas: {detalle.review} ★★★★★ (hardcode)
+                            Reseñas: {detalle.review} ★★★★★ 
                         </Card.Title>
 
                         <ListGroup variant="flush" style={{justifyContent: "center",widht: "90%" , display: "flex ", border: "1px solid grey"}}>

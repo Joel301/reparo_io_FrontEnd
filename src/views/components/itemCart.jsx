@@ -42,9 +42,9 @@ export default function ItemCart () {
         dispatch(addDayToProf(id, day))
     }
 
-    const orderDays = (days) => {
+    const orderDays = (dias) => {
 
-        let newArray = days.sort(( a, b ) => {
+        let newArray = dias.sort(( a, b ) => {
            return a.id - b.id
         })
 
@@ -68,10 +68,6 @@ export default function ItemCart () {
         total = item.days.length * costo
 
         return total
-    }
-
-    const numberItems = () => {
-
     }
 
     return (
@@ -110,7 +106,7 @@ export default function ItemCart () {
                     </td>
                     <td>
                         {
-                            orderDays(item.days)?.map((day) => {
+                            item.days?orderDays(item.days).map((day) => {
                                 return (
                                     <td>
                                         <Badge 
@@ -120,10 +116,12 @@ export default function ItemCart () {
                                     </td>
                                 )
                             })
+                            :
+                            <></>
                         }
                     </td>
                     <td style={{fontSize: "20px"}}>
-                        {item.quantity}
+                        {item.days?.length}
                     </td>
                     <td>
                         ${precioPorItem(item)}

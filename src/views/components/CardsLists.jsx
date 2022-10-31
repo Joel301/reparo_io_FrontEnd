@@ -6,7 +6,6 @@ import {
   Dropdown,
   Alert,
   Badge,
-  Button,
   Modal,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,7 +15,6 @@ import {
   getOrderReputation,
   filterByProfession,
   filterByReputation,
-  getAllProfessionals,
 } from "../../state/ducks/professionals/actions";
 
 //Componentes
