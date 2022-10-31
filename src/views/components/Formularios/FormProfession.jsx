@@ -61,7 +61,7 @@ export default function FormProfession({showProf, state}) {
 
   // se envia la informacion del formulario incluye la validación:
   function hedleOnSubmit(e) {
-    e.preventDefault(e)
+    e.preventDefault()
 
     const input = {
       firstName: nameRef.current.value,
