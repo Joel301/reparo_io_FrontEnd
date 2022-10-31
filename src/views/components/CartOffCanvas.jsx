@@ -1,19 +1,22 @@
 import React from 'react'
 import CartOffItem from './CartOffItem'
-import { Modal, Offcanvas } from 'react-bootstrap'
-import { useDispatch,useSelector } from 'react-redux'
+import { Offcanvas, Button } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 function CartOffCanvas({estado,estadoBoolean}) {
   const cartItems = useSelector(state=> state.cart.list)
-  const [noDaysAlert,setNoDaysAlert] = useState(false) // este estado se creo para mostrar el mensaje de error si ningun dia fue seleccionado
+  const [exitCanvas, setExit] = useState(false)
+  const navigate = useNavigate()
+  
   const onHideCart = ()=>{
-    if(cartItems.filter((item)=>item.quantity===0).length>0){
-      
-      return setNoDaysAlert(true)
+    
+    if(cartItems.map(i => i.quantity).includes(0)){
+      return setExit(true)
     }
-
     estadoBoolean(estado=false)
+    setExit(false)
   }
   useEffect(()=>{
     if(cartItems.length===0){
@@ -29,16 +32,12 @@ function CartOffCanvas({estado,estadoBoolean}) {
     </Offcanvas.Header>
     <Offcanvas.Body style={{display:'flex',flexDirection:'column',gap:'2rem'}}>
       {cartItems.map(({professional,quantity, days})=>{
-        return (<CartOffItem professional={professional} totalDays={quantity} days={days} />)
+        return (<CartOffItem professional={professional} totalDays={quantity} days={days} exitCanvas={exitCanvas} />)
 })}
+    
+    <Button variant='success' onClick={()=> navigate('/cart')}>Realizar Compras</Button>
     </Offcanvas.Body>
-    <Modal  style={{color:'white'}} show={noDaysAlert} onHide={()=>setNoDaysAlert(false)}>
-        <Modal.Header style={{backgroundColor:' #CC6666'}} closeButton>
-          <Modal.Title>No se puede realizar esta accion!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{backgroundColor:' #CC6666'}}>Debes seleccionar los dias de tu profesional para seguir navegando</Modal.Body>
-        <Modal.Footer style={{backgroundColor:' #CC6666'}}/>
-      </Modal>
+      
   </Offcanvas>
   )
 }

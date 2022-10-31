@@ -62,7 +62,7 @@ function HeaderNavBar() {
         <Navbar.Toggle />
         <Navbar.Collapse >
           <Nav className="ms-auto" style={{display:'flex',justifyContent:'space-around'}}>
-            <NavDropdown title="Login" id="login-nav-dropdown">
+            <NavDropdown title="Iniciar Sesion" id="login-nav-dropdown">
               <NavDropdown.Item disabled href="#login/client">
                 Cliente
               </NavDropdown.Item>
@@ -103,7 +103,6 @@ function HeaderNavBar() {
           <FormClient />
         </Offcanvas.Body>
       </Offcanvas>
-      
     </Navbar>
   );
 }
