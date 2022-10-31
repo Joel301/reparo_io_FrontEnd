@@ -20,7 +20,9 @@ import Button from 'react-bootstrap/Button'
 export default function Professions () {
 
   const dispatch = useDispatch();
+
   const professions = useSelector((state) => state.professionals.professions);
+
   useEffect(() => {
     dispatch(getAllProfessions());
   }, [dispatch]);
@@ -29,7 +31,7 @@ export default function Professions () {
         <div style={{marginTop:"2rem"}}>
 
             {/* Titulo componente profesiones  */}
-            <div style={{marginTop: "70px", fontWeight: "bolder",display:'flex',justifyContent:'center' }}>
+            <div style={{marginTop: "70px", fontWeight: "bolder",display:'flex',justifyContent:'center', marginBottom: "70px"}}>
                 <h3 style={{backgroundColor: "black",borderRadius:"0.6rem",color:'whitesmoke',width:'20rem',paddingBottom:'2px'}}>
                 Elige una profesion:
                 </h3>
@@ -64,20 +66,16 @@ export default function Professions () {
                         </Col>
                     ))
                 }
-                    
-                        
-                            <Link to='/home'>
-                                <Button 
-                                    variant="primary" 
-                                    style={{width: "10rem",height:'10rem'}}
-                                    onClick={(e)=>{ dispatch(filterByProfession('all')) }} >
+                    <Link to='/home'>
+                        <Button 
+                            variant="primary" 
+                            style={{width: "10rem",height:'10rem'}}
+                            onClick={(e)=>{ dispatch(filterByProfession('all')) }} >
 
-                                    <Card.Title>Todas las profesiones</Card.Title>
+                            <Card.Title>Todas las profesiones</Card.Title>
 
-                                </Button>
-                            </Link>
-                        
-                    
+                        </Button>
+                    </Link>
                 </Row>
             </div>
          </div>
