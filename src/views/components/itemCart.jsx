@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 
 //Actions
-import { deleteItemCart,  addDayToProf,  removeDayFromProf } from "../../state/ducks/cart/actions"
+import { deleteItemCart, addDayToProf, removeDayFromProf } from "../../state/ducks/cart/actions"
 
 //Bootstrap
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -22,13 +22,12 @@ export default function ItemCart () {
 
     const dispatch = useDispatch()
 
-    // const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
     const days = [{name: 'Lunes', id: 1},
-                  {name: 'Martes', id: 2},
-                  {name: 'Miercoles', id: 3},
-                  {name: 'Jueves', id: 4},
-                  {name: 'Viernes', id: 5},
-                  {name: 'Sabado', id: 6},
+                {name: 'Martes', id: 2},
+                {name: 'Miercoles', id: 3},
+                {name: 'Jueves', id: 4},
+                {name: 'Viernes', id: 5},
+                {name: 'Sabado', id: 6},
                 ]
 
     const deleteItem = (id) => {
@@ -41,6 +40,15 @@ export default function ItemCart () {
 
     const selectDays = (id, day) => {
         dispatch(addDayToProf(id, day))
+    }
+
+    const orderDays = (days) => {
+
+        let newArray = days.sort(( a, b ) => {
+           return a.id - b.id
+        })
+
+        return newArray
     }
 
     const costoTotal = (items) => {
@@ -62,6 +70,10 @@ export default function ItemCart () {
         return total
     }
 
+    const numberItems = () => {
+
+    }
+
     return (
         <>
         {
@@ -71,9 +83,6 @@ export default function ItemCart () {
                 <>
                 <tbody>
                     <tr>
-                    <td>
-                        1
-                    </td>
                     <td>{item.professional.firstName} {item.professional.lastName}</td>    
                     <td>{
                         item.professional.professions?.map((p) => {
@@ -93,7 +102,6 @@ export default function ItemCart () {
                             <Dropdown.Menu>
                                 {
                                     days.map((day) => {
-                                        console.log(day, "day")
                                        return (<Dropdown.Item onClick={() => selectDays(item.professional.id, day.name)}>{day.name}</Dropdown.Item>)
                                     })
                                 }
@@ -102,7 +110,7 @@ export default function ItemCart () {
                     </td>
                     <td>
                         {
-                            item.days?.map((day) => {
+                            orderDays(item.days)?.map((day) => {
                                 return (
                                     <td>
                                         <Badge 
@@ -110,7 +118,7 @@ export default function ItemCart () {
                                             onClick={() => deleteDay(item.professional.id, day)}
                                             >{day}</Badge>
                                     </td>
-                                    )
+                                )
                             })
                         }
                     </td>
@@ -133,7 +141,7 @@ export default function ItemCart () {
             <></>
             }
             <Badge pill bg="warning" text="dark" style={{width: "150px", height: "40px", fontSize: "15px"}}>
-                        Costo Total: ${costoTotal(items)}
+                Costo Total: ${costoTotal(items)}
             </Badge>{' '}
 
             <Container >

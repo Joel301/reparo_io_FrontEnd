@@ -17,7 +17,6 @@ export default function Cart() {
                 <Table striped bordered hover variant="dark" >
                     <thead>
                         <tr>
-                        <th>#</th>
                         <th>Nombre y Apellido</th>
                         <th>Profesiones</th>
                         <th>Selecciona los dias</th>
