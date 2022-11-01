@@ -14,7 +14,7 @@ export function filterByProfession(payload) {
 export function filterByReputation(payload) {
     return {
         type: 'FILTER_BY_REPUTATION',
-        payload
+        payload,
     }
 }
 

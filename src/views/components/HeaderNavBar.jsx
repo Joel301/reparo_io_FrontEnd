@@ -1,24 +1,26 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useState } from "react"
-import { Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap"
-import FormProfession from "./Formularios/FormProfession"
-import FormClient from "./Formularios/FormClient"
+import { Button, Badge, Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap"
+// import FormProfession from "./Formularios/FormProfession"
+// import FormClient from "./Formularios/FormClient"
 import { Link } from "react-router-dom"
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logoReparoio from "../pages/imgs/logo-reparoio.png"
-import LogSimpleCard from "./LogSimpleCard"
+import { useDispatch, useSelector } from "react-redux"
+import { getAllProfessionals } from "../../state/ducks/professionals/actions"
+import CartOffCanvas from "./CartOffCanvas"
 import FormRegistro from "./Formularios/FormRegistro"
-
-
-
+import LogSimpleCard from "./LogSimpleCard";
 function HeaderNavBar() {
-
+  const dispatch = useDispatch()
   const [showFormprof, setshowFormprof] = useState(false)
   const [showFormClient, setshowFormClient] = useState(false)
-
+  const totalReserved = useSelector(state => state.cart.list)
+  const total = useSelector(state => state.cart.total)
+  const profesionales = useSelector((state) => state.professionals.allProfessionals)
   const handleShow = (e) => {
 
-    // console.log(e.target.textContent);
+    console.log(e.target.textContent);
     if (e.target.textContent === "Cliente") setshowFormClient(true)
     if (e.target.textContent === "Profesional") setshowFormprof(true)
   }
@@ -26,7 +28,17 @@ function HeaderNavBar() {
   const handleClose = () => {
     setshowFormClient(false)
     setshowFormprof(false)
+
   }
+  useEffect(() => {
+    console.log(total)
+    console.log(totalReserved.length)
+    if (profesionales[0] === undefined) {
+      dispatch(getAllProfessionals())
+    }
+  }, [])
+
+  const showProf = (boolean) => setshowFormprof(boolean)
 
   return (
     /////// esto es con react-bootstrap
@@ -52,15 +64,15 @@ function HeaderNavBar() {
         </Container>
         <Navbar.Toggle />
         <Navbar.Collapse >
-          <Nav className="ms-auto">
-            <NavDropdown title="Login" id="login-nav-dropdown">
+          <Nav className="ms-auto" style={{ display: 'flex', justifyContent: 'space-around' }}>
+            <NavDropdown title="Iniciar Sesion" id="login-nav-dropdown">
               <NavDropdown.Item disabled href="#login/client">
                 Cliente
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item >
                 Profesional
-              </NavDropdown.Item>
+              </NavDropdown.Item >
             </NavDropdown>
             <NavDropdown title="Regístrate" id="signin-nav-dropdown">
               <NavDropdown.Item defaultValue='cliente' onClick={handleShow}>
@@ -71,6 +83,10 @@ function HeaderNavBar() {
                 Profesional
               </NavDropdown.Item>
             </NavDropdown>
+            <Link to='/cart'>
+              <Button style={{ display: 'flex', height: '2rem', alignItems: 'center' }}>
+                <ShoppingCartIcon /><Badge bg='danger'>{totalReserved.length > 0 ? totalReserved.length : null}</Badge>
+              </Button></Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -79,7 +95,7 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como prodesional</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {/* <FormProfession /> */}
+          {/* <FormProfession showProf={showProf} state={showFormprof} /> */}
           <FormRegistro />
         </Offcanvas.Body>
       </Offcanvas>

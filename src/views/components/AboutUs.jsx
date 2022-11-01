@@ -9,7 +9,7 @@ import iconLinkedIn from "../pages/imgs/icono-linkedin.png"
 
 export default function AboutUs () {
     return (
-        <>
+        <div style={{marginTop: "5px"}}>
 
             <h4 style={{fontSize: "20px"}}>
                 About Admins:
@@ -24,7 +24,7 @@ export default function AboutUs () {
                         />
                     <p>Lucas C</p>
                 </a>
-                <a href="https://www.linkedin.com/in/marchetti-lucas/" >
+                <a href="#/omar" >
                         <img
                         src={iconLinkedIn}
                         alt="imageLinkedin"
@@ -52,7 +52,7 @@ export default function AboutUs () {
                         />
                     <p>Joel</p>
                 </a>
-                <a href="https://www.linkedin.com/in/marchetti-lucas/" >
+                <a href="#blaz" >
                         <img
                         src={iconLinkedIn}
                         alt="imageLinkedin"
@@ -75,6 +75,6 @@ export default function AboutUs () {
                 </a>
                 
             </div>
-        </>
+        </div>
     )
 }

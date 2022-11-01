@@ -90,19 +90,19 @@ return{...state,
       let sortOrder =
         action.payload === "asc"
           ? state.professionalsFiltered.sort(function (a, b) {
-              if (a.firstName > b.firstName) {
+              if (a.firstName.toLowerCase() > b.firstName.toLowerCase()) {
                 return 1;
               }
-              if (b.firstName > a.firstName) {
+              if (b.firstName.toLowerCase() > a.firstName.toLowerCase()) {
                 return -1;
               }
               return 0;
             })
           : state.professionalsFiltered.sort(function (a, b) {
-              if (a.firstName > b.firstName) {
+              if (a.firstName.toLowerCase() > b.firstName.toLowerCase()) {
                 return -1;
               }
-              if (b.firstName > a.firstName) {
+              if (b.firstName.toLowerCase() > a.firstName.toLowerCase()) {
                 return 1;
               }
               return 0;

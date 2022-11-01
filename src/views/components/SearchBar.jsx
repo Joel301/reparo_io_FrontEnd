@@ -22,7 +22,7 @@ export default function SearchBar() {
   return (
     <Form
       style={{ width: "30%", display: "flex",height:'2.5rem',flex:'flex-end' }}
-      className="d-flex container-sm"
+   
       size="sm"
     >
       <Form.Control

@@ -17,69 +17,66 @@ import Button from 'react-bootstrap/Button'
 
 
 
-export default function Professions () {
+export default function Professions() {
 
-  const dispatch = useDispatch();
-  const professions = useSelector((state) => state.professionals.professions);
-  useEffect(() => {
-    dispatch(getAllProfessions());
-  }, [dispatch]);
+    const dispatch = useDispatch();
+
+    const professions = useSelector((state) => state.professionals.professions);
+
+    useEffect(() => {
+        dispatch(getAllProfessions());
+    }, [dispatch]);
 
     return (
-        <div style={{marginTop:"2rem"}}>
+        <div style={{ marginTop: "2rem" }}>
 
             {/* Titulo componente profesiones  */}
-            <div style={{marginTop: "70px", fontWeight: "bolder",display:'flex',justifyContent:'center' }}>
-                <h3 style={{backgroundColor: "black",borderRadius:"0.6rem",color:'whitesmoke',width:'20rem',paddingBottom:'2px'}}>
-                Elige una profesion:
+            <div style={{ marginTop: "70px", fontWeight: "bolder", display: 'flex', justifyContent: 'center', marginBottom: "70px" }}>
+                <h3 style={{ backgroundColor: "black", borderRadius: "0.6rem", color: 'whitesmoke', width: '20rem', paddingBottom: '2px' }}>
+                    Elige una profesion:
                 </h3>
             </div>
 
             {/* Listado de profesiones  */}
             <div className='profesiones'>
 
-                <Row 
-                    xs={1} 
+                <Row
+                    xs={1}
                     md={3}
                     lg={4}
                     className="g-4"
-                   
-                    >
-                {
-                    professions.map((prof) => (
-                        <Col className='g-1' key={`listado_de_profesiones_${prof.name}`}>
-                            
-                                <Link style={{}} to= {`/home/${prof.name}`}>
-                                  <Button 
-                                    value={prof.name[0].toUpperCase() + prof.name.slice(1)} 
-                                    variant="primary" 
-                                    style={{width: "10rem",height:'10rem'}}
-                                    onClick={(e)=>{dispatch(filterByProfession([e.target.value]))}}>
+
+                >
+                    {
+                        professions.map((prof) =>
+                            <Col key={prof.id} className='g-1'>
+                                <Link style={{}} to={`/home/${prof.name}`}>
+                                    <Button
+                                        value={prof.name[0].toUpperCase() + prof.name.slice(1)}
+                                        variant="primary"
+                                        style={{ width: "10rem", height: '10rem' }}
+                                        onClick={(e) => { dispatch(filterByProfession([e.target.value])) }}>
 
                                         {prof.name[0].toUpperCase() + prof.name.slice(1)}
 
-                                  </Button> 
+                                    </Button>
                                 </Link>
-                            
-                        </Col>
-                    ))
-                }
-                    
-                        
-                            <Link to='/home'>
-                                <Button 
-                                    variant="primary" 
-                                    style={{width: "10rem",height:'10rem'}}
-                                    onClick={(e)=>{ dispatch(filterByProfession('all')) }} >
 
-                                    <Card.Title>Todas las profesiones</Card.Title>
+                            </Col>
+                        )
+                    }
+                    <Link to='/home'>
+                        <Button
+                            variant="primary"
+                            style={{ width: "10rem", height: '10rem' }}
+                            onClick={(e) => { dispatch(filterByProfession('all')) }} >
 
-                                </Button>
-                            </Link>
-                        
-                    
+                            <Card.Title>Todas las profesiones</Card.Title>
+
+                        </Button>
+                    </Link>
                 </Row>
             </div>
-         </div>
+        </div>
     )
 }

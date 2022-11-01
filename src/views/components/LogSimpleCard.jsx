@@ -12,10 +12,10 @@ function LogSimpleCard(props) {
         logout()
         navigate('/')
     }
-    useEffect(() => { }, [user, usersimple])
+    useEffect(() => { if (user) { console.log(`${usersimple.clientId}`) } }, [user, usersimple])
 
     return (
-        usersimple && usersimple.email && <div>
+        user && usersimple && usersimple.email && <div>
             <div>
                 {usersimple.client ? "es cliente" : ""}
                 {usersimple.professional ? "es professional" : ""}

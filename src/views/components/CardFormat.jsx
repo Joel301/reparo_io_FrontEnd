@@ -1,17 +1,37 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Card, Button } from "react-bootstrap";
-
-function CardFormat({ worker }) {
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../state/ducks/cart/actions";
+function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert}) {
   let profToString = worker.professions?.map((e) => e.name);
-  // console.log(worker);
+  const reservedProf = useSelector(state=>state.cart.list)
+  
+  const dispatch = useDispatch()
+  const reserveOnClick =()=>{
+    
+    console.log(worker.id)
+    if(reservedProf.find((item)=>item.professional.id === worker.id)){
+      console.log("hola")
+        return setRepeatedAlert(repeatedAlert=true)
+    }
+
+    dispatch(addToCart(worker))
+   
+    estadoBoolean(estado=true)
+  
+   
+    
+  }
   return (
     <Card bg="light" style={{ width: "18rem", height: "22rem" }}>
-      <Card.Img
+      <div
         variant="top"
-        src={worker.profileImg}
-        style={{ maxHeight: "10rem" }}
+        
+        style={{ height: "10rem",width:'16.5rem',backgroundImage:`url(${worker.profileImg})`,  backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",borderRadius:'0.5rem',
+        backgroundPosition: "center"}}
       />
       <Card.Body>
         <Card.Title>{`${worker.firstName} ${worker.lastName}`}</Card.Title>
@@ -22,7 +42,7 @@ function CardFormat({ worker }) {
       <Card.Footer
         style={{ display: "flex", gap: "2rem", justifyContent: "center" }}
       >
-        <Button>Reservan</Button>
+        <Button onClick={()=> reserveOnClick()}>Reservar</Button>
         <Link to={`/detail/${worker.id}`}>
           <Button bg="primary">Ver Mas...</Button>
         </Link>
