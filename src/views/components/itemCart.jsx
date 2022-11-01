@@ -19,6 +19,7 @@ import { Container } from 'react-bootstrap'
 export default function ItemCart () {
 
     const items = useSelector((state) => state.cart.list)
+    console.log(items, "items")
 
     const dispatch = useDispatch()
 
@@ -52,20 +53,18 @@ export default function ItemCart () {
     }
 
     const costoTotal = (items) => {
-        let costo = 2000
         let counter = 0
 
         items.forEach((item) => {
-            counter = counter + (costo * item.quantity)
+            counter = counter + (item.professional.dayPrice * item.quantity)
         })
         return counter
     }
 
     const precioPorItem = (item) => {
         let total = 0
-        let costo = 2000
 
-        total = item.days.length * costo
+        total = item.days.length * item.professional.dayPrice
 
         return total
     }
@@ -92,13 +91,13 @@ export default function ItemCart () {
                     <td>
                         <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                Selecciona los dias
+                                Selecciona los dias 
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
                                 {
-                                    days.map((day) => {
-                                       return (<Dropdown.Item onClick={() => selectDays(item.professional.id, day.name)}>{day.name}</Dropdown.Item>)
+                                    item.professional.availableDays.map((day) => {
+                                       return (<Dropdown.Item onClick={() => selectDays(item.professional.id, day)}>{day}</Dropdown.Item>)
                                     })
                                 }
                             </Dropdown.Menu>

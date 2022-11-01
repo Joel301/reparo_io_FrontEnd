@@ -19,7 +19,7 @@ export default function Cart() {
                         <tr>
                         <th>Nombre y Apellido</th>
                         <th>Profesiones</th>
-                        <th>Selecciona los dias</th>
+                        <th>Selecciona entre los dias habiles</th>
                         <th>Dias Seleccionados</th>
                         <th>Numero de dias</th>
                         <th>Precio</th>
