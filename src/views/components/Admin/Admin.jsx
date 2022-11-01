@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 //Components
 import EditarProfesional from './EditarProfesional'
-import CrearProfesional from './CrearProfesional'
+import Ordenes from './Ordenes'
 import EditarCliente from './EditarCliente'
 import CrearProfesion from './CrearProfesion'
 
@@ -45,7 +45,7 @@ export default function Admin () {
                     <Button variant="primary" onClick={onChangeComponent} value='editarProfesional' style={{margin: "2.5%"}}>
                         Editar Profesionales
                     </Button>
-                    <Button variant="primary" onClick={onChangeComponent} value='crearProfesional' style={{margin: "2.5%"}}>
+                    <Button variant="primary" onClick={onChangeComponent} value='ordenes' style={{margin: "2.5%"}}>
                         Crear Profesionales
                     </Button>
                     <Button variant="primary" onClick={onChangeComponent} value='editarCliente' style={{margin: "2.5%"}}>
@@ -61,8 +61,8 @@ export default function Admin () {
                 component === 'editarProfesional' ?
                 <EditarProfesional /> 
                 : 
-                component === 'crearProfesional' ?
-                <CrearProfesional />
+                component === 'ordenes' ?
+                <Ordenes />
                 :
                 component === 'editarCliente' ?
                 <EditarCliente />
