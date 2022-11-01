@@ -55,6 +55,12 @@ export default function cartReducer (state=initialState, action) {
                     list: [...updatedList]
                 }
         }
+
+        case 'POST_CART':
+            return {
+                ...state
+                
+            }
               
 
 

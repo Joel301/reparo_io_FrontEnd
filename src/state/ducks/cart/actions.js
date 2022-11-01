@@ -1,3 +1,4 @@
+import axios from "axios";
 
   export function addToCart (worker){
     return async function(dispatch){
@@ -66,5 +67,18 @@ return async function (dispatch){
         console.log(error);
     }
 }
+}
 
+export function postCart(clientId, professionalId, days){
+    return async function(dispatch){
+        try {
+            const postCarrito = await axios.post('https://reparoiobackend-main.up.railway.app/api/cart'+ clientId + professionalId + days)
+            return dispatch({
+                type: 'POST_CART',
+                payload: postCarrito
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
