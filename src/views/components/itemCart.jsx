@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 
 //Actions
-import { deleteItemCart, addDayToProf, removeDayFromProf } from "../../state/ducks/cart/actions"
+import { deleteItemCart, addDayToProf, removeDayFromProf, postCart } from "../../state/ducks/cart/actions"
 
 //Bootstrap
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -33,6 +33,10 @@ export default function ItemCart () {
 
     const deleteItem = (id) => {
         dispatch(deleteItemCart(id))
+    }
+
+    const postCarrito = (id, professionlId, days) => {
+         dispatch(postCart(id, professionlId, days))
     }
 
     const deleteDay = ( id, day ) => {
@@ -129,6 +133,7 @@ export default function ItemCart () {
                         <CloseButton variant="white" onClick={() => deleteItem(item.professional.id)} />
                     </td>
                     </tr>
+                    
                 </tbody>
             </>)
             })
@@ -140,12 +145,13 @@ export default function ItemCart () {
             <Badge pill bg="warning" text="dark" style={{width: "150px", height: "40px", fontSize: "15px"}}>
                 Costo Total: ${costoTotal(items)}
             </Badge>{' '}
-
             <Container >
                 <Button variant="success">
                     Pasarela de Pago
                 </Button> 
             </Container>
+
+            
         </>
     )
 }
