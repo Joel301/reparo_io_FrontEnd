@@ -52,7 +52,7 @@ export default function FormClient() {
     const currentError = validateFormClient(input)
     setErrors(currentError)
 
-    console.log(input)
+    // console.log(input)
   }
 
   return (
@@ -120,7 +120,7 @@ export default function FormClient() {
         </i>
       </Form.Group>
       {errors.password && <span className="errors">{errors.password}</span>}
-      <Form.Group className="mb-2" controlId="formBasicPassword">
+      <Form.Group className="mb-2" controlId="formBasicPassword_confirm">
         <Form.Control
           ref={confirmPasswordRef}
           type={confirmShowPwd ? "text" : "password"}
