@@ -1,24 +1,40 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { Card, ListGroup, Dropdown, Button, Modal, Badge, Toast, ToastContainer } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { addDayToProf,deleteItemCart,removeDayFromProf } from "../../state/ducks/cart/actions";
-function CartOffItem({ professional, totalDays, days, exitCanvas, }) {
-  let { firstName, lastName, professions,id } = professional;
+
+//React
+import React from "react"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+
+//Actions
+import { addDayToProf,deleteItemCart,removeDayFromProf } from "../../state/ducks/cart/actions"
+
+//Bootstrap
+import { Card, ListGroup, Dropdown, Button, Modal, Badge, Toast, ToastContainer } from "react-bootstrap"
+
+
+
+export default function CartOffItem({ professional, totalDays, days, exitCanvas, }) {
+
+  let { firstName, lastName, professions, id } = professional;
+
   const [noDaysAlert,setNoDaysAlert] = useState(false) // este estado se creo para mostrar el mensaje de error si ningun dia fue seleccionado
+  
   let dispatch = useDispatch()
+  
   const [ alert , setAlert ] = useState({
     day:'',
     show:false
   })
+  
   const noDaysHandler = ()=>{
     if(days.length === 0 && exitCanvas == true){
       return setNoDaysAlert(true)
     }
+
     return setNoDaysAlert(false)
-    
   } 
-  let stringProfessions = professions.map((prof) => prof.name).join(" ,");
+  
+  let stringProfessions = professions.map((prof) => prof.name).join(" ,")
+  
   const week = [
     "Lunes ",
     "Martes ",
@@ -27,13 +43,17 @@ function CartOffItem({ professional, totalDays, days, exitCanvas, }) {
     "Viernes ",
     "Sabado ",
   ];
+  
   const daysHandler = (e)=>{
-    if(days.includes(e.target.innerText)) return setAlert({day:`${e.target.innerText}`,show:true});
+    if(days.includes(e.target.innerText)) return setAlert({day:`${e.target.innerText}`,show:true})
+
     dispatch(addDayToProf(id ,e.target.innerText))
-}
-useEffect(()=>{
-  noDaysHandler()
-})
+  }
+
+  useEffect(()=>{
+    noDaysHandler()
+  })
+
 
   return (
     <Card bg="info" style={{ width: "18rem" }}>
@@ -97,4 +117,3 @@ useEffect(()=>{
   );
 }
 
-export default CartOffItem;

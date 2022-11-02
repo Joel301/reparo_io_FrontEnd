@@ -1,26 +1,39 @@
+
+//React
 import React, { useEffect } from "react"
 import { useState } from "react"
-import { Button, Badge, Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap"
-// import FormProfession from "./Formularios/FormProfession"
-// import FormClient from "./Formularios/FormClient"
 import { Link } from "react-router-dom"
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import logoReparoio from "../pages/imgs/logo-reparoio.png"
 import { useDispatch, useSelector } from "react-redux"
+
+//Redux
 import { getAllProfessionals } from "../../state/ducks/professionals/actions"
+
+//Bootstrap Material UI
+import { Button, Badge, Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap"
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+//Components
 import CartOffCanvas from "./CartOffCanvas"
 import FormRegistro from "./Formularios/FormRegistro"
 import LogSimpleCard from "./LogSimpleCard";
+
+//Image
+import logoReparoio from "../pages/imgs/logo-reparoio.png"
+
+
+
 function HeaderNavBar() {
+
   const dispatch = useDispatch()
+
   const [showFormprof, setshowFormprof] = useState(false)
   const [showFormClient, setshowFormClient] = useState(false)
+
   const totalReserved = useSelector(state => state.cart.list)
   const total = useSelector(state => state.cart.total)
   const profesionales = useSelector((state) => state.professionals.allProfessionals)
+  
   const handleShow = (e) => {
-
-    console.log(e.target.textContent);
     if (e.target.textContent === "Cliente") setshowFormClient(true)
     if (e.target.textContent === "Profesional") setshowFormprof(true)
   }
@@ -31,8 +44,6 @@ function HeaderNavBar() {
 
   }
   useEffect(() => {
-    console.log(total)
-    console.log(totalReserved.length)
     if (profesionales[0] === undefined) {
       dispatch(getAllProfessionals())
     }
@@ -41,11 +52,6 @@ function HeaderNavBar() {
   const showProf = (boolean) => setshowFormprof(boolean)
 
   return (
-    /////// esto es con react-bootstrap
-    // desde el archivo ../../node_modules/bootstrap/_variables.scss cambio la paleta de colores
-    //
-
-
 
     <Navbar sticky="top" expand="md" bg="primary" variant="dark">
       <Container>
@@ -95,7 +101,6 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como prodesional</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {/* <FormProfession showProf={showProf} state={showFormprof} /> */}
           <FormRegistro />
         </Offcanvas.Body>
       </Offcanvas>
@@ -104,7 +109,6 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como cliente</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {/* <FormClient /> */}
           <FormRegistro isClient={true} />
         </Offcanvas.Body>
       </Offcanvas>
