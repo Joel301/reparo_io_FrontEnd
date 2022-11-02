@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProfessionals } from "../../state/ducks/professionals/actions";
 import { getClientId } from "../../state/ducks/clients/actions";
 import CartOffCanvas from "./CartOffCanvas";
+import { fakeClient } from "./DetailClient";
 function HeaderNavBar() {
   const dispatch = useDispatch();
   const [loggedClient, setLoggedClient] = useState({});
@@ -30,7 +31,7 @@ function HeaderNavBar() {
   const profesionales = useSelector(
     (state) => state.professionals.allProfessionals
   );
-  const client = useSelector((state) => state.client);
+  const client = fakeClient;
 
   const handleShow = (e) => {
     console.log(e.target.textContent);
