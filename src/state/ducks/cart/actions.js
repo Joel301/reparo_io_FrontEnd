@@ -1,8 +1,5 @@
 import axios from "axios";
 
-import axios from "axios"
-
-
   export function addToCart (worker){
     console.log(worker)
     return async function(dispatch){
@@ -49,22 +46,22 @@ export function deleteItemCart(item){
 }
 
 export function addDayToProf(id,day){
-return async function(dispatch){
-    try {
-        return dispatch({
-            type:'ADD_DAY_TO_PROF',
-            payload:{
-                id,
-                day
-            }
-        })
-        
-    } catch (error) {
-        console.log(error)
+    return async function(dispatch){
+        try {
+            return dispatch({
+                type:'ADD_DAY_TO_PROF',
+                payload:{
+                    id,
+                    day
+                }
+            })
+            
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 
-}
 export function removeDayFromProf(id,day){
     return async function (dispatch){
         try {
@@ -80,6 +77,21 @@ export function removeDayFromProf(id,day){
         }
     }
 }
+
+export function postCart(body){
+    console.log(body)
+    return async function(dispatch){
+        try {
+            const postCarrito = await axios.post('https://reparoiobackend-main.up.railway.app/api/orders', body)
+            return dispatch({
+                type: 'POST_CART',
+                payload: body
+            })
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 export function marcadoPago(body) {
@@ -91,18 +103,3 @@ export function marcadoPago(body) {
         }
     }
 }
-
-export function postCart(body){
-    return async function(dispatch){
-        try {
-            const postCarrito = await axios.post('https://reparoiobackend-main.up.railway.app/api/orders', body)
-            return dispatch({
-                type: 'POST_CART',
-                payload: body
-            })
-            } catch (error) {
-            console.log(error)
-        }
-    }
-}
-
