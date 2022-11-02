@@ -1,7 +1,7 @@
 
 //React Redux
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -11,12 +11,14 @@ import CartOffItem from './CartOffItem'
 
 //Bootstrap
 import { Offcanvas, Button } from 'react-bootstrap'
+import { postingCart } from '../../state/ducks/cart/actions'
 
 
 
 export default function CartOffCanvas({ estado, estadoBoolean }) {
   
   const cartItems = useSelector(state=> state.cart.list)
+  const dispatch = useDispatch()
 
   const [exitCanvas, setExit] = useState(false)
 
@@ -54,7 +56,8 @@ export default function CartOffCanvas({ estado, estadoBoolean }) {
             })
         }
       
-        <Button variant='success' onClick={()=> navigate('/cart')}>Realizar Compras</Button>
+        <Button variant='success' onClick={()=> {navigate('/cart')
+      return dispatch(postingCart(cartItems))}}>Realizar Compras</Button>
       </Offcanvas.Body>
 
     </Offcanvas>
