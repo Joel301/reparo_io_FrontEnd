@@ -5,7 +5,8 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 
 //Actions
-import { deleteItemCart, addDayToProf, removeDayFromProf, marcadoPago } from "../../state/ducks/cart/actions"
+
+import { deleteItemCart, addDayToProf, removeDayFromProf, marcadoPago, postCart } from "../../state/ducks/cart/actions"
 
 //Bootstrap
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -19,7 +20,23 @@ import Form from 'react-bootstrap/Form'
 
 
 export default function ItemCart () {
-    
+
+    const cliente = {
+        id: "4264b59d-7df9-4669-869f-8a7340c51f2c",
+        firstName: "primernombre",
+        lastName: "apeido",
+        phoneNumber: "kulikitakati",
+        address: "kulikitakati",
+        email: "kulikittaka@sacatiki.com",
+        password: "1234567",
+        profileImg: "https://img.icons8.com/fluency-systems-regular/96/000000/guest-male.png",
+        enabled: true,
+        cart: {
+          id: "531b2e53-c73d-478d-8ebd-610e584ab27a"
+        }
+      }
+
+
     const items = useSelector((state) => state.cart.list)
     const [component, setComponent] = useState('')
     const [show, setShow] = useState(false);
@@ -27,6 +44,7 @@ export default function ItemCart () {
   const handleClose = () => setShow(false);
 
     const dispatch = useDispatch()
+    
 
     // const days = [{name: 'Lunes', id: 1},
     //             {name: 'Martes', id: 2},
@@ -38,6 +56,19 @@ export default function ItemCart () {
 
     const deleteItem = (id) => {
         dispatch(deleteItemCart(id))
+    }
+    
+    const postItem = items.map(el => {
+        return {
+            clientId: cliente.id,
+            professionalId: el.professional.id,
+            days: el.days
+        }
+    })
+
+    const postCarrito = (e) => {
+       dispatch(postCart({cartId: "5b18ccd4-7342-457a-93a7-0814974967a6"}))
+
     }
 
     const deleteDay = ( id, day ) => {
@@ -149,9 +180,10 @@ export default function ItemCart () {
                         ${precioPorItem(item)}
                     </td>
                     <td>
-                        <CloseButton variant="white" onClick={() => deleteItem(item.professional.id)} />
+                        <CloseButton variant="white" onClick={() => deleteItem(item)} />
                     </td>
                     </tr>
+                    
                 </tbody>
             </>)
             })
@@ -163,7 +195,6 @@ export default function ItemCart () {
             <Badge pill bg="warning" text="dark" style={{width: "150px", height: "40px", fontSize: "15px"}}>
                 Costo Total: ${costoTotal(items)}
             </Badge>{' '}
-
             <Container >
                 <Button variant="success" value='resumen' onClick={onChangeComponent} >
                     Resumen de la compra

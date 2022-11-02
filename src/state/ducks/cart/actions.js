@@ -1,8 +1,10 @@
+import axios from "axios";
 
 import axios from "axios"
 
 
   export function addToCart (worker){
+    console.log(worker)
     return async function(dispatch){
         try {
             const itemDeCompra = {
@@ -13,6 +15,13 @@ import axios from "axios"
                 },
               
             }
+            const response = await axios.post("https://reparoiobackend-main.up.railway.app/api/cart", {
+                clientId:"5b18ccd4-7342-457a-93a7-0814974967a6",
+                professionalId: worker.id,
+                days: worker.availableDays,
+            })
+            itemDeCompra.idDb = response.data.newCartDetail.id;
+            console.log(itemDeCompra.idDb, "itemdeCompra")
             return dispatch({
                 type:'ADD_TO_CART',
                 payload: itemDeCompra
@@ -25,12 +34,13 @@ import axios from "axios"
     }
   }
 
-export function deleteItemCart(id){
+export function deleteItemCart(item){
     return async function (dispatch){
         try {
+            await axios.delete(`https://reparoiobackend-main.up.railway.app/api/cart/${item.idDb}`)
             return dispatch({
                 type:"DELETE_ITEM_CART",
-                payload:id
+                payload: item.professional.id
             })
         } catch (error) {
             console.log(error)
@@ -70,14 +80,29 @@ export function removeDayFromProf(id,day){
         }
     }
 }
+}
 
 export function marcadoPago(body) {
-    console.log(body, "body action")
     return async function (dispatch) {
         try {
             await axios.get('http://localhost:3001/home/mercado', body)
-        } catch (error) {
+            } catch (error) {
             console.log(error)
         }
     }
 }
+
+export function postCart(body){
+    return async function(dispatch){
+        try {
+            const postCarrito = await axios.post('https://reparoiobackend-main.up.railway.app/api/orders', body)
+            return dispatch({
+                type: 'POST_CART',
+                payload: body
+            })
+            } catch (error) {
+            console.log(error)
+        }
+    }
+}
+

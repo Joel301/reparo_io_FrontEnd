@@ -11,17 +11,20 @@ import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import store from "./state/store"
+import { AuthProvider } from "./Context/AuthContext";
 
 axios.defaults.baseURL = "https://reparoiobackend-main.up.railway.app" || "http://localhost:3001/"
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
+    <AuthProvider>
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+      </Provider>
+    </AuthProvider>
   </React.StrictMode>
 );
 
