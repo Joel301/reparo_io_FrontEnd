@@ -9,7 +9,7 @@ import adminsReducer from "./admins/reducer";
 const reducers = combineReducers({
   professionals: rootReducer,
   detail: detailReducer,
-  clients: clientReducer,
+  client: clientReducer,
   cart: cartReducer,
   admins: adminsReducer
 })

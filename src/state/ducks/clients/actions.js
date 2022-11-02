@@ -18,7 +18,7 @@ export function postClient(payload){
 export function getClientId(id){
     return async function(dispatch){
         try {
-            const getClient = await axios.get(`https://reparoiobackend-develop.up.railway.app/home/clients/${id}`)
+            const getClient = await axios.get(`/home/clients/${id}`)
             console.log(getClient)
             return dispatch({
                 type: 'GET_CLIENT',
