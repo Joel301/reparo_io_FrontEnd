@@ -37,21 +37,14 @@ export default function ItemCart () {
 
 
     const items = useSelector((state) => state.cart.list)
+
     const [component, setComponent] = useState('')
     const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+    const handleClose = () => setShow(false);
 
     const dispatch = useDispatch()
-    
 
-    // const days = [{name: 'Lunes', id: 1},
-    //             {name: 'Martes', id: 2},
-    //             {name: 'Miercoles', id: 3},
-    //             {name: 'Jueves', id: 4},
-    //             {name: 'Viernes', id: 5},
-    //             {name: 'Sabado', id: 6},
-    //             ]
 
     const deleteItem = (id) => {
         dispatch(deleteItemCart(id))
@@ -66,8 +59,10 @@ export default function ItemCart () {
     })
 
     const postCarrito = (e) => {
-       dispatch(postCart({cartId: "5b18ccd4-7342-457a-93a7-0814974967a6"}))
-
+        
+        setComponent("resumen")
+        setShow(true)
+        dispatch(postCart({cartId: "5b18ccd4-7342-457a-93a7-0814974967a6"}))
     }
 
     const deleteDay = ( id, day ) => {
@@ -89,10 +84,11 @@ export default function ItemCart () {
 
     const costoTotal = (items) => {
         let counter = 0
-
-        items.forEach((item) => {
-            counter = counter + (item.professional.dayPrice * item.quantity)
+        
+        items.map((item) => {
+            counter = counter + (item.professional.dayPrice * item.days.length)
         })
+
         return counter
     }
 
@@ -102,12 +98,6 @@ export default function ItemCart () {
         total = item.days.length * item.professional.dayPrice
 
         return total
-    }
-
-    const onChangeComponent = (e) => {
-        e.preventDefault()
-        setComponent(e.target.value)
-        setShow(true)
     }
 
     const payItems = (profesionales) => {
@@ -122,6 +112,7 @@ export default function ItemCart () {
 
         dispatch(marcadoPago(itemsMercadoPago))
     }
+
     return (
         <>
         {
@@ -194,8 +185,8 @@ export default function ItemCart () {
             <Badge pill bg="warning" text="dark" style={{width: "150px", height: "40px", fontSize: "15px"}}>
                 Costo Total: ${costoTotal(items)}
             </Badge>{' '}
-            <Container >
-                <Button variant="success" value='resumen' onClick={onChangeComponent} >
+            <Container>
+                <Button variant="success" value='resumen' onClick={() => postCarrito(postItem)}>
                     Resumen de la compra
                 </Button> 
             </Container>
