@@ -53,8 +53,7 @@ export default function ItemCart () {
     const postItem = items.map(el => {
         return {
             clientId: cliente.id,
-            professionalId: el.professional.id,
-            days: el.days
+            
         }
     })
 
