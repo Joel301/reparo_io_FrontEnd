@@ -1,7 +1,7 @@
 import axios from "axios";
 
   export function addToCart (worker){
-    console.log(worker)
+    console.log(worker, "Soy workeeer")
     return async function(dispatch){
         try {
             const itemDeCompra = {
@@ -15,7 +15,7 @@ import axios from "axios";
             const response = await axios.post("https://reparoiobackend-main.up.railway.app/api/cart", {
                 clientId:"5b18ccd4-7342-457a-93a7-0814974967a6",
                 professionalId: worker.id,
-                days: worker.availableDays,
+                days: []
             })
             itemDeCompra.idDb = response.data.newCartDetail.id;
             console.log(itemDeCompra.idDb, "itemdeCompra")
@@ -79,7 +79,7 @@ return async function (dispatch){
 }
 
 export function postCart(body){
-    console.log(body)
+    console.log(body, "soy el body y se esta enviando")
     return async function(dispatch){
         try {
             const postCarrito = await axios.post('https://reparoiobackend-main.up.railway.app/api/orders', body)

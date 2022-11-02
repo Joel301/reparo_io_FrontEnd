@@ -57,8 +57,7 @@ export default function ItemCart () {
     
         return {
             clientId: cliente.id,
-            professionalId: el.professional.id,
-            days: el.days
+            
         }
     }
 
