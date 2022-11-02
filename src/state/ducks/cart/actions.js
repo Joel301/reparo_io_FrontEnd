@@ -46,22 +46,22 @@ export function deleteItemCart(item){
 }
 
 export function addDayToProf(id,day){
-return async function(dispatch){
-    try {
-        return dispatch({
-            type:'ADD_DAY_TO_PROF',
-            payload:{
-                id,
-                day
-            }
-        })
-        
-    } catch (error) {
-        console.log(error)
+    return async function(dispatch){
+        try {
+            return dispatch({
+                type:'ADD_DAY_TO_PROF',
+                payload:{
+                    id,
+                    day
+                }
+            })
+            
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 
-}
 export function removeDayFromProf(id,day){
 return async function (dispatch){
     try {
@@ -76,7 +76,9 @@ return async function (dispatch){
         console.log(error);
     }
 }
+
 }
+
 
 export function postCart(body){
     console.log(body)
@@ -93,3 +95,15 @@ export function postCart(body){
         }
     }
 }
+
+
+export function marcadoPago(body) {
+    return async function (dispatch) {
+        try {
+            await axios.get('http://localhost:3001/home/mercado', body)
+            } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
