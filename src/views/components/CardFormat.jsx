@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../state/ducks/cart/actions";
-function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert}) {
+function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert, client}) {
   let profToString = worker.professions?.map((e) => e.name);
   const reservedProf = useSelector(state=>state.cart.list)
   
@@ -17,7 +17,7 @@ function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert
     }
     
     console.log(worker, "worker")
-    dispatch(addToCart(worker))
+    dispatch(addToCart(worker, client))
    
     estadoBoolean(estado=true)
   
