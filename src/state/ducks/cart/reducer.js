@@ -23,6 +23,13 @@ export default function cartReducer (state=initialState, action) {
                     }
         }
 
+        case 'POSTING_CART': {
+            console.log(action.payload)
+            return {
+                ...state
+            }
+        }
+
 
         case 'ADD_DAY_TO_PROF':{
 
@@ -55,6 +62,12 @@ export default function cartReducer (state=initialState, action) {
                     list: [...updatedList]
                 }
         }
+
+        case 'POST_CART':
+            return {
+                ...state
+                
+            }
               
 
 

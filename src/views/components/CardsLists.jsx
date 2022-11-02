@@ -33,6 +33,7 @@ function CardsList() {
   );
 
   const professions = useSelector((state) => state.professionals.professions);
+  const client = useSelector(state => state.clients)
 
   const [orden, setOrden] = useState("");
 
@@ -138,7 +139,7 @@ function CardsList() {
 
     dispatch(filterByProfession(filterByProf));
 
-    console.log(filterByProf);
+    // console.log(filterByProf);
   }, [filterByProf]);
 
   return (
@@ -284,6 +285,7 @@ function CardsList() {
                   repeatedAlert={repeatProfAlert}
                   worker={e}
                   key={e.id}
+                  client = {client}
                 />
               </Col>
             );

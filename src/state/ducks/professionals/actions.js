@@ -1,28 +1,28 @@
 import axios from "axios";
 
+//authentincation :P
 
-export function filterByProfession(payload){
-    console.log(payload);
+
+export function filterByProfession(payload) {
+    // console.log(payload);
     return {
-        type:'FILTER_BY_PROFESSION',
+        type: 'FILTER_BY_PROFESSION',
         payload
     }
-} 
+}
 
-export function filterByReputation(payload){
+export function filterByReputation(payload) {
     return {
         type: 'FILTER_BY_REPUTATION',
-        payload
-    }   
-} 
+        payload,
+    }
+}
 
 
 export function getAllProfessionals() {
     return async function (dispatch) {
         try {
             const getAll = await axios.get('/home/professionals')
-
-
             return dispatch({
                 type: 'GET_ALL_PROFESSIONALS',
                 payload: getAll.data
@@ -69,13 +69,32 @@ export function getAllProfessions() {
     }
 }
 
-export function postProfessionals(payload){
-    return async function(dispatch){
+export function postProfessionals(payload) {
+    const POSTURL = "/home/user"
+    console.log(payload)
+    return async function (dispatch) {
         try {
-            const postProfessionals = await axios.post('/home/professionals', payload)
+            const postProfessionals = await axios.post(
+                POSTURL, { ...payload, isProfessional: true })
             return dispatch({
                 type: 'POST_PROFESSIONAL',
                 postProfessionals
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+export function postlClient(payload) {
+    const POSTURL = "/home/user"
+    console.log({ ...payload, isClient: true })
+    return async function (dispatch) {
+        try {
+            const postClients = await axios.post(
+                POSTURL, { ...payload, isClient: true })
+            return dispatch({
+                type: 'POST_CLIENT',
+                postClients
             })
         } catch (error) {
             console.log(error)

@@ -1,73 +1,76 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import {
-  Button,
-  Badge,
-  Container,
-  Nav,
-  Navbar,
-  NavDropdown,
-  Offcanvas,
-  Dropdown,
-} from "react-bootstrap";
+
+
+
+//React
+import React, { useEffect } from "react"
+import { useState } from "react"
+import { Link,useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+
+//Redux
+import { getAllProfessionals } from "../../state/ducks/professionals/actions"
+import { getClientId } from "../../state/ducks/clients/actions";
+//Bootstrap Material UI
+import { Button, Badge, Container, Nav, Navbar, NavDropdown, Offcanvas, Dropdown } from "react-bootstrap"
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+//Components
+import CartOffCanvas from "./CartOffCanvas"
+import FormRegistro from "./Formularios/FormRegistro"
+import LogSimpleCard from "./LogSimpleCard";
 import FormProfession from "./Formularios/FormProfession";
 import FormClient from "./Formularios/FormClient";
-import { Link, useNavigate } from "react-router-dom";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import logoReparoio from "../pages/imgs/logo-reparoio.png";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProfessionals } from "../../state/ducks/professionals/actions";
-import { getClientId } from "../../state/ducks/clients/actions";
-import CartOffCanvas from "./CartOffCanvas";
-import { fakeClient } from "./DetailClient";
-function HeaderNavBar() {
-  const dispatch = useDispatch();
-  const [loggedClient, setLoggedClient] = useState({});
-  const [showFormprof, setshowFormprof] = useState(false);
-  const [showFormClient, setshowFormClient] = useState(false);
-  const totalReserved = useSelector((state) => state.cart.list);
-  const navigate = useNavigate();
-  const total = useSelector((state) => state.cart.total);
-  const profesionales = useSelector(
-    (state) => state.professionals.allProfessionals
-  );
-  const client = fakeClient;
+//Image
+import logoReparoio from "../pages/imgs/logo-reparoio.png"
 
+import { fakeClient } from "./DetailClient";
+
+function HeaderNavBar() {
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [showFormprof, setshowFormprof] = useState(false)
+  const [showFormClient, setshowFormClient] = useState(false)
+  const [loggedClient, setLoggedClient] = useState({});
+  const totalReserved = useSelector(state => state.cart.list)
+  const total = useSelector(state => state.cart.total)
+  const profesionales = useSelector((state) => state.professionals.allProfessionals)
+  const client = fakeClient;
   const handleShow = (e) => {
-    console.log(e.target.textContent);
-    if (e.target.textContent === "Cliente") setshowFormClient(true);
-    if (e.target.textContent === "Profesional") setshowFormprof(true);
-  };
+    if (e.target.textContent === "Cliente") setshowFormClient(true)
+    if (e.target.textContent === "Profesional") setshowFormprof(true)
+  }
 
   const handleClose = () => {
-    setshowFormClient(false);
-    setshowFormprof(false);
-  };
+    setshowFormClient(false)
+    setshowFormprof(false)
+
+  }
   useEffect(() => {
-    console.log(total);
-    console.log(totalReserved.length);
     if (profesionales[0] === undefined) {
-      dispatch(getAllProfessionals());
+      dispatch(getAllProfessionals())
     }
-  }, []);
+  }, [])
+
 
   const showProf = (boolean) => setshowFormprof(boolean);
 
   return (
-    /////// esto es con react-bootstrap
-    // desde el archivo ../../node_modules/bootstrap/_variables.scss cambio la paleta de colores
-    //
+
 
     <Navbar sticky="top" expand="md" bg="primary" variant="dark">
       <Container>
         <Container>
           <Link to="/">
+
             <img style={{ width: "5%" }} src={logoReparoio} />
+
             <Navbar.Brand>Reparo.io</Navbar.Brand>
           </Link>
           <Link to="/home">
             <Navbar.Brand>Home</Navbar.Brand>
           </Link>
+          <LogSimpleCard />
         </Container>
         <Navbar.Toggle />
 
@@ -148,6 +151,7 @@ function HeaderNavBar() {
                 </Badge>
               </Button>
             </Link>
+
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -161,7 +165,7 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como prodesional</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <FormProfession showProf={showProf} state={showFormprof} />
+          <FormRegistro />
         </Offcanvas.Body>
       </Offcanvas>
       <Offcanvas
@@ -174,7 +178,7 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como cliente</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <FormClient />
+          <FormRegistro isClient={true} />
         </Offcanvas.Body>
       </Offcanvas>
     </Navbar>
