@@ -63,20 +63,22 @@ export function addDayToProf(id,day){
 }
 
 export function removeDayFromProf(id,day){
-    return async function (dispatch){
-        try {
-            return dispatch({
-                type:'REMOVE_DAY_FROM_PROF',
-                payload:{
-                    id,
-                    day
-                }
-            })         
-        } catch (error) {
-            console.log(error);
-        }
+return async function (dispatch){
+    try {
+        return dispatch({
+            type:'REMOVE_DAY_FROM_PROF',
+            payload:{
+                id,
+                day
+            }
+        })         
+    } catch (error) {
+        console.log(error);
     }
 }
+
+}
+
 
 export function postCart(body){
     console.log(body)
@@ -94,6 +96,7 @@ export function postCart(body){
     }
 }
 
+
 export function marcadoPago(body) {
     return async function (dispatch) {
         try {
@@ -103,3 +106,4 @@ export function marcadoPago(body) {
         }
     }
 }
+
