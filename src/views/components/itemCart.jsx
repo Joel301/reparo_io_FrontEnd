@@ -72,7 +72,8 @@ export default function ItemCart () {
 
 
     const items = useSelector((state) => state.cart.list)
-    const order=useSelector((state) => state.cart.order)
+    const order = useSelector((state) => state.cart.order)
+    const url = useSelector((state) => state.cart.url)
 
     let id = order? order.newOrder.id : ""
 
@@ -144,20 +145,27 @@ export default function ItemCart () {
 
         let itemsMercadoPago = profesionales.map((item) => {
             return {
+                professionalId: item.idDb,
+                clientId: cliente.id,
                 title: item.professional.email,
                 price: (item.days?.length * item.professional.dayPrice),
                 quantity: item.quantity,
             }
         })
+        console.log(url, "urldepago")
 
         dispatch(marcadoPago(itemsMercadoPago))
     }
 
     //PARA BORRAR LA ORDEN DE COMPRA DEL HISTORIAL DEL CLIENT
     const deleteOrderHandler = (orderId) => {
+        handleClose()
         dispatch(deleteOrder(orderId))
         handleClose()
     }
+
+
+
 
     return (
         <>
@@ -232,16 +240,23 @@ export default function ItemCart () {
                 Costo Total: ${costoTotal(items)}
             </Badge>{' '}
             <Container>
-                <Button variant="success" value='resumen' onClick={() => postCarrito(postItem)}>
-                    Resumen de la compra
-                </Button> 
+                {
+                    items.length > 0 
+                    ? 
+                    <Button variant="success" value='resumen'  onClick={() => postCarrito(postItem)}>
+                        Resumen de la compra
+                    </Button> 
+                    :
+                     <></>
+                }
+                
             </Container>
 
             {
                 component === 'resumen' ?
                 <>
                     <Modal show={show}  animation={false}>
-                        <Modal.Header closeButton>
+                        <Modal.Header >
                             <Modal.Title>Resumen de la Compra</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
@@ -257,7 +272,6 @@ export default function ItemCart () {
                                 {
                                     items ?
                                     items.map((item) => {
-                                        console.log(item, "item")
                                         return (
                                             <tbody>
                                                 <tr>
@@ -295,11 +309,11 @@ export default function ItemCart () {
                         <Modal.Footer style={{display: "flex", justifyContent: "flex-start"}}>
                             <h5>Direccion: direccion del cliente</h5>
                             <br/>
-                            <Form.Label htmlFor="inputPassword5">¿ Desea cambiar de direccion ? Indique aqui...</Form.Label>
+                            <Form.Label htmlFor="inputCambiarDireccion">¿ Desea cambiar de direccion ? Indique aqui...</Form.Label>
                             <Form.Control
-                                type="password"
-                                id="inputPassword5"
-                                aria-describedby="passwordHelpBlock"
+                                type="text"
+                                id="inputCambiarDireccion"
+                                placeholder="Nueva direccion..."
                             />
                         </Modal.Footer>
 
@@ -308,8 +322,10 @@ export default function ItemCart () {
                         </Modal.Footer>
 
                         <Modal.Footer>
-                            <Button variant='danger' onClick={()=>deleteOrderHandler(id)}>Cancelar compra</Button>
-                            <Button variant="primary" onClick={()=> payItems(items)}>
+                            <Button variant='danger' onClick={() => deleteOrderHandler(id)}>
+                                Cancelar compra
+                            </Button>
+                            <Button variant="primary" onClick={() => payItems(items)}>
                                 Pagar
                             </Button>
                         </Modal.Footer>

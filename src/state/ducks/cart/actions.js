@@ -72,7 +72,6 @@ export function removeDayFromProf(id, day) {
 }
 
 export function postCart(body) {
-  console.log(body, "soy el body y se esta enviando");
   return async function (dispatch) {
     try {
       const postCarrito = await axios.post(
@@ -92,11 +91,16 @@ export function postCart(body) {
 export function marcadoPago(body) {
   return async function (dispatch) {
     try {
-      await axios.post("http://localhost:3001/home/mercado", body);
+      const response = await axios.post("http://localhost:3001/home/mercado", body)
+      console.log(response, "response")
+      return dispatch({
+        type: "URL_MERCADO_PAGO",
+        payload: response
+      })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 }
 
 export function postingCart(cartList) {
