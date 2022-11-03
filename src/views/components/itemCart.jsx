@@ -17,6 +17,41 @@ import Modal from 'react-bootstrap/Modal'
 import Table from 'react-bootstrap/Table'
 import Form from 'react-bootstrap/Form'
 
+import axios from "axios"
+
+//PARA REMOVER DIAS EN DBCART
+async function removeDay (day,idDb) {
+    try {
+        await axios.patch(
+            `https://reparoiobackend-main.up.railway.app/api/cart/${idDb}`,
+            {
+              type: "remove",
+              day,
+            }
+          );
+         
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//PARA AGREGAR DIAS EN DBCART
+async function addDay (day,idDb) {
+    try {
+        await axios.patch(
+            `https://reparoiobackend-main.up.railway.app/api/cart/${idDb}`,
+            {
+              type: "add",
+              day,
+            }
+          );
+         
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 export default function ItemCart () {
 
@@ -67,11 +102,14 @@ export default function ItemCart () {
         dispatch(postCart({cartId: "14b34440-2abc-4a80-a2dd-3865481ea174"}))
     }
 
-    const deleteDay = ( id, day ) => {
-        dispatch(removeDayFromProf( id, day ))
+    const deleteDay = ( id, day, idDb) => {
+        removeDay(day,idDb)
+        dispatch(removeDayFromProf( id, day))
+
     }
 
-    const selectDays = (id, day) => {
+    const selectDays = (id, day, idDb) => {
+        addDay(day,idDb)
         dispatch(addDayToProf(id, day))
     }
 
@@ -118,6 +156,7 @@ export default function ItemCart () {
     //PARA BORRAR LA ORDEN DE COMPRA DEL HISTORIAL DEL CLIENT
     const deleteOrderHandler = (orderId) => {
         dispatch(deleteOrder(orderId))
+        handleClose()
     }
 
     return (
@@ -148,7 +187,7 @@ export default function ItemCart () {
                             <Dropdown.Menu>
                                 {
                                     item.professional.availableDays.map((day) => {
-                                       return (<Dropdown.Item onClick={() => selectDays(item.professional.id, day)}>{day}</Dropdown.Item>)
+                                       return (<Dropdown.Item onClick={() => selectDays(item.professional.id, day,item.idDb)}>{day}</Dropdown.Item>)
                                     })
                                 }
                             </Dropdown.Menu>
@@ -161,7 +200,7 @@ export default function ItemCart () {
                                     <td>
                                         <Badge 
                                             style={{cursor: "pointer"}} 
-                                            onClick={() => deleteDay(item.professional.id, day)}
+                                            onClick={() => deleteDay(item.professional.id, day,item.idDb)}
                                             >{day}</Badge>
                                     </td>
                                 )

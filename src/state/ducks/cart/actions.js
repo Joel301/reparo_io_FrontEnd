@@ -42,7 +42,6 @@ export function deleteItemCart(item) {
 export function addDayToProf(id, day) {
   return async function (dispatch) {
     try {
-      await axios.patch();
       return dispatch({
         type: "ADD_DAY_TO_PROF",
         payload: {
