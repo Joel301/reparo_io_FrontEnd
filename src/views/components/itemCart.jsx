@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 
 //Actions
-import { deleteItemCart, addDayToProf, removeDayFromProf, marcadoPago, postCart } from "../../state/ducks/cart/actions"
+import { deleteItemCart, addDayToProf, removeDayFromProf, marcadoPago, postCart, deleteOrder } from "../../state/ducks/cart/actions"
 
 //Bootstrap
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -37,6 +37,9 @@ export default function ItemCart () {
 
 
     const items = useSelector((state) => state.cart.list)
+    const order=useSelector((state) => state.cart.order)
+
+    let id = order? order.newOrder.id : ""
 
     const [component, setComponent] = useState('')
     const [show, setShow] = useState(false);
@@ -110,6 +113,11 @@ export default function ItemCart () {
         })
 
         dispatch(marcadoPago(itemsMercadoPago))
+    }
+
+    //PARA BORRAR LA ORDEN DE COMPRA DEL HISTORIAL DEL CLIENT
+    const deleteOrderHandler = (orderId) => {
+        dispatch(deleteOrder(orderId))
     }
 
     return (
@@ -193,7 +201,7 @@ export default function ItemCart () {
             {
                 component === 'resumen' ?
                 <>
-                    <Modal show={show} onHide={handleClose} animation={false}>
+                    <Modal show={show}  animation={false}>
                         <Modal.Header closeButton>
                             <Modal.Title>Resumen de la Compra</Modal.Title>
                         </Modal.Header>
@@ -261,7 +269,8 @@ export default function ItemCart () {
                         </Modal.Footer>
 
                         <Modal.Footer>
-                            <Button variant="primary" onClick={payItems(items)}>
+                            <Button variant='danger' onClick={()=>deleteOrderHandler(id)}>Cancelar compra</Button>
+                            <Button variant="primary" onClick={()=> payItems(items)}>
                                 Pagar
                             </Button>
                         </Modal.Footer>
