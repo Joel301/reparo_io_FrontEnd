@@ -20,9 +20,6 @@ function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert
     dispatch(addToCart(worker, client))
    
     estadoBoolean(estado=true)
-  
-   
-    
   }
   return (
     <Card bg="light" style={{ width: "18rem", height: "22rem" }}>

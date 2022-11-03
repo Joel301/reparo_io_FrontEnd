@@ -61,7 +61,7 @@ export default function ItemCart () {
         
         setComponent("resumen")
         setShow(true)
-        dispatch(postCart({cartId: "5b18ccd4-7342-457a-93a7-0814974967a6"}))
+        dispatch(postCart({cartId: "14b34440-2abc-4a80-a2dd-3865481ea174"}))
     }
 
     const deleteDay = ( id, day ) => {

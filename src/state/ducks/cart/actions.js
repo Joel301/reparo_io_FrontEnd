@@ -6,7 +6,6 @@ import axios from "axios";
         try {
             const itemDeCompra = {
                 professional:worker,
-                client: client.id,
                 days:[],
                 get quantity(){
                     return this.days.length
@@ -30,7 +29,7 @@ import axios from "axios";
 export function deleteItemCart(item){
     return async function (dispatch){
         try {
-            axios.delete(`https://reparoiobackend-main.up.railway.app/api/cart/${item.idDb}`)
+            await axios.delete(`https://reparoiobackend-main.up.railway.app/api/cart/${item.idDb}`)
             return dispatch({
                 type:"DELETE_ITEM_CART",
                 payload: item.professional.id
@@ -77,13 +76,13 @@ return async function (dispatch){
 
 
 export function postCart(body){
-    console.log(body, "soy el body y se esta enviando")
+    console.log(body , "soy el body y se esta enviando")
     return async function(dispatch){
         try {
             const postCarrito = await axios.post('https://reparoiobackend-main.up.railway.app/api/orders', body)
             return dispatch({
                 type: 'POST_CART',
-                payload: body
+                payload: postCarrito
             })
             
         } catch (error) {
