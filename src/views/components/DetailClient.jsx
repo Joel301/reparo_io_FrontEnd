@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   Button,
@@ -9,24 +9,25 @@ import {
   Tooltip,
   OverlayTrigger,
   Modal,
-  Form
+  Form,
 } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getClientId } from "../../state/ducks/clients/actions";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export let fakeClient = {
-  id: "bf2665ba-9c64-40b6-b948-49cb9690145e",
-  firstName: "primernombre",
-  lastName: "apeido",
-  phoneNumber: "kulikitakati",
-  address: "kulikitakati",
+  id: "5b18ccd4-7342-457a-93a7-0814974967a6",
+  firstName: "Roberto",
+  lastName: "Del Valle",
+  phoneNumber: "116588",
+  address: "Av Siempre Viva 345",
   email: "kulikittaka@sacatiki.com",
   password: "1234567",
   profileImg:
-    "https://img.icons8.com/fluency-systems-regular/96/000000/guest-male.png",
+    "https://revistaharoldo.com.ar/img/notas/2020/10/nestor2.jpg",
   enabled: true,
   cart: {
     id: "b1add96b-9d5a-4048-a6b5-f7c776e99334",
@@ -37,7 +38,7 @@ export let fakeClient = {
       amount: 1500,
       createdAt: "2022-11-01T23:41:03.185Z",
       updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "bf2665ba-9c64-40b6-b948-49cb9690145e",
+      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
       orderDetails: [
         {
           id: "7a406dab-aa48-40b8-a758-969f84831cb5",
@@ -55,7 +56,7 @@ export let fakeClient = {
       amount: 1500,
       createdAt: "2022-11-01T23:41:03.185Z",
       updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "bf2665ba-9c64-40b6-b948-49cb9690145e",
+      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
       orderDetails: [
         {
           id: "7a406dab-aa48-40b8-a758-969f84831cb5",
@@ -73,7 +74,7 @@ export let fakeClient = {
       amount: 1500,
       createdAt: "2022-11-01T23:41:03.185Z",
       updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "bf2665ba-9c64-40b6-b948-49cb9690145e",
+      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
       orderDetails: [
         {
           id: "7a406dab-aa48-40b8-a758-969f84831cb5",
@@ -91,7 +92,7 @@ export let fakeClient = {
       amount: 1500,
       createdAt: "2022-11-01T23:41:03.185Z",
       updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "bf2665ba-9c64-40b6-b948-49cb9690145e",
+      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
       orderDetails: [
         {
           id: "7a406dab-aa48-40b8-a758-969f84831cb5",
@@ -109,7 +110,7 @@ export let fakeClient = {
       amount: 1500,
       createdAt: "2022-11-01T23:41:03.185Z",
       updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "bf2665ba-9c64-40b6-b948-49cb9690145e",
+      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
       orderDetails: [
         {
           id: "7a406dab-aa48-40b8-a758-969f84831cb5",
@@ -128,10 +129,12 @@ export let fakeClient = {
 export default function DetailClient() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [rating,setRating] = useState(0)
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
   const client = fakeClient; /* useSelector((state) => state.client); */
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => setShow(false)
+    ;
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
   const professionals = useSelector(
@@ -140,7 +143,27 @@ export default function DetailClient() {
   const shoppingHistory = fakeClient.orders
     .map((order) => order.orderDetails)
     .flat();
-  console.log(shoppingHistory);
+  /*  Body = {
+      clientId,
+      professionalId,
+      comment,
+      rating
+      } */
+  const handleSubmit = async (e,professionalId) => {
+    e.preventDefault();
+    console.log("hola");
+    let review = {
+      clientId:client.id ,
+      professionalId,
+      comment,
+      rating,
+    };
+    console.log(review)
+      await axios.post('https://reparoiobackend-main.up.railway.app/api/reviews',review).then(res=>console.log(res)).catch(err=>console.log(err))
+    setComment("");
+    setRating(0);
+  };
+
   useEffect(() => {
     dispatch(getClientId(id));
   }, [dispatch, id]);
@@ -158,8 +181,9 @@ export default function DetailClient() {
             margin: "3rem auto",
             padding: "1rem",
             height: "40rem",
+            fontFamily:'DMSans',
           }}
-        >
+        ><div style={{display:'flex',justifyContent:'center',alignItems:"center",justifySelf:'center',height:"15rem",width:'15rem',backgroundColor:'lightblue',borderRadius:'50%'}}>
           <div
             style={{
               gridArea: "  1 / 1 / 3 / 2",
@@ -170,14 +194,16 @@ export default function DetailClient() {
               borderRadius: "50%",
               height: "8rem",
               width: "8rem",
+             
             }}
-          ></div>
+          ></div></div>
 
           <h2
             style={{
               textAlign: "center",
               gridArea: " 3 / 1 / 4 / 2",
               alignSelf: "end",
+              
             }}
           >
             {client.firstName} {client.lastName}
@@ -223,6 +249,9 @@ export default function DetailClient() {
               marginBottom: "10px",
               overflowY: "scroll",
               WebkitOverflowScrolling: "touch",
+              WebkitScrollbarTrack:{
+                backgroundColor:'black'
+              }
             }}
           >
             <ListGroup.Item
@@ -235,11 +264,11 @@ export default function DetailClient() {
               </div>
             </ListGroup.Item>
             {shoppingHistory.map((item) => {
-              let { firstName, lastName } = professionals.find(
+              let { firstName, lastName, id } = professionals.find(
                 (prof) => prof.id === item.professionalId
               );
               let date = new Date(item.createdAt);
-              console.log(date);
+
               return (
                 <ListGroup.Item
                   key={item.id}
@@ -267,22 +296,25 @@ export default function DetailClient() {
                       }}
                     >
                       {" "}
-                      <div style={{display: "flex"}}>
-                      <p
-                        style={{
-                          
-                          color: "gray",
-                          
-                        }}
-                      >
-                        {" "}
-                        Fecha:
-                        
-                      </p>
-                      <p style={{ color: "black", marginLeft: "3px" }}>
+                      <div style={{ display: "flex" }}>
+                        <p
+                          style={{
+                            color: "gray",
+                          }}
+                        >
+                          {" "}
+                          Fecha:
+                        </p>
+                        <p style={{ color: "black", marginLeft: "3px" }}>
                           {date.toString().split("", 15)}
-                        </p></div>
-                      <Button style={{ justifyContent: "flex-end" }} onClick={handleShow}>Deja una Reseña</Button>
+                        </p>
+                      </div>
+                      <Button
+                        style={{ justifyContent: "flex-end" }}
+                        onClick={handleShow}
+                      >
+                        Deja una Reseña
+                      </Button>
                     </div>
                   </div>
 
@@ -297,45 +329,50 @@ export default function DetailClient() {
                       {item.days.length}
                     </Badge>
                   </OverlayTrigger>
+                  <Modal show={show} onHide={handleClose}>
+            <Modal.Header>
+              <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form onSubmit={(e)=>handleSubmit(e,item.professionalId)}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Puntua a tu profesional!</Form.Label>
+                  <StarRatings
+                    rating={rating}
+                    starRatedColor="blue"
+                    changeRating={(rating) => setRating(rating)}
+                    numberOfStars={5}
+                    name="rating"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Comentario</Form.Label>
+                  <Form.Control
+                    type="text-area"
+                    placeholder="Escribe algun comentario"
+                    onChange={(e) => {
+                      setComment(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={handleClose}
+                >
+                  Submit
+                </Button>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer></Modal.Footer>
+          </Modal>
                 </ListGroup.Item>
               );
             })}
           </ListGroup>
-          <Modal show={show} onHide={handleClose}>
-            <Modal.Header>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Puntua a tu profesional!</Form.Label>
-        <StarRatings
-        rating={rating}
-        starRatedColor="blue"
-        changeRating={(rating)=>setRating(rating)}
-        numberOfStars={5}
-        name='rating'/>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Comentario</Form.Label>
-        <Form.Control type="text-area" placeholder="Escribe algun comentario" />
-      </Form.Group>
-      
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-          </Modal>
+          
         </Card>
       ) : (
         <Alert variant="danger">
