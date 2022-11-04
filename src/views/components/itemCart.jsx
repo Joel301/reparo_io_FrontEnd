@@ -128,6 +128,7 @@ export default function ItemCart () {
         
         items.map((item) => {
             counter = counter + (item.professional.dayPrice * item.days.length)
+            return counter
         })
 
         return counter
