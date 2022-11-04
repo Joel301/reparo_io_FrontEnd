@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 
 //Actions
-import { deleteItemCart, addDayToProf, removeDayFromProf, marcadoPago, postCart, deleteOrder } from "../../state/ducks/cart/actions"
+import { deleteItemCart, addDayToProf, removeDayFromProf, getMercadoPagoLink, postCart, deleteOrder } from "../../state/ducks/cart/actions"
 
 //Bootstrap
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -56,7 +56,7 @@ async function addDay (day,idDb) {
 export default function ItemCart () {
 
     const cliente = {
-        id: "4264b59d-7df9-4669-869f-8a7340c51f2c",
+        id: "5b18ccd4-7342-457a-93a7-0814974967a6",
         firstName: "primernombre",
         lastName: "apeido",
         phoneNumber: "kulikitakati",
@@ -155,7 +155,7 @@ export default function ItemCart () {
         })
         console.log(url, "urldepago")
 
-        dispatch(marcadoPago(itemsMercadoPago))
+        dispatch(getMercadoPagoLink(itemsMercadoPago))
     }
 
     //PARA BORRAR LA ORDEN DE COMPRA DEL HISTORIAL DEL CLIENT
@@ -327,8 +327,17 @@ export default function ItemCart () {
                                 Cancelar compra
                             </Button>
                             <Button variant="primary" onClick={() => payItems(items)}>
-                                Pagar
+                                Solicitar Pago
                             </Button>
+                            {
+                                url ?
+                                // onClick={() => payItems(items)}
+                                <Button variant="secondary">
+                                    Pagar
+                                </Button> 
+                                : 
+                                <></>
+                            }
                         </Modal.Footer>
 
                     </Modal>
