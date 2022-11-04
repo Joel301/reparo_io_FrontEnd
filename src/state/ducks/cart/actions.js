@@ -88,7 +88,7 @@ export function postCart(body) {
   };
 }
 
-export function marcadoPago(body) {
+export function getMercadoPagoLink(body) {
   return async function (dispatch) {
     try {
       const response = await axios.post("http://localhost:3001/home/mercado", body)
