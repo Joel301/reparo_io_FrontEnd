@@ -75,12 +75,23 @@ export default function ItemCart () {
     const order = useSelector((state) => state.cart.order)
     const url = useSelector((state) => state.cart.url)
 
-    let id = order? order.newOrder.id : ""
+    let id = order ? order.newOrder.id : ""
 
     const [component, setComponent] = useState('')
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false)
+    const [name, setName] = useState("")
 
-    const handleClose = () => setShow(false);
+    function handleInputChange(e) {
+      e.preventDefault(e)
+      setName(e.target.value)
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        // dispatch(getProfesional(name))
+    }
+
+    const handleClose = () => setShow(false)
 
     const dispatch = useDispatch()
 
@@ -92,12 +103,10 @@ export default function ItemCart () {
     const postItem = items.map(el => {
         return {
             clientId: cliente.id,
-            
         }
     })
 
     const postCarrito = (e) => {
-        
         setComponent("resumen")
         setShow(true)
         dispatch(postCart({cartId: "14b34440-2abc-4a80-a2dd-3865481ea174"}))
@@ -106,7 +115,6 @@ export default function ItemCart () {
     const deleteDay = ( id, day, idDb) => {
         removeDay(day,idDb)
         dispatch(removeDayFromProf( id, day))
-
     }
 
     const selectDays = (id, day, idDb) => {
@@ -115,11 +123,9 @@ export default function ItemCart () {
     }
 
     const orderDays = (dias) => {
-
         let newArray = dias.sort(( a, b ) => {
            return a.id - b.id
         })
-
         return newArray
     }
 
@@ -146,6 +152,7 @@ export default function ItemCart () {
 
         let itemsMercadoPago = profesionales.map((item) => {
             return {
+                orderId: "", //falta reveer
                 professionalId: item.idDb,
                 clientId: cliente.id,
                 title: item.professional.email,
@@ -153,7 +160,6 @@ export default function ItemCart () {
                 quantity: item.quantity,
             }
         })
-        console.log(url, "urldepago")
 
         dispatch(getMercadoPagoLink(itemsMercadoPago))
     }
@@ -308,14 +314,23 @@ export default function ItemCart () {
                         </Modal.Body>
 
                         <Modal.Footer style={{display: "flex", justifyContent: "flex-start"}}>
-                            <h5>Direccion: direccion del cliente</h5>
+                            <h5>Direccion : {cliente.address}</h5>
                             <br/>
-                            <Form.Label htmlFor="inputCambiarDireccion">¿ Desea cambiar de direccion ? Indique aqui...</Form.Label>
+                            <h5>Email : {cliente.email}</h5>
+                            {/* <Form.Label htmlFor="inputCambiarDireccion">¿ Desea cambiar de direccion ? Indique aqui...</Form.Label>
                             <Form.Control
                                 type="text"
                                 id="inputCambiarDireccion"
                                 placeholder="Nueva direccion..."
+                                onChange={(e) => handleInputChange(e)}
                             />
+                            <Button
+                                type="submit"
+                                variant="outline-success"
+                                onClick={(e) => handleSubmit(e)}
+                            >
+                                Buscar
+                            </Button> */}
                         </Modal.Footer>
 
                         <Modal.Footer style={{marginTop: "10px"}}>
@@ -331,15 +346,15 @@ export default function ItemCart () {
                             </Button>
                             {
                                 url ?
-                                // onClick={() => payItems(items)}
-                                <Button variant="secondary">
-                                    Pagar
-                                </Button> 
+                                    <a href={url}>
+                                        <Button variant="secondary">
+                                            Pagar
+                                        </Button> 
+                                    </a>
                                 : 
                                 <></>
                             }
                         </Modal.Footer>
-
                     </Modal>
                 </>
                 :

@@ -34,7 +34,7 @@ export default function cartReducer(state = initialState, action) {
     }
 
     case "URL_MERCADO_PAGO": {
-      console.log(action.payload, "action.payload")
+      console.log(action.payload.data, "action.payload")
       let urlMercadoPago = action.payload
 
       return {

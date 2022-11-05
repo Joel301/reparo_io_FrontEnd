@@ -89,13 +89,14 @@ export function postCart(body) {
 }
 
 export function getMercadoPagoLink(body) {
+  console.log(body, "body")
   return async function (dispatch) {
     try {
-      const response = await axios.post("http://localhost:3001/home/mercado", body)
+      const response = await axios.post("https://reparoiobackend-develop.up.railway.app/home/mercado", body)
       console.log(response, "response")
       return dispatch({
         type: "URL_MERCADO_PAGO",
-        payload: response
+        payload: response.data
       })
     } catch (error) {
       console.log(error)
