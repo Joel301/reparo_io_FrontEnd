@@ -23,6 +23,7 @@ export function getAllProfessionals() {
     return async function (dispatch) {
         try {
             const getAll = await axios.get('/home/professionals')
+            console.log(getAll)
             return dispatch({
                 type: 'GET_ALL_PROFESSIONALS',
                 payload: getAll.data

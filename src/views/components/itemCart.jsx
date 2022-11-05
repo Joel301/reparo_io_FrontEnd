@@ -75,7 +75,7 @@ export default function ItemCart () {
     const order = useSelector((state) => state.cart.order)
     const url = useSelector((state) => state.cart.url)
 
-    let id = order? order.newOrder.id : ""
+    let id = order? order.newOrder.id : "";
 
     const [component, setComponent] = useState('')
     const [show, setShow] = useState(false);
@@ -127,7 +127,7 @@ export default function ItemCart () {
         let counter = 0
         
         items.map((item) => {
-            counter = counter + (item.professional.dayPrice * item.days.length)
+          return   counter = counter + (item.professional.dayPrice * item.days.length)
         })
 
         return counter
