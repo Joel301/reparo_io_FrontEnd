@@ -1,5 +1,5 @@
 const initialState = {
-  clients: {},
+  clients: [],
   
 }
 
@@ -10,7 +10,7 @@ const adminsReducer = (state = initialState, action) => {
       case "GET_CLIENT": {
         return {
           ...state,
-          clients: action.payload,
+          clients: [...state, action.payload]
         }
       }
       

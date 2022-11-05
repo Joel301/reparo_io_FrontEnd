@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux'
 export default function EditarCliente () {
 
     const cliente = useSelector((state) => state.admins.clients)
+    console.log(cliente, "cliente")
 
     const dispatch = useDispatch()
     
@@ -59,7 +60,7 @@ export default function EditarCliente () {
             </div>
             
             {
-                cliente.id ? 
+                cliente !== {} ? 
                 <div style={{ display: "flex", justifyContent: "center"}}>
 
                 <Form style={{ width: "60%", border: "1"}}>
@@ -108,7 +109,7 @@ export default function EditarCliente () {
                             <Form.Label>Contraseña :</Form.Label>
                             <Form.Control type="password" placeholder={`${cliente.password}`} />
                         </Form.Group>
-                        <Form.Group controlId="formBasicPassword" style={{ width: "50%", marginLeft: "20px"}}>
+                        <Form.Group  style={{ width: "50%", marginLeft: "20px"}}>
                             <Form.Label>Confirmar Contraseña :</Form.Label>
                             <Form.Control type="password" placeholder="Contraseña..." />
                         </Form.Group>
