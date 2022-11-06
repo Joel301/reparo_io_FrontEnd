@@ -40,6 +40,10 @@ export default function CartOffCanvas({ estado, estadoBoolean }) {
     }
   },[cartItems])
 
+  //INFORMACION DEL CLIENT HARDCODED
+  let clientId="a270f3c5-10a8-4aec-a46f-e73e6e8fbdbc"
+
+
 
   return (
       <Offcanvas show={estado } onHide={onHideCart}>
@@ -57,7 +61,7 @@ export default function CartOffCanvas({ estado, estadoBoolean }) {
         }
       
         <Button variant='success' onClick={()=> {navigate('/cart')
-      return dispatch(postingCart(cartItems))}}>Realizar Compras</Button>
+      return dispatch(postingCart(cartItems,clientId))}}>Realizar Compras</Button>
       </Offcanvas.Body>
 
     </Offcanvas>
