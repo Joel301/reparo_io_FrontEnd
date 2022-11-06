@@ -48,13 +48,6 @@ export function getProfesional(payload) {
 }
 
 
-// export function getProfessionsOfProfessionals(payload) {
-//     return {
-//         type: 'GET_PRFESSIONS_OF_PROFESSIONALS',
-//         payload
-//     }
-// }
-
 export function getAllProfessions() {
     return async function (dispatch) {
         try {
