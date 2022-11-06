@@ -89,29 +89,32 @@ export function postCart(body) {
 }
 
 export function getMercadoPagoLink(body) {
-  console.log(body, "body")
+  console.log(body, "body");
   return async function (dispatch) {
     try {
-      const response = await axios.post("https://reparoiobackend-develop.up.railway.app/home/mercado", body)
-      console.log(response, "response")
+      const response = await axios.post(
+        "https://reparoiobackend-main.up.railway.app/api/mercado",
+        body
+      );
+      console.log(response, "response");
       return dispatch({
         type: "URL_MERCADO_PAGO",
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 }
 
-export function postingCart(cartList) {
+export function postingCart(cartList, clientId) {
   return async function (dispatch) {
     try {
       const addCartList = cartList.map(async (el) => {
         const response = await axios.post(
           "https://reparoiobackend-main.up.railway.app/api/cart",
           {
-            clientId: "5b18ccd4-7342-457a-93a7-0814974967a6", //el.client
+            clientId, //el.client
             professionalId: el.professional.id,
             days: el.days,
           }
