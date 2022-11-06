@@ -4,7 +4,7 @@ import axios from "axios"
 export function getDetail(id) {
     return async function (dispatch) {
         try {
-            var detalle = await axios.get('/home/professionals/' + id)
+            const detalle = await axios.get('/home/professionals/' + id)
 
             return dispatch({
                 type: 'GET_DETAIL',
