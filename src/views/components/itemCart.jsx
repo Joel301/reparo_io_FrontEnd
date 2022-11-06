@@ -56,7 +56,7 @@ async function addDay (day,idDb) {
 export default function ItemCart () {
 
     const cliente = {
-        id: "5b18ccd4-7342-457a-93a7-0814974967a6",
+        id: "a270f3c5-10a8-4aec-a46f-e73e6e8fbdbc",
         firstName: "primernombre",
         lastName: "apeido",
         phoneNumber: "kulikitakati",
@@ -66,7 +66,7 @@ export default function ItemCart () {
         profileImg: "https://img.icons8.com/fluency-systems-regular/96/000000/guest-male.png",
         enabled: true,
         cart: {
-          id: "531b2e53-c73d-478d-8ebd-610e584ab27a"
+          id: "3ad80aaa-6aef-45f1-aaf0-c02ccba7835e"
         }
       }
 
@@ -109,7 +109,7 @@ export default function ItemCart () {
     const postCarrito = (e) => {
         setComponent("resumen")
         setShow(true)
-        dispatch(postCart({cartId: "14b34440-2abc-4a80-a2dd-3865481ea174"}))
+        dispatch(postCart({cartId: cliente.cart.id}))
     }
 
     const deleteDay = ( id, day, idDb) => {
@@ -150,16 +150,17 @@ export default function ItemCart () {
 
     const payItems = (profesionales) => {
 
-        let itemsMercadoPago = profesionales.map((item) => {
-            return {
-                orderId: "", //falta reveer
-                professionalId: item.idDb,
+
+        const itemsMercadoPago =  {
+                orderId: order.newOrder.id, //falta reveer
                 clientId: cliente.id,
-                title: item.professional.email,
-                price: (item.days?.length * item.professional.dayPrice),
-                quantity: item.quantity,
+                items: [{
+                    title: `Order ${order.newOrder.id}`,
+                    price: order.newOrder.amount,
+                    quantity: 1
+                }]
             }
-        })
+    
 
         dispatch(getMercadoPagoLink(itemsMercadoPago))
     }
