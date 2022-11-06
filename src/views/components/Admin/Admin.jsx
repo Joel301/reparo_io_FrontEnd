@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 export default function Admin() {
   const allProfesionales = useSelector(state => state.professionals.allProfessionals.length)
   const allProfesiones = useSelector(state => state.professionals.professions.length)
-  const allCarpinteros = useSelector()
+ 
   const navigate = useNavigate();
   const [component, setComponent] = useState("");
   const [show, setShow] = useState(false);
@@ -30,6 +30,16 @@ export default function Admin() {
     e.preventDefault();
     setComponent(e.target.value);
   };
+
+  const usuario =  {
+    Id: "3425hlkasjdhfkljasdhf234",
+    nombre: "Lucas",
+    apellido: "Caño",
+    celular: "2614987585",
+    mail: "luema94@gmail.com",
+    img: "https://i.pinimg.com/originals/75/08/77/750877ee27f0a6082c6590f805714efc.png",
+    nacionalidad: "Argentina"
+  }
 
   return (
     <>
@@ -44,9 +54,9 @@ export default function Admin() {
               padding: "4%",
             }}
           >
-            <h1 style={{ textAlign: "center" }}>Lucas Caño</h1>
+            <h1 style={{ textAlign: "center" }}>{usuario.nombre} {usuario.apellido}</h1>
             <img
-              src="https://i.pinimg.com/originals/75/08/77/750877ee27f0a6082c6590f805714efc.png"
+              src={usuario.img}
               style={{
                 width: "200px",
                 height: "200px",
@@ -55,10 +65,10 @@ export default function Admin() {
               }}
             />
             <ListGroup variant="flush">
-              <ListGroup.Item>ID Admin: 98TWEJR65464</ListGroup.Item>
-              <ListGroup.Item>Correo: luema94@gmail.com</ListGroup.Item>
-              <ListGroup.Item>Celular: 2614987585</ListGroup.Item>
-              <ListGroup.Item>Nacionalidad: Argentina</ListGroup.Item>
+              <ListGroup.Item>ID: {usuario.Id}</ListGroup.Item>
+              <ListGroup.Item>Correo: {usuario.mail}</ListGroup.Item>
+              <ListGroup.Item>Celular: {usuario.celular}</ListGroup.Item>
+              <ListGroup.Item>Nacionalidad: {usuario.nacionalidad}</ListGroup.Item>
             </ListGroup>
           </Card >
           <Card style={{
@@ -79,10 +89,11 @@ export default function Admin() {
         </div>
 
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <Button
+          
+        <Button
             variant="primary"
             onClick={handleShow}
-            style={{ margin: "1.5%", width: "20%" }}
+            style={{ width: "20%",margin: "1.5%" }}
           >
             Herramientas
           </Button>
