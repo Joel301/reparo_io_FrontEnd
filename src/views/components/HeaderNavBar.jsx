@@ -18,8 +18,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartOffCanvas from "./CartOffCanvas"
 import FormRegistro from "./Formularios/FormRegistro"
 import LogSimpleCard from "./LogSimpleCard";
-import FormProfession from "./Formularios/FormProfession";
-import FormClient from "./Formularios/FormClient";
+//import FormProfession from "./Formularios/FormProfession";
+//import FormClient from "./Formularios/FormClient";
 //Image
 import logoReparoio from "../pages/imgs/logo-reparoio.png"
 
