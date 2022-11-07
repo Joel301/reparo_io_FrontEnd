@@ -55,15 +55,14 @@ export default function FormRegistro({ isClient = false }) {
 
     // Se llena el input de profesiones:
     function handleSelectProfession(e) {
-        e.preventDefault()
         if (professionsRef.current.includes(e.target.value)) {
             professionsRef.current = professionsRef.current.filter(el => el !== e.target.value)
         } else professionsRef.current.push(e.target.value)
+        console.log(professionsRef);
 
     }
 
-    // ESTO DEBE SERVIR PARA CLOUDINARY:
-
+    // Esta es la logica para el funcionamiento de cloudinary:
         const [image,setImage] = useState("");
         const [loading, setLoading] = useState(false);
         
@@ -134,7 +133,7 @@ export default function FormRegistro({ isClient = false }) {
             isclient
                 ? dispatch(postlClient({ ...input, email, authid: uid }))
                 : dispatch(postProfessionals({ ...input, email, authid: uid }))
-            navigate('/')
+            navigate('/Home')
         } else {
             console.log("sin firebase")
             signup(input.email, input.password)
@@ -145,7 +144,7 @@ export default function FormRegistro({ isClient = false }) {
                     isclient
                         ? dispatch(postlClient({ ...input, email, authid: uid }))
                         : dispatch(postProfessionals({ ...input, email, authid: uid }))
-                    navigate('/')
+                    navigate('/Home')
                     // esto de abajo esta bueno pero no puede ser un mensaje que no sea alert?
                     // alert('Tu perfil ha sido creado')
                 }
