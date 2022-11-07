@@ -62,6 +62,30 @@ export default function FormRegistro({ isClient = false }) {
 
     }
 
+    // ESTO DEBE SERVIR PARA CLOUDINARY:
+
+        const [image,setImage] = useState("");
+        const [loading, setLoading] = useState(false);
+        
+        const upLoadImage = async (e) =>{
+            const files= e.target.files;
+            const data = new FormData();
+            data.append("file", files[0]);
+            data.append("upload_preset","reparoio_images");
+            setLoading(true);
+            const res = await fetch(
+                "https://api.cloudinary.com/v1_1/de2sdmotl/image/upload",
+                {
+                    method: "POST",
+                    body: data,
+                }
+            )
+            const file = await res.json();
+            console.log(file.secure_url);
+            console.log(res);
+            setImage(file.secure_url);
+            setLoading(false);}
+
     // se envia la informacion del formulario incluye la validación:
     function hedleOnSubmit(e) {
         e.preventDefault(e)
@@ -73,7 +97,7 @@ export default function FormRegistro({ isClient = false }) {
                 passwordRef.current.value : "No coinciden",
             email: emailRef.current.value,
             phoneNumber: phoneNumberRef.current.value,
-            profileImg: profileImgRef.current.value || user ? user.photoURL : "",
+            profileImg: image ,
             aboutMe: aboutMeRef.current.value,
             address: addressRef.current.value,
         };
@@ -244,9 +268,12 @@ export default function FormRegistro({ isClient = false }) {
             <Form.Group className="mb-3" >
                 <Form.Control
                     ref={profileImgRef}
-                    type="text"
-                    placeholder="imagen" />
+                    type="file"
+                    placeholder="imagen"
+                    onChange={upLoadImage} />
+                    
             </Form.Group>
+           
             {errors.profileImg && <span className="errors">{errors.profileImg}</span>}
             {!isclient && <Form.Group
                 className="mb-3"

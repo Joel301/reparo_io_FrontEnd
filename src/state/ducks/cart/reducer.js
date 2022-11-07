@@ -1,13 +1,10 @@
-
 const initialState = {
   list: [],
-  url: '',
-}
-
+  url: "",
+};
 
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
-
     case "ADD_TO_CART": {
       return {
         ...state,
@@ -30,17 +27,18 @@ export default function cartReducer(state = initialState, action) {
       console.log(action.payload);
       return {
         ...state,
+        list: [...state.list, ...action.payload],
       };
     }
 
     case "URL_MERCADO_PAGO": {
-      console.log(action.payload.data, "action.payload")
-      let urlMercadoPago = action.payload
+      console.log(action.payload.data, "action.payload");
+      let urlMercadoPago = action.payload;
 
       return {
         ...state,
-        url: urlMercadoPago
-      }
+        url: urlMercadoPago,
+      };
     }
 
     case "ADD_DAY_TO_PROF": {
@@ -84,10 +82,7 @@ export default function cartReducer(state = initialState, action) {
     case "DELETE_ORDER":
       return {
         ...state,
-        cart: {
-          ...state.cart,
-          order: {},
-        },
+        order: {},
       };
 
     default:

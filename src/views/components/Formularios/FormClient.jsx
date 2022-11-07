@@ -17,6 +17,29 @@ export default function FormClient() {
   const confirmPasswordRef = useRef('')
 
 
+  //Aca viene el cloudinary:
+
+  const [image,setImage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const upLoadImage = async (e) =>{
+    const files= e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset","reparoio_images");
+    setLoading(true);
+    const res = await fetch(
+        "https://api.cloudinary.com/v1_1/de2sdmotl/image/upload",
+        {
+            method: "POST",
+            body: data,
+        }
+    )
+    const file = await res.json();
+    console.log(file.secure_url);
+    console.log(res);
+    setImage(file.secure_url);
+    setLoading(false);}
 
   //Estado de mostrar contraseña
   const [showPwd, setShowPwd] = useState(false)// pendiente usar useEffect para no renderizar todo el componente
@@ -45,7 +68,7 @@ export default function FormClient() {
                 passwordRef.current.value: "No coinciden",
       email: emailRef.current.value,
       phoneNumber: phoneNumberRef.current.value,
-      profileImg: profileImgRef.current.value,
+      profileImg: image,
       address: addressRef.current.value
     };
 
@@ -97,7 +120,8 @@ export default function FormClient() {
         <Form.Control
           ref={profileImgRef}
           type="text"
-          placeholder="imagen" />
+          placeholder="imagen" 
+          onChange={upLoadImage}/>
       </Form.Group>
       {errors.profileImg && <span className="errors">{errors.profileImg}</span>}
       <Form.Group className="mb-3" controlId="formBasicEmail">

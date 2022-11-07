@@ -55,22 +55,7 @@ async function addDay (day,idDb) {
 
 export default function ItemCart () {
 
-    const cliente = {
-        id: "5b18ccd4-7342-457a-93a7-0814974967a6",
-        firstName: "primernombre",
-        lastName: "apeido",
-        phoneNumber: "kulikitakati",
-        address: "kulikitakati",
-        email: "kulikittaka@sacatiki.com",
-        password: "1234567",
-        profileImg: "https://img.icons8.com/fluency-systems-regular/96/000000/guest-male.png",
-        enabled: true,
-        cart: {
-          id: "531b2e53-c73d-478d-8ebd-610e584ab27a"
-        }
-      }
-
-
+    const cliente = useSelector(state=>state.user)
     const items = useSelector((state) => state.cart.list)
     const order = useSelector((state) => state.cart.order)
     const url = useSelector((state) => state.cart.url)
@@ -98,8 +83,8 @@ export default function ItemCart () {
     const dispatch = useDispatch()
 
 
-    const deleteItem = (id) => {
-        dispatch(deleteItemCart(id))
+    const deleteItem = (item) => {
+        dispatch(deleteItemCart(item))
     }
     
     const postItem = items.map(el => {
@@ -111,7 +96,7 @@ export default function ItemCart () {
     const postCarrito = (e) => {
         setComponent("resumen")
         setShow(true)
-        dispatch(postCart({cartId: "14b34440-2abc-4a80-a2dd-3865481ea174"}))
+        dispatch(postCart({cartId: cliente.cartId}))
     }
 
     const deleteDay = ( id, day, idDb) => {
@@ -154,16 +139,17 @@ export default function ItemCart () {
 
     const payItems = (profesionales) => {
 
-        let itemsMercadoPago = profesionales.map((item) => {
-            return {
-                orderId: "", //falta reveer
-                professionalId: item.idDb,
+
+        const itemsMercadoPago =  {
+                orderId: order.newOrder.id, //falta reveer
                 clientId: cliente.id,
-                title: item.professional.email,
-                price: (item.days?.length * item.professional.dayPrice),
-                quantity: item.quantity,
+                items: [{
+                    title: `Order ${order.newOrder.id}`,
+                    price: order.newOrder.amount,
+                    quantity: 1
+                }]
             }
-        })
+    
 
         dispatch(getMercadoPagoLink(itemsMercadoPago))
     }
