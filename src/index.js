@@ -1,13 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
+import axios from 'axios';
+
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import store from "./state/store"
+import { AuthProvider } from "./Context/AuthContext";
+
+axios.defaults.baseURL = "https://reparoiobackend-main.up.railway.app" || "http://localhost:3001/"
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+      </Provider>
+    </AuthProvider>
   </React.StrictMode>
 );
 
