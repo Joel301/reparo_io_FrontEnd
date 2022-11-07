@@ -83,8 +83,8 @@ export default function ItemCart () {
     const dispatch = useDispatch()
 
 
-    const deleteItem = (id) => {
-        dispatch(deleteItemCart(id))
+    const deleteItem = (item) => {
+        dispatch(deleteItemCart(item))
     }
     
     const postItem = items.map(el => {

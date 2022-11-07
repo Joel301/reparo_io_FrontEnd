@@ -27,6 +27,7 @@ export default function cartReducer(state = initialState, action) {
       console.log(action.payload);
       return {
         ...state,
+        list: [...state.list, ...action.payload],
       };
     }
 
