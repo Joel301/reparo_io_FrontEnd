@@ -55,22 +55,7 @@ async function addDay (day,idDb) {
 
 export default function ItemCart () {
 
-    const cliente = {
-        id: "a270f3c5-10a8-4aec-a46f-e73e6e8fbdbc",
-        firstName: "primernombre",
-        lastName: "apeido",
-        phoneNumber: "kulikitakati",
-        address: "kulikitakati",
-        email: "kulikittaka@sacatiki.com",
-        password: "1234567",
-        profileImg: "https://img.icons8.com/fluency-systems-regular/96/000000/guest-male.png",
-        enabled: true,
-        cart: {
-          id: "3ad80aaa-6aef-45f1-aaf0-c02ccba7835e"
-        }
-      }
-
-
+    const cliente = useSelector(state=>state.user)
     const items = useSelector((state) => state.cart.list)
     const order = useSelector((state) => state.cart.order)
     const url = useSelector((state) => state.cart.url)
@@ -111,7 +96,7 @@ export default function ItemCart () {
     const postCarrito = (e) => {
         setComponent("resumen")
         setShow(true)
-        dispatch(postCart({cartId: cliente.cart.id}))
+        dispatch(postCart({cartId: cliente.cartId}))
     }
 
     const deleteDay = ( id, day, idDb) => {
