@@ -3,7 +3,7 @@
 //React
 import React, { useEffect } from "react"
 import { useState } from "react"
-import { Link,useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
 //Redux
@@ -27,21 +27,21 @@ import LogIn from "./LogIn"
 import { useAuth } from "../../Context/AuthContext"
 
 function HeaderNavBar() {
-  const {user,usersimple,logout}=useAuth()
+  const { user, usersimple, logout } = useAuth()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [showFormprof, setshowFormprof] = useState(false)
   const [showFormClient, setshowFormClient] = useState(false)
-  const [showLoginForm,setShowLoginForm]= useState(false)
+  const [showLoginForm, setShowLoginForm] = useState(false)
   const totalReserved = useSelector(state => state.cart.list)
   const total = useSelector(state => state.cart.total)
   const profesionales = useSelector((state) => state.professionals.allProfessionals)
-  const userLogged =useSelector(state=>state.user)
+  const userLogged = useSelector(state => state.user)
   const handleShow = (e) => {
     if (e.target.textContent === "Cliente") setshowFormClient(true)
     if (e.target.textContent === "Profesional") setshowFormprof(true)
   }
-  const loginClose= ()=> setShowLoginForm(false)
+  const loginClose = () => setShowLoginForm(false)
   const handleClose = () => {
     setshowFormClient(false)
     setshowFormprof(false)
@@ -58,7 +58,7 @@ function HeaderNavBar() {
 
   const showProf = (boolean) => setshowFormprof(boolean);
 
-  return (  
+  return (
 
 
     <Navbar sticky="top" expand="md" bg="primary" variant="dark">
@@ -85,38 +85,38 @@ function HeaderNavBar() {
             {usersimple?.hasOwnProperty("uid") ? (
               <>
                 <Dropdown
-                  
-                >
+
+                >{console.log(user)}
                   <Dropdown.Toggle style={{
-                    backgroundImage: `url(${user?.photoURL})`,
-                    color:'transparent',
+                    backgroundImage: `url(${user?.photoURL || usersimple?.client?.profileImg || ""})`,
+                    color: 'transparent',
                     backgroundSize: "cover",
                     height: "2rem",
                     width: "2rem",
                     borderRadius: "50%",
                     marginRight: "2rem",
-                  }} /* onClick={showProfile} *//>
-                    <Dropdown.Menu>
-                  <Dropdown.Item
-                    // onClick={() =>
-                    //   navigate(`details/client/${loggedClient.id}`)
-                    // }
-                  >
-                    Ir a Mi Perfil
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={()=>logout()}>
-                    Cerrar Sesion
-                  </Dropdown.Item></Dropdown.Menu>
+                  }} /* onClick={showProfile} */ />
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                    onClick={() =>
+                      navigate(`details/me`)
+                    }
+                    >
+                      Ir a Mi Perfil
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => logout()}>
+                      Cerrar Sesion
+                    </Dropdown.Item></Dropdown.Menu>
                 </Dropdown>
               </>
             ) : (
               <> <LogIn show={showLoginForm} onClose={loginClose} />
                 <NavDropdown title="Iniciar Sesion" id="login-nav-dropdown">
-                  <NavDropdown.Item onClick={()=>setShowLoginForm(true)}
+                  <NavDropdown.Item onClick={() => setShowLoginForm(true)}
                   > Login
-                 
+
                   </NavDropdown.Item>
-               
+
                 </NavDropdown>
                 <NavDropdown title="Regístrate" id="signin-nav-dropdown">
                   <NavDropdown.Item defaultValue="cliente" onClick={handleShow}>

@@ -18,7 +18,7 @@ function LogIn({ show,onClose}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(loginUser(user));
+    //   dispatch(loginUser(user));
       if (!loggedUser.hasOwnProperty("firstName")) {
         await login(user.email, user.password);
       }

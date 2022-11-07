@@ -64,27 +64,28 @@ export default function FormRegistro({ isClient = false }) {
 
     // ESTO DEBE SERVIR PARA CLOUDINARY:
 
-        const [image,setImage] = useState("");
-        const [loading, setLoading] = useState(false);
-        
-        const upLoadImage = async (e) =>{
-            const files= e.target.files;
-            const data = new FormData();
-            data.append("file", files[0]);
-            data.append("upload_preset","reparoio_images");
-            setLoading(true);
-            const res = await fetch(
-                "https://api.cloudinary.com/v1_1/de2sdmotl/image/upload",
-                {
-                    method: "POST",
-                    body: data,
-                }
-            )
-            const file = await res.json();
-            console.log(file.secure_url);
-            console.log(res);
-            setImage(file.secure_url);
-            setLoading(false);}
+    const [image, setImage] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const upLoadImage = async (e) => {
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "reparoio_images");
+        setLoading(true);
+        const res = await fetch(
+            "https://api.cloudinary.com/v1_1/de2sdmotl/image/upload",
+            {
+                method: "POST",
+                body: data,
+            }
+        )
+        const file = await res.json();
+        console.log(file.secure_url);
+        console.log(res);
+        setImage(file.secure_url);
+        setLoading(false);
+    }
 
     // se envia la informacion del formulario incluye la validación:
     function hedleOnSubmit(e) {
@@ -97,10 +98,13 @@ export default function FormRegistro({ isClient = false }) {
                 passwordRef.current.value : "No coinciden",
             email: emailRef.current.value,
             phoneNumber: phoneNumberRef.current.value,
-            profileImg: image ,
+            profileImg: image,
             aboutMe: aboutMeRef.current.value,
             address: addressRef.current.value,
         };
+        if (input["profileImg"] === "") {
+            input["profileImg"] = user?.photoURL||""
+        }
         if (!isClient) {
             input["professions"] = professionsRef.current
         }
@@ -151,7 +155,7 @@ export default function FormRegistro({ isClient = false }) {
                 }
                 ).catch(error => {
                     //aqui se pueden manejar los errores de auth con correo y usuario, 
-                    if (error.code === "auth/email-already-in-use") { 
+                    if (error.code === "auth/email-already-in-use") {
                         login(input.email, input.password)
                     }
                     else { console.log(error) }
@@ -271,9 +275,9 @@ export default function FormRegistro({ isClient = false }) {
                     type="file"
                     placeholder="imagen"
                     onChange={upLoadImage} />
-                    
+
             </Form.Group>
-           
+
             {errors.profileImg && <span className="errors">{errors.profileImg}</span>}
             {!isclient && <Form.Group
                 className="mb-3"

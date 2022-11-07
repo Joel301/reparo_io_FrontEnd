@@ -23,11 +23,11 @@ import axios from "axios";
 
 export default function DetailClient() {
   const { id } = useParams();
-  const {user,usersimple}= useAuth()
+  const { user, usersimple } = useAuth()
   const navigate = useNavigate();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const client = usersimple;
+  const { client,professional,admin } = usersimple || {};
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false)
     ;
@@ -36,33 +36,33 @@ export default function DetailClient() {
   const professionals = useSelector(
     (state) => state.professionals.allProfessionals
   );
-  const shoppingHistory = fakeClient.orders
-    .map((order) => order.orderDetails)
-    .flat();
+  // const shoppingHistory = fakeClient.orders
+  //   .map((order) => order.orderDetails)
+  //   .flat();
   /*  Body = {
       clientId,
       professionalId,
       comment,
       rating
       } */
-  const handleSubmit = async (e,professionalId) => {
+  const handleSubmit = async (e, professionalId) => {
     e.preventDefault();
     console.log("hola");
     let review = {
-      clientId:client.id ,
+      clientId: client.id,
       professionalId,
       comment,
       rating,
     };
     console.log(review)
-      await axios.post('https://reparoiobackend-main.up.railway.app/api/reviews',review).then(res=>console.log(res)).catch(err=>console.log(err))
+    await axios.post('https://reparoiobackend-main.up.railway.app/api/reviews', review).then(res => console.log(res)).catch(err => console.log(err))
     setComment("");
     setRating(0);
   };
 
   useEffect(() => {
     console.log(usersimple);
-    dispatch(getClientId(id));
+    // dispatch(getClientId(id));
   }, [dispatch, id]);
 
   return (
@@ -78,32 +78,32 @@ export default function DetailClient() {
             margin: "3rem auto",
             padding: "1rem",
             height: "40rem",
-            fontFamily:'DMSans',
+            fontFamily: 'DMSans',
           }}
-        ><div style={{display:'flex',justifyContent:'center',alignItems:"center",justifySelf:'center',height:"15rem",width:'15rem',backgroundColor:'lightblue',borderRadius:'50%'}}>
-          <div
-            style={{
-              gridArea: "  1 / 1 / 3 / 2",
-              justifySelf: "center",
-              backgroundImage: `url(${client.profileImg})`,
-              backgroundSize: "cover",
-              alignSelf: "center",
-              borderRadius: "50%",
-              height: "8rem",
-              width: "8rem",
-             
-            }}
-          ></div></div>
+        ><div style={{ display: 'flex', justifyContent: 'center', alignItems: "center", justifySelf: 'center', height: "15rem", width: '15rem', backgroundColor: 'lightblue', borderRadius: '50%' }}>
+            <div
+              style={{
+                gridArea: "  1 / 1 / 3 / 2",
+                justifySelf: "center",
+                backgroundImage: `url(${user?.photoURL || usersimple?.client?.profileImg || ""})`,
+                backgroundSize: "cover",
+                alignSelf: "center",
+                borderRadius: "50%",
+                height: "8rem",
+                width: "8rem",
+
+              }}
+            ></div></div>
 
           <h2
             style={{
               textAlign: "center",
               gridArea: " 3 / 1 / 4 / 2",
               alignSelf: "end",
-              
+
             }}
           >
-            {client.firstName} {client.lastName}
+            {usersimple?.client?.firstName} {usersimple?.client?.lastName}
           </h2>
 
           <h5
@@ -146,8 +146,8 @@ export default function DetailClient() {
               marginBottom: "10px",
               overflowY: "scroll",
               WebkitOverflowScrolling: "touch",
-              WebkitScrollbarTrack:{
-                backgroundColor:'black'
+              WebkitScrollbarTrack: {
+                backgroundColor: 'black'
               }
             }}
           >
@@ -160,7 +160,7 @@ export default function DetailClient() {
                 <div className="fw-bold">Historial de Compras</div>
               </div>
             </ListGroup.Item>
-            {shoppingHistory.map((item) => {
+            {[].map((item) => {
               let { firstName, lastName, id } = professionals.find(
                 (prof) => prof.id === item.professionalId
               );
@@ -227,49 +227,49 @@ export default function DetailClient() {
                     </Badge>
                   </OverlayTrigger>
                   <Modal show={show} onHide={handleClose}>
-            <Modal.Header>
-              <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form onSubmit={(e)=>handleSubmit(e,item.professionalId)}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Puntua a tu profesional!</Form.Label>
-                  <StarRatings
-                    rating={rating}
-                    starRatedColor="blue"
-                    changeRating={(rating) => setRating(rating)}
-                    numberOfStars={5}
-                    name="rating"
-                  />
-                </Form.Group>
+                    <Modal.Header>
+                      <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Form onSubmit={(e) => handleSubmit(e, item.professionalId)}>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label>Puntua a tu profesional!</Form.Label>
+                          <StarRatings
+                            rating={rating}
+                            starRatedColor="blue"
+                            changeRating={(rating) => setRating(rating)}
+                            numberOfStars={5}
+                            name="rating"
+                          />
+                        </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Comentario</Form.Label>
-                  <Form.Control
-                    type="text-area"
-                    placeholder="Escribe algun comentario"
-                    onChange={(e) => {
-                      setComment(e.target.value);
-                    }}
-                  />
-                </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                          <Form.Label>Comentario</Form.Label>
+                          <Form.Control
+                            type="text-area"
+                            placeholder="Escribe algun comentario"
+                            onChange={(e) => {
+                              setComment(e.target.value);
+                            }}
+                          />
+                        </Form.Group>
 
-                <Button
-                  variant="primary"
-                  type="submit"
-                  onClick={handleClose}
-                >
-                  Submit
-                </Button>
-              </Form>
-            </Modal.Body>
-            <Modal.Footer></Modal.Footer>
-          </Modal>
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          onClick={handleClose}
+                        >
+                          Submit
+                        </Button>
+                      </Form>
+                    </Modal.Body>
+                    <Modal.Footer></Modal.Footer>
+                  </Modal>
                 </ListGroup.Item>
               );
             })}
           </ListGroup>
-          
+
         </Card>
       ) : (
         <Alert variant="danger">

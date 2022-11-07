@@ -15,19 +15,19 @@ function LogSimpleCard(props) {
 
     return (
         user && usersimple && usersimple.email && <div>
-            <div>
+            {/* <div>
                 {usersimple.client ? "es cliente" : ""}
                 {usersimple.professional ? "es professional" : ""}
                 {usersimple.admin ? "es admin" : ""}
             </div>
             Datos en usersimple:
-            <div>
+            {/* <div>
                 {!!usersimple.client && JSON.stringify(usersimple.client)}
                 {!!usersimple.professional && JSON.stringify(usersimple.professional)}
                 {!!usersimple.admin && JSON.stringify(usersimple.admin)}
-            </div>
-            soy una simple carta de logeo mi email es {usersimple.email}
-            <button onClick={handleLogout}>Cerrar Sesion</button>
+            </div> */}
+            {/* soy una simple carta de logeo mi email es {usersimple.email} */}
+            {/* <button onClick={handleLogout}>Cerrar Sesion</button>  */}
         </div>
     );
 }
