@@ -19,42 +19,46 @@ import CartOffCanvas from "./CartOffCanvas"
 import FormRegistro from "./Formularios/FormRegistro"
 import LogSimpleCard from "./LogSimpleCard";
 
-//Image
+//Image 
 import logoReparoio from "../pages/imgs/logo-reparoio.png"
 
 import { fakeClient } from "./DetailClient";
+import LogIn from "./LogIn"
+import { useAuth } from "../../Context/AuthContext"
 
 function HeaderNavBar() {
-
+  const {user,usersimple,logout}=useAuth()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [showFormprof, setshowFormprof] = useState(false)
   const [showFormClient, setshowFormClient] = useState(false)
-  const [loggedClient, setLoggedClient] = useState({});
+  const [showLoginForm,setShowLoginForm]= useState(false)
   const totalReserved = useSelector(state => state.cart.list)
   const total = useSelector(state => state.cart.total)
   const profesionales = useSelector((state) => state.professionals.allProfessionals)
-  const client = fakeClient;
+  const userLogged =useSelector(state=>state.user)
   const handleShow = (e) => {
     if (e.target.textContent === "Cliente") setshowFormClient(true)
     if (e.target.textContent === "Profesional") setshowFormprof(true)
   }
-
+  const loginClose= ()=> setShowLoginForm(false)
   const handleClose = () => {
     setshowFormClient(false)
     setshowFormprof(false)
 
   }
   useEffect(() => {
+    console.log(userLogged);
+
     if (profesionales[0] === undefined) {
       dispatch(getAllProfessionals())
     }
-  }, [])
+  }, [user])
 
 
   const showProf = (boolean) => setshowFormprof(boolean);
 
-  return (
+  return (  
 
 
     <Navbar sticky="top" expand="md" bg="primary" variant="dark">
@@ -78,13 +82,13 @@ function HeaderNavBar() {
             className="ms-auto"
             style={{ display: "flex", justifyContent: "space-around" }}
           >
-            {loggedClient.hasOwnProperty("id") ? (
+            {usersimple?.hasOwnProperty("uid") ? (
               <>
                 <Dropdown
                   
                 >
                   <Dropdown.Toggle style={{
-                    backgroundImage: `url(${client.profileImg})`,
+                    backgroundImage: `url(${user?.photoURL})`,
                     color:'transparent',
                     backgroundSize: "cover",
                     height: "2rem",
@@ -94,33 +98,25 @@ function HeaderNavBar() {
                   }} /* onClick={showProfile} *//>
                     <Dropdown.Menu>
                   <Dropdown.Item
-                    onClick={() =>
-                      navigate(`details/client/${loggedClient.id}`)
-                    }
+                    // onClick={() =>
+                    //   navigate(`details/client/${loggedClient.id}`)
+                    // }
                   >
                     Ir a Mi Perfil
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setLoggedClient({})}>
+                  <Dropdown.Item onClick={()=>logout()}>
                     Cerrar Sesion
                   </Dropdown.Item></Dropdown.Menu>
                 </Dropdown>
               </>
             ) : (
-              <>
+              <> <LogIn show={showLoginForm} onClose={loginClose} />
                 <NavDropdown title="Iniciar Sesion" id="login-nav-dropdown">
-                  <NavDropdown.Item
-                    onClick={() => {
-                      dispatch(
-                        getClientId("bf2665ba-9c64-40b6-b948-49cb9690145e")
-                      );
-                      return setLoggedClient(client);
-                    }}
-                    href="#login/client"
-                  >
-                    Cliente
+                  <NavDropdown.Item onClick={()=>setShowLoginForm(true)}
+                  > Login
+                 
                   </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item>Profesional</NavDropdown.Item>
+               
                 </NavDropdown>
                 <NavDropdown title="Regístrate" id="signin-nav-dropdown">
                   <NavDropdown.Item defaultValue="cliente" onClick={handleShow}>

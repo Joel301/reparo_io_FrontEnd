@@ -16,122 +16,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getClientId } from "../../state/ducks/clients/actions";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 import axios from "axios";
 
-export let fakeClient = {
-  id: "5b18ccd4-7342-457a-93a7-0814974967a6",
-  firstName: "Roberto",
-  lastName: "Del Valle",
-  phoneNumber: "116588",
-  address: "Av Siempre Viva 345",
-  email: "kulikittaka@sacatiki.com",
-  password: "1234567",
-  profileImg:
-    "https://revistaharoldo.com.ar/img/notas/2020/10/nestor2.jpg",
-  enabled: true,
-  cart: {
-    id: "b1add96b-9d5a-4048-a6b5-f7c776e99334",
-  },
-  orders: [
-    {
-      id: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-      amount: 1500,
-      createdAt: "2022-11-01T23:41:03.185Z",
-      updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
-      orderDetails: [
-        {
-          id: "7a406dab-aa48-40b8-a758-969f84831cb5",
-          reservationAmount: 1500,
-          days: ["lunes"],
-          createdAt: "2022-11-01T23:41:03.384Z",
-          updatedAt: "2022-11-01T23:41:03.384Z",
-          orderId: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-          professionalId: "e6f76316-87ae-4a47-b103-f8fa8d17d945",
-        },
-      ],
-    },
-    {
-      id: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-      amount: 1500,
-      createdAt: "2022-11-01T23:41:03.185Z",
-      updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
-      orderDetails: [
-        {
-          id: "7a406dab-aa48-40b8-a758-969f84831cb5",
-          reservationAmount: 1500,
-          days: ["lunes"],
-          createdAt: "2022-11-01T23:41:03.384Z",
-          updatedAt: "2022-11-01T23:41:03.384Z",
-          orderId: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-          professionalId: "2584a487-ca9a-48e6-a527-3dd49e91db93",
-        },
-      ],
-    },
-    {
-      id: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-      amount: 1500,
-      createdAt: "2022-11-01T23:41:03.185Z",
-      updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
-      orderDetails: [
-        {
-          id: "7a406dab-aa48-40b8-a758-969f84831cb5",
-          reservationAmount: 1500,
-          days: ["lunes"],
-          createdAt: "2022-11-01T23:41:03.384Z",
-          updatedAt: "2022-11-01T23:41:03.384Z",
-          orderId: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-          professionalId: "2584a487-ca9a-48e6-a527-3dd49e91db93",
-        },
-      ],
-    },
-    {
-      id: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-      amount: 1500,
-      createdAt: "2022-11-01T23:41:03.185Z",
-      updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
-      orderDetails: [
-        {
-          id: "7a406dab-aa48-40b8-a758-969f84831cb5",
-          reservationAmount: 1500,
-          days: ["lunes"],
-          createdAt: "2022-11-01T23:41:03.384Z",
-          updatedAt: "2022-11-01T23:41:03.384Z",
-          orderId: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-          professionalId: "2584a487-ca9a-48e6-a527-3dd49e91db93",
-        },
-      ],
-    },
-    {
-      id: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-      amount: 1500,
-      createdAt: "2022-11-01T23:41:03.185Z",
-      updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
-      orderDetails: [
-        {
-          id: "7a406dab-aa48-40b8-a758-969f84831cb5",
-          reservationAmount: 1500,
-          days: ["lunes"],
-          createdAt: "2022-11-01T23:41:03.384Z",
-          updatedAt: "2022-11-01T23:41:03.384Z",
-          orderId: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-          professionalId: "2584a487-ca9a-48e6-a527-3dd49e91db93",
-        },
-      ],
-    },
-  ],
-};
+
 
 export default function DetailClient() {
   const { id } = useParams();
+  const {user,usersimple}= useAuth()
   const navigate = useNavigate();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const client = fakeClient; /* useSelector((state) => state.client); */
+  const client = usersimple;
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false)
     ;
@@ -165,6 +61,7 @@ export default function DetailClient() {
   };
 
   useEffect(() => {
+    console.log(usersimple);
     dispatch(getClientId(id));
   }, [dispatch, id]);
 

@@ -126,7 +126,7 @@ export default function FormRegistro({ isClient = false }) {
         console.log("es, admin: ", usersimple && !!usersimple.adminId)
         console.log("es, client: ", usersimple && !!usersimple.clientId)
         console.log("es, professional: ", usersimple && !!usersimple.professionalId)
-        if (user && usersimple && !usersimple.email) {
+        if (user && !usersimple && !usersimple.email) {
             // aqui se da de alta en firebase
             console.log("en firebase")
             const { email, uid } = user
