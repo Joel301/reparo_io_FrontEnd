@@ -18,8 +18,9 @@ import { useSelector } from "react-redux";
 export default function Admin() {
   const allProfesionales = useSelector(state => state.professionals.allProfessionals.length)
   const allProfesiones = useSelector(state => state.professionals.professions.length)
-  const allCarpinteros = useSelector()
+
   const navigate = useNavigate();
+
   const [component, setComponent] = useState("");
   const [show, setShow] = useState(false);
 
@@ -114,7 +115,7 @@ export default function Admin() {
               value="ordenes"
               style={{ margin: "2.5%" }}
             >
-              Crear Profesionales
+              Ordenes de Compra
             </Button>
             <Button
               variant="primary"

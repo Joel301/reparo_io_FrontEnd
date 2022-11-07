@@ -1,6 +1,5 @@
 
 
-
 //React
 import React, { useEffect } from "react"
 import { useState } from "react"
@@ -10,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux"
 //Redux
 import { getAllProfessionals } from "../../state/ducks/professionals/actions"
 import { getClientId } from "../../state/ducks/clients/actions";
+
 //Bootstrap Material UI
 import { Button, Badge, Container, Nav, Navbar, NavDropdown, Offcanvas, Dropdown } from "react-bootstrap"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -18,8 +18,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartOffCanvas from "./CartOffCanvas"
 import FormRegistro from "./Formularios/FormRegistro"
 import LogSimpleCard from "./LogSimpleCard";
-//import FormProfession from "./Formularios/FormProfession";
-//import FormClient from "./Formularios/FormClient";
+
 //Image
 import logoReparoio from "../pages/imgs/logo-reparoio.png"
 
@@ -68,7 +67,7 @@ function HeaderNavBar() {
             <Navbar.Brand>Reparo.io</Navbar.Brand>
           </Link>
           <Link to="/home">
-            <Navbar.Brand>Home</Navbar.Brand>
+            <Navbar.Brand>Profesionales</Navbar.Brand>
           </Link>
           <LogSimpleCard />
         </Container>
