@@ -14,7 +14,7 @@ import { Card, ListGroup, Dropdown, Button, Modal, Badge, Toast, ToastContainer 
 
 export default function CartOffItem({ professional, totalDays, days, exitCanvas, }) {
 
-  let { firstName, lastName, professions, id } = professional;
+  let { firstName, lastName, professions, id, availableDays } = professional;
 
   const [noDaysAlert,setNoDaysAlert] = useState(false) // este estado se creo para mostrar el mensaje de error si ningun dia fue seleccionado
   
@@ -76,7 +76,7 @@ export default function CartOffItem({ professional, totalDays, days, exitCanvas,
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              {week.map((day) => {
+              {availableDays.map((day) => {
                 return (
                   <Dropdown.Item    onClick={daysHandler}>
                     {day}

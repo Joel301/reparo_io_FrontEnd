@@ -15,3 +15,51 @@ export function getClient(id) {
         }
     }
 }
+
+export function getProfessions () {
+    return async function (dispatch) {
+        try {
+            const profesiones = await axios.get(
+                `https://reparoiobackend-main.up.railway.app/home/professions/`
+              )
+              console.log(profesiones, "profesiones action")
+              return dispatch({
+                type: 'GET_PROFESSIONS',
+                payload: profesiones.data
+              })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export function deleteProfession (id) {
+    return async function (dispatch) {
+        try {
+            await axios.delete(`https://reparoiobackend-main.up.railway.app/home/professions/${id}`)
+            return dispatch ({
+                type: "DELETE_PROFESION",
+                payload: {
+                    id
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export function addProfessions (body) {
+    return async function (dispatch) {
+        try {
+            await axios.post("https://reparoiobackend-main.up.railway.app/home/professions", body)
+            return dispatch ({
+                type: "ADD_PROFESION",
+                payload: body
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
