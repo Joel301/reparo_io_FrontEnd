@@ -18,6 +18,8 @@ import { useSelector } from "react-redux";
 export default function Admin() {
   const allProfesionales = useSelector(state => state.professionals.allProfessionals.length)
   const allProfesiones = useSelector(state => state.professionals.professions.length)
+  const profesionesNombres = useSelector(state => state.professionals.professions)
+  console.log(profesionesNombres.map(el => el))
  
   const navigate = useNavigate();
   const [component, setComponent] = useState("");
@@ -72,7 +74,7 @@ export default function Admin() {
             </ListGroup>
           </Card >
           <Card style={{
-              height: "60%",
+              
               border: "3px solid blue",
               boxShadow: "0 0 10px #000",
               margin: "2%",
@@ -83,7 +85,12 @@ export default function Admin() {
               <ListGroup.Item>Cantidad Profesionales: {allProfesionales}</ListGroup.Item>
               <ListGroup.Item>Cantidad Profesiones: {allProfesiones}</ListGroup.Item>
               <ListGroup.Item>Cantidad de Clientes: 5</ListGroup.Item>
-              <ListGroup.Item style={{fontWeight: "bold", textAlign: "center"}}>Profesionales por profesion </ListGroup.Item>
+              <ListGroup.Item style={{fontWeight: "bold", textAlign: "center"}}>Lista de profesiones: </ListGroup.Item>
+              {
+                profesionesNombres.map((el) => {
+                 return <ListGroup.Item>{el.name[0].toUpperCase()+ el.name.substring(1)} Cantidad: {el.professionals.length}</ListGroup.Item>
+                })
+                }
             </ListGroup>
           </Card>
         </div>
@@ -110,7 +117,7 @@ export default function Admin() {
             <Offcanvas.Title>Modificaciones</Offcanvas.Title>
           </Offcanvas.Header>
 
-          <Offcanvas.Body>
+          <Offcanvas.Body style={{display: "contents"}}>
             <Button
               variant="primary"
               onClick={onChangeComponent}
