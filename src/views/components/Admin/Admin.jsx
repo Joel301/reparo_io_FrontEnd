@@ -34,6 +34,7 @@ export default function Admin() {
   const onChangeComponent = (e) => {
     e.preventDefault();
     setComponent(e.target.value);
+    handleClose()
   };
 
   const usuario =  {
