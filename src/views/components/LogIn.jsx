@@ -10,18 +10,24 @@ function LogIn({ show,onClose}) {
   const [user, setUser] = useState({
     email: "",
     password: "",
+    google:false
   });
-  const { login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle, usersimple } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-    //   dispatch(loginUser(user));
+         dispatch(loginUser(user));
       if (!loggedUser.hasOwnProperty("firstName")) {
         await login(user.email, user.password);
+        setUser({email:usersimple.email,
+                password:null,
+                google:true})
+        
       }
+      
       console.log(loggedUser);
       navigate("/");
     } catch (error) {

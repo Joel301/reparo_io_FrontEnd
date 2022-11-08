@@ -19,18 +19,16 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import axios from "axios";
 
-
-
 export default function DetailClient() {
   const { id } = useParams();
-  const { user, usersimple } = useAuth()
+  const { user, usersimple } = useAuth();
   const navigate = useNavigate();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const { client,professional,admin } = usersimple || {};
+  const { client, professional, admin } = usersimple || {};
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false)
-    ;
+  const handleClose = () => setShow(false);
+
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
   const professionals = useSelector(
@@ -54,8 +52,11 @@ export default function DetailClient() {
       comment,
       rating,
     };
-    console.log(review)
-    await axios.post('https://reparoiobackend-main.up.railway.app/api/reviews', review).then(res => console.log(res)).catch(err => console.log(err))
+    console.log(review);
+    await axios
+      .post("https://reparoiobackend-main.up.railway.app/api/reviews", review)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     setComment("");
     setRating(0);
   };
@@ -78,29 +79,42 @@ export default function DetailClient() {
             margin: "3rem auto",
             padding: "1rem",
             height: "40rem",
-            fontFamily: 'DMSans',
+            fontFamily: "DMSans",
           }}
-        ><div style={{ display: 'flex', justifyContent: 'center', alignItems: "center", justifySelf: 'center', height: "15rem", width: '15rem', backgroundColor: 'lightblue', borderRadius: '50%' }}>
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              justifySelf: "center",
+              height: "15rem",
+              width: "15rem",
+              backgroundColor: "lightblue",
+              borderRadius: "50%",
+            }}
+          >
             <div
               style={{
                 gridArea: "  1 / 1 / 3 / 2",
                 justifySelf: "center",
-                backgroundImage: `url(${user?.photoURL || usersimple?.client?.profileImg || ""})`,
+                backgroundImage: `url(${
+                  user?.photoURL || usersimple?.client?.profileImg || ""
+                })`,
                 backgroundSize: "cover",
                 alignSelf: "center",
                 borderRadius: "50%",
                 height: "8rem",
                 width: "8rem",
-
               }}
-            ></div></div>
+            ></div>
+          </div>
 
           <h2
             style={{
               textAlign: "center",
               gridArea: " 3 / 1 / 4 / 2",
               alignSelf: "end",
-
             }}
           >
             {usersimple?.client?.firstName} {usersimple?.client?.lastName}
@@ -147,8 +161,8 @@ export default function DetailClient() {
               overflowY: "scroll",
               WebkitOverflowScrolling: "touch",
               WebkitScrollbarTrack: {
-                backgroundColor: 'black'
-              }
+                backgroundColor: "black",
+              },
             }}
           >
             <ListGroup.Item
@@ -231,7 +245,9 @@ export default function DetailClient() {
                       <Modal.Title>Modal heading</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <Form onSubmit={(e) => handleSubmit(e, item.professionalId)}>
+                      <Form
+                        onSubmit={(e) => handleSubmit(e, item.professionalId)}
+                      >
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>Puntua a tu profesional!</Form.Label>
                           <StarRatings
@@ -243,7 +259,10 @@ export default function DetailClient() {
                           />
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Group
+                          className="mb-3"
+                          controlId="formBasicPassword"
+                        >
                           <Form.Label>Comentario</Form.Label>
                           <Form.Control
                             type="text-area"
@@ -269,7 +288,6 @@ export default function DetailClient() {
               );
             })}
           </ListGroup>
-
         </Card>
       ) : (
         <Alert variant="danger">
