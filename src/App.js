@@ -13,6 +13,10 @@ import HeaderNavBar from "./views/components/HeaderNavBar"
 import DetailClient from "./views/components/DetailClient"
 import LogIn from "./views/components/LogIn"
 import Admin from "./views/components/Admin/Admin"
+
+//Error
+import ErrorPage from "./views/components/ErrorPage"
+
 //un segundo 
 function App() {
   return (
@@ -28,6 +32,7 @@ function App() {
         <Route exact path="/login" element={<LogIn />} />
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/admin" element={<Admin />} />
+        <Route path="*" element={<ErrorPage/>}/>
       </Routes>
     </div>
   )
