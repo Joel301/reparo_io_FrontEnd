@@ -14,11 +14,6 @@ function rootReducer(state = initialState, action) {
         allProfessionals: action.payload,
       };
 
-    case "GET_PROFESSIONALS":
-      return {
-        ...state,
-        professionalsFiltered: action.payload,
-      };
 
     case "FILTER_BY_PROFESSION":
      

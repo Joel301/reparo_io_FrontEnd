@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 
 //Actions
-import { deleteItemCart, addDayToProf, removeDayFromProf, marcadoPago, postCart } from "../../state/ducks/cart/actions"
+import { deleteItemCart, addDayToProf, removeDayFromProf, getMercadoPagoLink, postCart, deleteOrder } from "../../state/ducks/cart/actions"
 
 //Bootstrap
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -17,67 +17,102 @@ import Modal from 'react-bootstrap/Modal'
 import Table from 'react-bootstrap/Table'
 import Form from 'react-bootstrap/Form'
 
+import axios from "axios"
+
+//PARA REMOVER DIAS EN DBCART
+async function removeDay (day,idDb) {
+    try {
+        await axios.patch(
+            `https://reparoiobackend-main.up.railway.app/api/cart/${idDb}`,
+            {
+              type: "remove",
+              day,
+            }
+          );
+         
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//PARA AGREGAR DIAS EN DBCART
+async function addDay (day,idDb) {
+    try {
+        await axios.patch(
+            `https://reparoiobackend-main.up.railway.app/api/cart/${idDb}`,
+            {
+              type: "add",
+              day,
+            }
+          );
+         
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 export default function ItemCart () {
 
-    const cliente = {
-        id: "4264b59d-7df9-4669-869f-8a7340c51f2c",
-        firstName: "primernombre",
-        lastName: "apeido",
-        phoneNumber: "kulikitakati",
-        address: "kulikitakati",
-        email: "kulikittaka@sacatiki.com",
-        password: "1234567",
-        profileImg: "https://img.icons8.com/fluency-systems-regular/96/000000/guest-male.png",
-        enabled: true,
-        cart: {
-          id: "531b2e53-c73d-478d-8ebd-610e584ab27a"
-        }
-      }
-
-
+    const cliente = useSelector(state=>state.user)
     const items = useSelector((state) => state.cart.list)
+    const order = useSelector((state) => state.cart.order)
+    const url = useSelector((state) => state.cart.url)
+
+
+    let id = order ? order.newOrder.id : ""
+
 
     const [component, setComponent] = useState('')
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false)
+    const [name, setName] = useState("")
 
-    const handleClose = () => setShow(false);
+    function handleInputChange(e) {
+      e.preventDefault(e)
+      setName(e.target.value)
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        // dispatch(getProfesional(name))
+    }
+
+    const handleClose = () => setShow(false)
 
     const dispatch = useDispatch()
 
 
-    const deleteItem = (id) => {
-        dispatch(deleteItemCart(id))
+    const deleteItem = (item) => {
+        dispatch(deleteItemCart(item))
     }
     
     const postItem = items.map(el => {
         return {
             clientId: cliente.id,
-            
         }
     })
 
     const postCarrito = (e) => {
-        
         setComponent("resumen")
         setShow(true)
-        dispatch(postCart({cartId: "5b18ccd4-7342-457a-93a7-0814974967a6"}))
+        dispatch(postCart({cartId: cliente.cartId}))
     }
 
-    const deleteDay = ( id, day ) => {
-        dispatch(removeDayFromProf( id, day ))
+    const deleteDay = ( id, day, idDb) => {
+        removeDay(day,idDb)
+        dispatch(removeDayFromProf( id, day))
     }
 
-    const selectDays = (id, day) => {
+    const selectDays = (id, day, idDb) => {
+        addDay(day,idDb)
         dispatch(addDayToProf(id, day))
     }
 
     const orderDays = (dias) => {
-
         let newArray = dias.sort(( a, b ) => {
            return a.id - b.id
         })
-
         return newArray
     }
 
@@ -85,7 +120,10 @@ export default function ItemCart () {
         let counter = 0
         
         items.map((item) => {
+
             counter = counter + (item.professional.dayPrice * item.days.length)
+            return counter
+
         })
 
         return counter
@@ -101,16 +139,30 @@ export default function ItemCart () {
 
     const payItems = (profesionales) => {
 
-        let itemsMercadoPago = profesionales.map((item) => {
-            return {
-                title: item.professional.email,
-                price: (item.days?.length * item.professional.dayPrice),
-                quantity: item.quantity,
-            }
-        })
 
-        dispatch(marcadoPago(itemsMercadoPago))
+        const itemsMercadoPago =  {
+                orderId: order.newOrder.id, //falta reveer
+                clientId: cliente.id,
+                items: [{
+                    title: `Order ${order.newOrder.id}`,
+                    price: order.newOrder.amount,
+                    quantity: 1
+                }]
+            }
+    
+
+        dispatch(getMercadoPagoLink(itemsMercadoPago))
     }
+
+    //PARA BORRAR LA ORDEN DE COMPRA DEL HISTORIAL DEL CLIENT
+    const deleteOrderHandler = (orderId) => {
+        handleClose()
+        dispatch(deleteOrder(orderId))
+        handleClose()
+    }
+
+
+
 
     return (
         <>
@@ -140,7 +192,7 @@ export default function ItemCart () {
                             <Dropdown.Menu>
                                 {
                                     item.professional.availableDays.map((day) => {
-                                       return (<Dropdown.Item onClick={() => selectDays(item.professional.id, day)}>{day}</Dropdown.Item>)
+                                       return (<Dropdown.Item onClick={() => selectDays(item.professional.id, day,item.idDb)}>{day}</Dropdown.Item>)
                                     })
                                 }
                             </Dropdown.Menu>
@@ -153,7 +205,7 @@ export default function ItemCart () {
                                     <td>
                                         <Badge 
                                             style={{cursor: "pointer"}} 
-                                            onClick={() => deleteDay(item.professional.id, day)}
+                                            onClick={() => deleteDay(item.professional.id, day,item.idDb)}
                                             >{day}</Badge>
                                     </td>
                                 )
@@ -185,16 +237,23 @@ export default function ItemCart () {
                 Costo Total: ${costoTotal(items)}
             </Badge>{' '}
             <Container>
-                <Button variant="success" value='resumen' onClick={() => postCarrito(postItem)}>
-                    Resumen de la compra
-                </Button> 
+                {
+                    items.length > 0 
+                    ? 
+                    <Button variant="success" value='resumen'  onClick={() => postCarrito(postItem)}>
+                        Resumen de la compra
+                    </Button> 
+                    :
+                     <></>
+                }
+                
             </Container>
 
             {
                 component === 'resumen' ?
                 <>
-                    <Modal show={show} onHide={handleClose} animation={false}>
-                        <Modal.Header closeButton>
+                    <Modal show={show}  animation={false}>
+                        <Modal.Header >
                             <Modal.Title>Resumen de la Compra</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
@@ -210,7 +269,6 @@ export default function ItemCart () {
                                 {
                                     items ?
                                     items.map((item) => {
-                                        console.log(item, "item")
                                         return (
                                             <tbody>
                                                 <tr>
@@ -246,14 +304,23 @@ export default function ItemCart () {
                         </Modal.Body>
 
                         <Modal.Footer style={{display: "flex", justifyContent: "flex-start"}}>
-                            <h5>Direccion: direccion del cliente</h5>
+                            <h5>Direccion : {cliente.address}</h5>
                             <br/>
-                            <Form.Label htmlFor="inputPassword5">¿ Desea cambiar de direccion ? Indique aqui...</Form.Label>
+                            <h5>Email : {cliente.email}</h5>
+                            {/* <Form.Label htmlFor="inputCambiarDireccion">¿ Desea cambiar de direccion ? Indique aqui...</Form.Label>
                             <Form.Control
-                                type="password"
-                                id="inputPassword5"
-                                aria-describedby="passwordHelpBlock"
+                                type="text"
+                                id="inputCambiarDireccion"
+                                placeholder="Nueva direccion..."
+                                onChange={(e) => handleInputChange(e)}
                             />
+                            <Button
+                                type="submit"
+                                variant="outline-success"
+                                onClick={(e) => handleSubmit(e)}
+                            >
+                                Buscar
+                            </Button> */}
                         </Modal.Footer>
 
                         <Modal.Footer style={{marginTop: "10px"}}>
@@ -261,11 +328,23 @@ export default function ItemCart () {
                         </Modal.Footer>
 
                         <Modal.Footer>
-                            <Button variant="primary" onClick={payItems(items)}>
-                                Pagar
+                            <Button variant='danger' onClick={() => deleteOrderHandler(id)}>
+                                Cancelar compra
                             </Button>
+                            <Button variant="primary" onClick={() => payItems(items)}>
+                                Solicitar Pago
+                            </Button>
+                            {
+                                url ?
+                                    <a href={url}>
+                                        <Button variant="secondary">
+                                            Pagar
+                                        </Button> 
+                                    </a>
+                                : 
+                                <></>
+                            }
                         </Modal.Footer>
-
                     </Modal>
                 </>
                 :

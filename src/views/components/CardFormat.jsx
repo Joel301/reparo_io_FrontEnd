@@ -16,13 +16,10 @@ function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert
       return setRepeatedAlert(repeatedAlert=true)
     }
     
-    console.log(worker, "worker")
+    console.log(worker, "workerrrr")
     dispatch(addToCart(worker, client))
    
     estadoBoolean(estado=true)
-  
-   
-    
   }
   return (
     <Card bg="light" style={{ width: "18rem", height: "22rem" }}>

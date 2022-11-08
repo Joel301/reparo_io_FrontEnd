@@ -18,6 +18,7 @@ import { postingCart } from '../../state/ducks/cart/actions'
 export default function CartOffCanvas({ estado, estadoBoolean }) {
   
   const cartItems = useSelector(state=> state.cart.list)
+  const client = useSelector(state=>state.user)
   const dispatch = useDispatch()
 
   const [exitCanvas, setExit] = useState(false)
@@ -41,6 +42,8 @@ export default function CartOffCanvas({ estado, estadoBoolean }) {
   },[cartItems])
 
 
+
+
   return (
       <Offcanvas show={estado } onHide={onHideCart}>
 
@@ -57,7 +60,7 @@ export default function CartOffCanvas({ estado, estadoBoolean }) {
         }
       
         <Button variant='success' onClick={()=> {navigate('/cart')
-      return dispatch(postingCart(cartItems))}}>Realizar Compras</Button>
+      return dispatch(postingCart(cartItems,client.id))}}>Realizar Compras</Button>
       </Offcanvas.Body>
 
     </Offcanvas>

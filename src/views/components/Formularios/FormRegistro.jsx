@@ -55,12 +55,35 @@ export default function FormRegistro({ isClient = false }) {
 
     // Se llena el input de profesiones:
     function handleSelectProfession(e) {
-        e.preventDefault()
         if (professionsRef.current.includes(e.target.value)) {
             professionsRef.current = professionsRef.current.filter(el => el !== e.target.value)
         } else professionsRef.current.push(e.target.value)
+        console.log(professionsRef);
 
     }
+
+    // Esta es la logica para el funcionamiento de cloudinary:
+        const [image,setImage] = useState("");
+        const [loading, setLoading] = useState(false);
+        
+        const upLoadImage = async (e) =>{
+            const files= e.target.files;
+            const data = new FormData();
+            data.append("file", files[0]);
+            data.append("upload_preset","reparoio_images");
+            setLoading(true);
+            const res = await fetch(
+                "https://api.cloudinary.com/v1_1/de2sdmotl/image/upload",
+                {
+                    method: "POST",
+                    body: data,
+                }
+            )
+            const file = await res.json();
+            console.log(file.secure_url);
+            console.log(res);
+            setImage(file.secure_url);
+            setLoading(false);}
 
     // se envia la informacion del formulario incluye la validación:
     function hedleOnSubmit(e) {
@@ -73,7 +96,7 @@ export default function FormRegistro({ isClient = false }) {
                 passwordRef.current.value : "No coinciden",
             email: emailRef.current.value,
             phoneNumber: phoneNumberRef.current.value,
-            profileImg: profileImgRef.current.value || user ? user.photoURL : "",
+            profileImg: image ,
             aboutMe: aboutMeRef.current.value,
             address: addressRef.current.value,
         };
@@ -110,7 +133,7 @@ export default function FormRegistro({ isClient = false }) {
             isclient
                 ? dispatch(postlClient({ ...input, email, authid: uid }))
                 : dispatch(postProfessionals({ ...input, email, authid: uid }))
-            navigate('/')
+            navigate('/Home')
         } else {
             console.log("sin firebase")
             signup(input.email, input.password)
@@ -121,7 +144,7 @@ export default function FormRegistro({ isClient = false }) {
                     isclient
                         ? dispatch(postlClient({ ...input, email, authid: uid }))
                         : dispatch(postProfessionals({ ...input, email, authid: uid }))
-                    navigate('/')
+                    navigate('/Home')
                     // esto de abajo esta bueno pero no puede ser un mensaje que no sea alert?
                     // alert('Tu perfil ha sido creado')
                 }
@@ -244,9 +267,12 @@ export default function FormRegistro({ isClient = false }) {
             <Form.Group className="mb-3" >
                 <Form.Control
                     ref={profileImgRef}
-                    type="text"
-                    placeholder="imagen" />
+                    type="file"
+                    placeholder="imagen"
+                    onChange={upLoadImage} />
+                    
             </Form.Group>
+           
             {errors.profileImg && <span className="errors">{errors.profileImg}</span>}
             {!isclient && <Form.Group
                 className="mb-3"
