@@ -211,7 +211,7 @@ export default function EditarProfesional () {
         }
     }
 
-    //Enviar profesional modificado
+    //Enviar profesional modificado 
     function handleInputChangeProfesional (e, id, newProfessional) {
         e.preventDefault(e)
         setShow(true)
@@ -220,7 +220,7 @@ export default function EditarProfesional () {
         dispatch(putDetail(id, newProfessional))
     }
 
-    
+    //style
 
     return (
         <div style={{ paddingBottom: "100px"}}>
@@ -252,16 +252,21 @@ export default function EditarProfesional () {
                 <Form style={{ width: "60%", border: "1"}}>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail" style={{marginTop: "30px"}}>
-                        <Form.Label>
+                        
+                        <Form.Label style={{border: "3px solid blue", borderRadius: "2%", boxShadow: "0 0 10px #000", padding: "2%"}}>
+                            
                             <h5>ID Cliente : {profesional.id}</h5>
+                            
                         </Form.Label>
+                        
                     </Form.Group>
-
+                <div style={{border: "3px solid blue", borderRadius: "2%", boxShadow: "0 0 10px #000", padding: "2%"}}>
                     <Form.Group className="mb-3" style={{ display: "flex"}}>
                         <Form.Group style={{ width: "50%", marginRight: "20px"}}>
                             <Form.Label>Nombre :</Form.Label>
                             <Form.Control placeholder={`${profesional.firstName}`} onChange={(e) => handleFirstName(e)} />
                             <Button
+                                style={{margin: "2%"}}
                                 type="submit"
                                 variant="outline-primary"
                                 onClick={(e) => handleChangeFirstName(e)}
@@ -273,6 +278,7 @@ export default function EditarProfesional () {
                             <Form.Label>Apellido :</Form.Label>
                             <Form.Control placeholder={`${profesional.lastName}`} onChange={(e) => handleLastName(e)}/>
                             <Button
+                                style={{margin: "2%"}}
                                 type="submit"
                                 variant="outline-primary"
                                 onClick={(e) => handleChangeLastName(e)}
@@ -287,6 +293,7 @@ export default function EditarProfesional () {
                             <Form.Label>Email :</Form.Label>
                             <Form.Control type="email" placeholder={`${profesional.email}`} onChange={(e) => handleEmail(e)} />
                             <Button
+                                style={{margin: "2%"}}
                                 type="submit"
                                 variant="outline-primary"
                                 onClick={(e) => handleChangeEmail(e)}
@@ -298,6 +305,7 @@ export default function EditarProfesional () {
                             <Form.Label>Direccion :</Form.Label>
                             <Form.Control placeholder={`${profesional.address}`} onChange={(e) => handleAddress(e)} />
                             <Button
+                                style={{margin: "2%"}}
                                 type="submit"
                                 variant="outline-primary"
                                 onClick={(e) => handleChangeAddress(e)}
@@ -312,6 +320,7 @@ export default function EditarProfesional () {
                             <Form.Label>Numero de Telefono :</Form.Label>
                             <Form.Control type="number" placeholder={`${profesional.phoneNumber}`} onChange={(e) => handlePhoneNumber(e)} />
                             <Button
+                                style={{margin: "2%"}}
                                 type="submit"
                                 variant="outline-primary"
                                 onClick={(e) => handleChangePhoneNumber(e)}
@@ -323,6 +332,7 @@ export default function EditarProfesional () {
                             <Form.Label>Imagen del Profesional :</Form.Label>
                             <Form.Control type="text" placeholder={`${profesional.profileImg}`} onChange={(e) => handleProfileImg(e)} />
                             <Button
+                                style={{margin: "2%"}}
                                 type="submit"
                                 variant="outline-primary"
                                 onClick={(e) => handleChangeProfileImg(e)}
@@ -339,6 +349,7 @@ export default function EditarProfesional () {
                                 profesional.availableDays?.map((dia) => {
                                     return (
                                         <Badge 
+                                        style={{margin: "2%"}}
                                             // style={{cursor: "pointer"}}
                                             >{dia}
                                         </Badge>
@@ -350,7 +361,7 @@ export default function EditarProfesional () {
                                 newProfessional.availableDays?.map((day) => {
                                     return (
                                         <Badge 
-                                            style={{cursor: "pointer"}} 
+                                            style={{cursor: "pointer", margin: "2%"}} 
                                             onClick={() => deleteDay(day)}
                                             >{day}
                                         </Badge>
@@ -377,6 +388,7 @@ export default function EditarProfesional () {
                                 profesional.professions?.map((profesion) => {
                                     return (
                                         <Badge 
+                                        style={{margin: "2%"}}
                                             >{profesion.name}
                                         </Badge>
                                     )
@@ -387,7 +399,7 @@ export default function EditarProfesional () {
                                 newProfessional.professions?.map((profesion) => {
                                     return (
                                         <Badge 
-                                            style={{cursor: "pointer"}} 
+                                            style={{cursor: "pointer", margin: "2%"}} 
                                             onClick={() => deleteProfession(profesion)}
                                             >{profesion}
                                         </Badge>
@@ -422,6 +434,7 @@ export default function EditarProfesional () {
                             >
                         Finalizar Cambios
                     </Button>
+                    </div>
                     {
                         show ? 
                         <Alert show={show} variant="success" style={{marginTop: "50px"}}>
