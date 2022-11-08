@@ -29,3 +29,19 @@ export function getClientId(id){
         }
     }
 }
+
+export function getClients(){
+    return async function(dispatch){
+        try {
+            const allClients = await axios.get("/home/clients")
+            console.log(allClients)
+            return dispatch({
+                type: "GET_CLIENTS",
+                payload: allClients.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+}
