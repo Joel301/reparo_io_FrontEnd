@@ -73,7 +73,7 @@ export default function EditarProfesional () {
     
 
     useEffect(() => {
-        dispatch(getProfessions())
+        
     }, [dispatch, newProfessional])
 
     //Buscar por ID
@@ -84,6 +84,7 @@ export default function EditarProfesional () {
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(getDetail(id))
+        dispatch(getProfessions())
     }
     
     //Cambiar Nombre
