@@ -211,7 +211,7 @@ export default function EditarProfesional () {
         }
     }
 
-    //Enviar profesional modificado
+    //Enviar profesional modificado 
     function handleInputChangeProfesional (e, id, newProfessional) {
         e.preventDefault(e)
         setShow(true)
@@ -220,7 +220,7 @@ export default function EditarProfesional () {
         dispatch(putDetail(id, newProfessional))
     }
 
-    
+    //style
 
     return (
         <div style={{ paddingBottom: "100px"}}>
