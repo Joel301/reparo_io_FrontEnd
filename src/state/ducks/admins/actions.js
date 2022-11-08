@@ -22,7 +22,6 @@ export function getProfessions () {
             const profesiones = await axios.get(
                 `https://reparoiobackend-main.up.railway.app/home/professions/`
               )
-              console.log(profesiones, "profesiones action")
               return dispatch({
                 type: 'GET_PROFESSIONS',
                 payload: profesiones.data

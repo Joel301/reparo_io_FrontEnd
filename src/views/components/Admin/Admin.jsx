@@ -117,14 +117,14 @@ export default function Admin() {
             >
               Ordenes de Compra
             </Button>
-            <Button
+            {/* <Button
               variant="primary"
               onClick={onChangeComponent}
               value="editarCliente"
               style={{ margin: "2.5%" }}
             >
               Editar Cliente
-            </Button>
+            </Button> */}
             <Button
               variant="primary"
               onClick={onChangeComponent}
@@ -139,8 +139,6 @@ export default function Admin() {
           <EditarProfesional />
         ) : component === "ordenes" ? (
           <Ordenes />
-        ) : component === "editarCliente" ? (
-          <EditarCliente />
         ) : component === "crearProfesion" ? (
           <CrearProfesion />
         ) : (

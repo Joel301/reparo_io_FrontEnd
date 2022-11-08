@@ -20,11 +20,14 @@ import { useSelector } from 'react-redux'
 export default function EditarCliente () {
 
     const cliente = useSelector((state) => state.admins.clients)
+    
     console.log(cliente, "cliente")
+
 
     const dispatch = useDispatch()
     
     const [id, setId] = useState("")
+    const [client, setClient] = useState("")
 
     function handleInputChange(e) {
         e.preventDefault(e)
@@ -35,6 +38,8 @@ export default function EditarCliente () {
         e.preventDefault()
         dispatch(getClient(id))
     }
+
+    const modifyClient = () => {}
 
     return (
         <div style={{ paddingBottom: "100px"}}>
@@ -60,54 +65,54 @@ export default function EditarCliente () {
             </div>
             
             {
-                cliente !== {} ? 
+                cliente.length !== 0 ? 
                 <div style={{ display: "flex", justifyContent: "center"}}>
 
                 <Form style={{ width: "60%", border: "1"}}>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail" style={{marginTop: "30px"}}>
                         <Form.Label>
-                            <h5>ID Cliente : {cliente.id}</h5>
+                            <h5>ID Cliente : {cliente[0].id}</h5>
                         </Form.Label>
                     </Form.Group>
 
                     <Form.Group className="mb-3" style={{ display: "flex"}}>
                         <Form.Group style={{ width: "50%", marginRight: "20px"}}>
                             <Form.Label>Nombre :</Form.Label>
-                            <Form.Control placeholder={`${cliente.firstName}`} />
+                            <Form.Control placeholder={`${cliente[0].firstName}`} />
                         </Form.Group>
                         <Form.Group style={{ width: "50%", marginLeft: "20px"}} >
                             <Form.Label>Apellido :</Form.Label>
-                            <Form.Control placeholder={`${cliente.lastName}`} />
+                            <Form.Control placeholder={`${cliente[0].lastName}`} />
                         </Form.Group>
                     </Form.Group>
 
                     <Form.Group className="mb-3" style={{ display: "flex"}}>
                         <Form.Group controlId="formBasicEmail" style={{ width: "50%", marginRight: "20px"}}>
                             <Form.Label>Email :</Form.Label>
-                            <Form.Control type="email" placeholder={`${cliente.email}`} />
+                            <Form.Control type="email" placeholder={`${cliente[0].email}`} />
                         </Form.Group>
                         <Form.Group style={{ width: "50%", marginLeft: "20px"}}>
                             <Form.Label>Direccion :</Form.Label>
-                            <Form.Control placeholder={`${cliente.address}`} />
+                            <Form.Control placeholder={`${cliente[0].address}`} />
                         </Form.Group>
                     </Form.Group>
 
                     <Form.Group className="mb-3" style={{ display: "flex"}}>
                         <Form.Group style={{ width: "50%", marginRight: "20px"}}>
                             <Form.Label>Numero de Telefono :</Form.Label>
-                            <Form.Control type="number" placeholder={`${cliente.phoneNumber}`} />
+                            <Form.Control type="number" placeholder={`${cliente[0].phoneNumber}`} />
                         </Form.Group>
                         <Form.Group style={{ width: "50%", marginLeft: "20px"}}>
-                            <Form.Label>Imagen del Contacto :</Form.Label>
-                            <Form.Control type="text" placeholder={`${cliente.profileImg}`} />
+                            <Form.Label>Imagen del Cliente :</Form.Label>
+                            <Form.Control type="text" placeholder={`${cliente[0].profileImg}`} />
                         </Form.Group>
                     </Form.Group>
 
                     <Form.Group className="mb-3" style={{ display: "flex"}}>
                         <Form.Group controlId="formBasicPassword" style={{ width: "50%", marginRight: "20px"}}>
                             <Form.Label>Contraseña :</Form.Label>
-                            <Form.Control type="password" placeholder={`${cliente.password}`} />
+                            <Form.Control type="password" placeholder={`${cliente[0].password}`} />
                         </Form.Group>
                         <Form.Group  style={{ width: "50%", marginLeft: "20px"}}>
                             <Form.Label>Confirmar Contraseña :</Form.Label>
@@ -115,7 +120,7 @@ export default function EditarCliente () {
                         </Form.Group>
                     </Form.Group>
 
-                    <ToggleButtonGroup type="radio" name="options" defaultValue={cliente.enabled? 1 : 2} style={{ display: "flex", justifyContent: "space-evenly"}}>
+                    <ToggleButtonGroup type="radio" name="options" defaultValue={cliente[0].enabled? 1 : 2} style={{ display: "flex", justifyContent: "space-evenly"}}>
                         <ToggleButton id="tbg-radio-1" value={1} >
                             Habilitado
                         </ToggleButton>

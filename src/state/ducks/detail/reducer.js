@@ -10,7 +10,12 @@
         case "GET_DETAIL":
       return {
         ...action.payload,
-      };
+      }
+
+      case "POST_DETAIL": 
+        return{
+          ...action.payload,
+        }
 
       default: return state;
       }

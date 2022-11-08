@@ -56,10 +56,10 @@ export default function CrearProfesion () {
     return (
         <>
             <div>
-                <h2 style={{display: "flex", justifyContent: "center", marginBottom: "50px"}}>Crea una nueva profesion</h2>
+                <h2 style={{display: "flex", justifyContent: "center", marginBottom: "50px", marginTop: "50px"}}>Crea una nueva profesion</h2>
                 {
                     professions ? 
-                    <>
+                    <div style={{ paddingBottom: "100px"}}>
                     <Container>
                         <h4>Profesiones Existentes :</h4>
                         <Row className="justify-content-md-center">
@@ -76,7 +76,7 @@ export default function CrearProfesion () {
                     </Container>
                    
                     <Form
-                        style={{ width: "30%", display: "flex", height:'2.5rem', justifyContent: "center", marginLeft: "35%", marginTop: "50px"}}
+                        style={{ width: "30%", display: "flex", height:'2.5rem', justifyContent: "center", marginLeft: "35%", marginTop: "50px", marginBottom: "50px"}}
                         size="sm"
                         >
                         <Form.Control
@@ -94,7 +94,7 @@ export default function CrearProfesion () {
                             Crear
                         </Button>
                     </Form>
-                    </>
+                    </div>
                  :
                  <>Error, no se encuentran las profesiones...</>
                 }
