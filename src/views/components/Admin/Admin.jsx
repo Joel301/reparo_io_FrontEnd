@@ -13,11 +13,17 @@ import Modal from "react-bootstrap/Modal";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getClients } from "../../../state/ducks/clients/actions";
+import { useEffect } from "react";
 
 export default function Admin() {
   const allProfesionales = useSelector(state => state.professionals.allProfessionals.length)
   const allProfesiones = useSelector(state => state.professionals.professions.length)
+  const allClientes = useSelector(state => state.client.clients.length)
+  const dispatch = useDispatch()
+  console.log(allClientes)
+  
 
   const profesionesNombres = useSelector(state => state.professionals.professions)
   console.log(profesionesNombres.map(el => el))
@@ -45,6 +51,10 @@ export default function Admin() {
     img: "https://i.pinimg.com/originals/75/08/77/750877ee27f0a6082c6590f805714efc.png",
     nacionalidad: "Argentina"
   }
+
+  useEffect(()=>{
+      dispatch(getClients())
+  }, [dispatch])
 
   return (
     <>
@@ -88,7 +98,7 @@ export default function Admin() {
             <ListGroup variant="flush">
               <ListGroup.Item>Cantidad Profesionales: {allProfesionales}</ListGroup.Item>
               <ListGroup.Item>Cantidad Profesiones: {allProfesiones}</ListGroup.Item>
-              <ListGroup.Item>Cantidad de Clientes: 5</ListGroup.Item>
+              <ListGroup.Item>Cantidad de Clientes: {allClientes}</ListGroup.Item>
               <ListGroup.Item style={{fontWeight: "bold", textAlign: "center"}}>Lista de profesiones: </ListGroup.Item>
               {
                 profesionesNombres.map((el) => {

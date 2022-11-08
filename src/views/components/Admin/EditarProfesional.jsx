@@ -428,6 +428,8 @@ export default function EditarProfesional () {
                     <br/>
                     
                     <Button variant="primary" 
+                            
+                            
                             type="submit" 
                             style={{ display: "flex", justifyContent: "center"}} 
                             onClick={(e) => handleInputChangeProfesional(e, newProfessional.id, newProfessional)}
