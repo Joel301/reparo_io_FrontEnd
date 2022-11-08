@@ -17,18 +17,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getClients } from "../../../state/ducks/clients/actions";
 import { useEffect } from "react";
 
-export default function Admin() {
+export default function Admin({user}) {
   const allProfesionales = useSelector(state => state.professionals.allProfessionals.length)
   const allProfesiones = useSelector(state => state.professionals.professions.length)
   const allClientes = useSelector(state => state.client.clients.length)
   const dispatch = useDispatch()
-  console.log(allClientes)
-  
-
+  const allClienteS = useSelector(state => state.client.clients)
+  console.log(allClienteS)
   const profesionesNombres = useSelector(state => state.professionals.professions)
-  console.log(profesionesNombres.map(el => el))
+  console.log(user)
  
-
   const navigate = useNavigate();
 
   const [component, setComponent] = useState("");
