@@ -56,7 +56,8 @@ export default function Admin() {
               border: "3px solid blue",
               boxShadow: "0 0 10px #000",
               margin: "2%",
-              padding: "4%",
+              padding: "4% 9% 4% 9%",
+              borderRadius: "50%"
             }}
           >
             <h1 style={{ textAlign: "center" }}>{usuario.nombre} {usuario.apellido}</h1>
