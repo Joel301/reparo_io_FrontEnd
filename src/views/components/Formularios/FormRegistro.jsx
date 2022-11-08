@@ -96,10 +96,13 @@ export default function FormRegistro({ isClient = false }) {
                 passwordRef.current.value : "No coinciden",
             email: emailRef.current.value,
             phoneNumber: phoneNumberRef.current.value,
-            profileImg: image ,
+            profileImg: image,
             aboutMe: aboutMeRef.current.value,
             address: addressRef.current.value,
         };
+        if (input["profileImg"] === "") {
+            input["profileImg"] = user?.photoURL||""
+        }
         if (!isClient) {
             input["professions"] = professionsRef.current
         }
@@ -125,7 +128,7 @@ export default function FormRegistro({ isClient = false }) {
         console.log("es, admin: ", usersimple && !!usersimple.adminId)
         console.log("es, client: ", usersimple && !!usersimple.clientId)
         console.log("es, professional: ", usersimple && !!usersimple.professionalId)
-        if (user && usersimple && !usersimple.email) {
+        if (user && !usersimple && !usersimple.email) {
             // aqui se da de alta en firebase
             console.log("en firebase")
             const { email, uid } = user
@@ -150,7 +153,7 @@ export default function FormRegistro({ isClient = false }) {
                 }
                 ).catch(error => {
                     //aqui se pueden manejar los errores de auth con correo y usuario, 
-                    if (error.code === "auth/email-already-in-use") { 
+                    if (error.code === "auth/email-already-in-use") {
                         login(input.email, input.password)
                     }
                     else { console.log(error) }
@@ -270,9 +273,9 @@ export default function FormRegistro({ isClient = false }) {
                     type="file"
                     placeholder="imagen"
                     onChange={upLoadImage} />
-                    
+
             </Form.Group>
-           
+
             {errors.profileImg && <span className="errors">{errors.profileImg}</span>}
             {!isclient && <Form.Group
                 className="mb-3"

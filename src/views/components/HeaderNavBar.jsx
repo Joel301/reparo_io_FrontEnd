@@ -3,7 +3,7 @@
 //React
 import React, { useEffect } from "react"
 import { useState } from "react"
-import { Link,useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
 //Redux
@@ -19,37 +19,42 @@ import CartOffCanvas from "./CartOffCanvas"
 import FormRegistro from "./Formularios/FormRegistro"
 import LogSimpleCard from "./LogSimpleCard";
 
-//Image
+//Image 
 import logoReparoio from "../pages/imgs/logo-reparoio.png"
 
-import { fakeClient } from "./DetailClient";
+import { fakeClient } from "./ClientProfile";
+import LogIn from "./LogIn"
+import { useAuth } from "../../Context/AuthContext"
+import { logoutUser } from "../../state/ducks/users/actions"
 
 function HeaderNavBar() {
-
+  const { user, usersimple, logout } = useAuth()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [showFormprof, setshowFormprof] = useState(false)
   const [showFormClient, setshowFormClient] = useState(false)
-  const [loggedClient, setLoggedClient] = useState({});
+  const [showLoginForm, setShowLoginForm] = useState(false)
   const totalReserved = useSelector(state => state.cart.list)
   const total = useSelector(state => state.cart.total)
   const profesionales = useSelector((state) => state.professionals.allProfessionals)
-  const client = fakeClient;
+  const userLogged = useSelector(state => state.user)
   const handleShow = (e) => {
     if (e.target.textContent === "Cliente") setshowFormClient(true)
     if (e.target.textContent === "Profesional") setshowFormprof(true)
   }
-
+  const loginClose = () => setShowLoginForm(false)
   const handleClose = () => {
     setshowFormClient(false)
     setshowFormprof(false)
 
   }
   useEffect(() => {
+    console.log(userLogged);
+
     if (profesionales[0] === undefined) {
       dispatch(getAllProfessionals())
     }
-  }, [])
+  }, [userLogged])
 
 
   const showProf = (boolean) => setshowFormprof(boolean);
@@ -78,49 +83,45 @@ function HeaderNavBar() {
             className="ms-auto"
             style={{ display: "flex", justifyContent: "space-around" }}
           >
-            {loggedClient.hasOwnProperty("id") ? (
+            {userLogged?.id ? (
               <>
                 <Dropdown
-                  
-                >
+
+                >{console.log(user)}
                   <Dropdown.Toggle style={{
-                    backgroundImage: `url(${client.profileImg})`,
-                    color:'transparent',
+                    backgroundImage: `url(${userLogged?.profileImg || usersimple?.client?.profileImg || ""})`,
+                    color: 'transparent',
                     backgroundSize: "cover",
                     height: "2rem",
                     width: "2rem",
                     borderRadius: "50%",
                     marginRight: "2rem",
-                  }} /* onClick={showProfile} *//>
-                    <Dropdown.Menu>
-                  <Dropdown.Item
+                  }} /* onClick={showProfile} */ />
+                  <Dropdown.Menu>
+                    <Dropdown.Item
                     onClick={() =>
-                      navigate(`details/client/${loggedClient.id}`)
+                      navigate(`details/me`)
                     }
-                  >
-                    Ir a Mi Perfil
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setLoggedClient({})}>
-                    Cerrar Sesion
-                  </Dropdown.Item></Dropdown.Menu>
+                    >
+                      Ir a Mi Perfil
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() =>{
+                      dispatch(logoutUser())
+                       logout()}}>
+                      Cerrar Sesion
+                    </Dropdown.Item></Dropdown.Menu>
                 </Dropdown>
               </>
             ) : (
-              <>
+              <> <LogIn show={showLoginForm} onClose={loginClose} />
                 <NavDropdown title="Iniciar Sesion" id="login-nav-dropdown">
-                  <NavDropdown.Item
-                    onClick={() => {
-                      dispatch(
-                        getClientId("bf2665ba-9c64-40b6-b948-49cb9690145e")
-                      );
-                      return setLoggedClient(client);
-                    }}
-                    href="#login/client"
-                  >
-                    Cliente
+                  <NavDropdown.Item onClick={() => setShowLoginForm(true)}
+                  > Login
+
                   </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item>Profesional</NavDropdown.Item>
+                <NavDropdown>
+
+                </NavDropdown>
                 </NavDropdown>
                 <NavDropdown title="Regístrate" id="signin-nav-dropdown">
                   <NavDropdown.Item defaultValue="cliente" onClick={handleShow}>

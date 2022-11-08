@@ -16,132 +16,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getClientId } from "../../state/ducks/clients/actions";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 import axios from "axios";
 import { Rating } from "@mui/material";
-
-export let fakeClient = {
-  id: "5b18ccd4-7342-457a-93a7-0814974967a6",
-  firstName: "Roberto",
-  lastName: "Del Valle",
-  phoneNumber: "116588",
-  address: "Av Siempre Viva 345",
-  email: "kulikittaka@sacatiki.com",
-  password: "1234567",
-  profileImg: "https://revistaharoldo.com.ar/img/notas/2020/10/nestor2.jpg",
-  enabled: true,
-  cart: {
-    id: "b1add96b-9d5a-4048-a6b5-f7c776e99334",
-  },
-  orders: [
-    {
-      id: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-      amount: 1500,
-      createdAt: "2022-11-01T23:41:03.185Z",
-      updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
-      orderDetails: [
-        {
-          id: "7a406dab-aa48-40b8-a758-969f84831cb5",
-          reservationAmount: 1500,
-          days: ["lunes"],
-          createdAt: "2022-11-01T23:41:03.384Z",
-          updatedAt: "2022-11-01T23:41:03.384Z",
-          orderId: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-          professionalId: "e6f76316-87ae-4a47-b103-f8fa8d17d945",
-        },
-      ],
-    },
-    {
-      id: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-      amount: 1500,
-      createdAt: "2022-11-01T23:41:03.185Z",
-      updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
-      orderDetails: [
-        {
-          id: "7a406dab-aa48-40b8-a758-969f84831cb5",
-          reservationAmount: 1500,
-          days: ["lunes"],
-          createdAt: "2022-11-01T23:41:03.384Z",
-          updatedAt: "2022-11-01T23:41:03.384Z",
-          orderId: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-          professionalId: "2584a487-ca9a-48e6-a527-3dd49e91db93",
-        },
-      ],
-    },
-    {
-      id: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-      amount: 1500,
-      createdAt: "2022-11-01T23:41:03.185Z",
-      updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
-      orderDetails: [
-        {
-          id: "7a406dab-aa48-40b8-a758-969f84831cb5",
-          reservationAmount: 1500,
-          days: ["lunes"],
-          createdAt: "2022-11-01T23:41:03.384Z",
-          updatedAt: "2022-11-01T23:41:03.384Z",
-          orderId: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-          professionalId: "2584a487-ca9a-48e6-a527-3dd49e91db93",
-        },
-      ],
-    },
-    {
-      id: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-      amount: 1500,
-      createdAt: "2022-11-01T23:41:03.185Z",
-      updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
-      orderDetails: [
-        {
-          id: "7a406dab-aa48-40b8-a758-969f84831cb5",
-          reservationAmount: 1500,
-          days: ["lunes"],
-          createdAt: "2022-11-01T23:41:03.384Z",
-          updatedAt: "2022-11-01T23:41:03.384Z",
-          orderId: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-          professionalId: "2584a487-ca9a-48e6-a527-3dd49e91db93",
-        },
-      ],
-    },
-    {
-      id: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-      amount: 1500,
-      createdAt: "2022-11-01T23:41:03.185Z",
-      updatedAt: "2022-11-01T23:41:03.185Z",
-      clientId: "5b18ccd4-7342-457a-93a7-0814974967a6",
-      orderDetails: [
-        {
-          id: "7a406dab-aa48-40b8-a758-969f84831cb5",
-          reservationAmount: 1500,
-          days: ["lunes"],
-          createdAt: "2022-11-01T23:41:03.384Z",
-          updatedAt: "2022-11-01T23:41:03.384Z",
-          orderId: "e7b7742c-5caa-4aa8-86e3-3fd3936d887b",
-          professionalId: "2584a487-ca9a-48e6-a527-3dd49e91db93",
-        },
-      ],
-    },
-  ],
-};
-
-export default function DetailClient() {
+import FormEditClient from "./Formularios/FormEditClient";
+export default function ClientProfile({user}) {
   const { id } = useParams();
+  console.log(user)
   const navigate = useNavigate();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const client = fakeClient; /* useSelector((state) => state.client); */
+  
   const [show, setShow] = useState(false);
+  const [ showEdit,setShowEdit]= useState(false)
+  const onHideEdit = ()=> setShowEdit(false)
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
   const professionals = useSelector(
     (state) => state.professionals.allProfessionals
   );
-  const shoppingHistory = fakeClient.orders
-    .map((order) => order.orderDetails)
-    .flat();
+  // const shoppingHistory = fakeClient.orders
+  //   .map((order) => order.orderDetails)
+  //   .flat();
   /*  Body = {
       clientId,
       professionalId,
@@ -152,7 +49,7 @@ export default function DetailClient() {
     e.preventDefault();
     console.log("hola");
     let review = {
-      clientId: client.id,
+      clientId: user.id,
       professionalId,
       comment,
       rating,
@@ -167,12 +64,13 @@ export default function DetailClient() {
   };
 
   useEffect(() => {
-    dispatch(getClientId(id));
+    
+    // dispatch(getClientId(id));
   }, [dispatch, id]);
 
   return (
     <>
-      {client ? (
+      {user ? (
         <Card
           style={{
             display: "grid",
@@ -202,7 +100,9 @@ export default function DetailClient() {
               style={{
                 gridArea: "  1 / 1 / 3 / 2",
                 justifySelf: "center",
-                backgroundImage: `url(${client.profileImg})`,
+                backgroundImage: `url(${
+                  user?.profileImg || user.profileImg || ""
+                })`,
                 backgroundSize: "cover",
                 alignSelf: "center",
                 borderRadius: "50%",
@@ -219,7 +119,7 @@ export default function DetailClient() {
               alignSelf: "end",
             }}
           >
-            {client.firstName} {client.lastName}
+            {user.firstName} {user.lastName}
           </h2>
 
           <h5
@@ -230,7 +130,7 @@ export default function DetailClient() {
             }}
           >
             {" "}
-            {client.address}
+            {user.address}
           </h5>
           <h5
             style={{
@@ -240,7 +140,7 @@ export default function DetailClient() {
             }}
           >
             {" "}
-            {client.phoneNumber}
+            {user.phoneNumber}
           </h5>
           <h5
             style={{
@@ -249,8 +149,9 @@ export default function DetailClient() {
               alignSelf: "center",
             }}
           >
-            {client.email}
+            {user.email}
           </h5>
+          <Button onClick={()=>setShowEdit(true)} style={{gridArea:"8 / 1 / 9 / 2"}}> Editar Perfil</Button>
 
           {/* HISTORIAL DE COMPRAS */}
           <ListGroup
@@ -274,7 +175,7 @@ export default function DetailClient() {
                 <div className="fw-bold">Historial de Compras</div>
               </div>
             </ListGroup.Item>
-            {shoppingHistory.map((item) => {
+            {[].map((item) => {
               let { firstName, lastName, id } = professionals.find(
                 (prof) => prof.id === item.professionalId
               );
@@ -367,7 +268,7 @@ export default function DetailClient() {
                           <Form.Control
                             type="text-area"
                             placeholder="Escribe algun comentario"
-                            onChange={(e) => {
+                            onChange={(e) => { 
                               setComment(e.target.value);
                             }}
                           />
@@ -388,6 +289,9 @@ export default function DetailClient() {
               );
             })}
           </ListGroup>
+          <Modal show={showEdit} onHide={onHideEdit}>
+              <FormEditClient/>
+          </Modal>
         </Card>
       ) : (
         <Alert variant="danger">
