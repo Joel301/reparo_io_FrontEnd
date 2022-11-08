@@ -23,6 +23,23 @@ export function getDetail(id) {
     }
   };
 }
+
+export function putDetail(id, body) {
+    return async function (dispatch) {
+        try {
+            const nuevoDetalle = await axios.put(`/home/professionals/${id}`, body)
+
+            return dispatch({
+                type: 'POST_DETAIL',
+                payload: nuevoDetalle.data
+            })
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 // export function getDetailReviews(professionalId) {
 //   return async (dispatch) => {
 //     try {
