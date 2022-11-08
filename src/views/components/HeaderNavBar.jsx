@@ -22,9 +22,10 @@ import LogSimpleCard from "./LogSimpleCard";
 //Image 
 import logoReparoio from "../pages/imgs/logo-reparoio.png"
 
-import { fakeClient } from "./DetailClient";
+import { fakeClient } from "./ClientProfile";
 import LogIn from "./LogIn"
 import { useAuth } from "../../Context/AuthContext"
+import { logoutUser } from "../../state/ducks/users/actions"
 
 function HeaderNavBar() {
   const { user, usersimple, logout } = useAuth()
@@ -53,7 +54,7 @@ function HeaderNavBar() {
     if (profesionales[0] === undefined) {
       dispatch(getAllProfessionals())
     }
-  }, [user])
+  }, [userLogged])
 
 
   const showProf = (boolean) => setshowFormprof(boolean);
@@ -82,13 +83,13 @@ function HeaderNavBar() {
             className="ms-auto"
             style={{ display: "flex", justifyContent: "space-around" }}
           >
-            {usersimple?.hasOwnProperty("uid") ? (
+            {userLogged?.id ? (
               <>
                 <Dropdown
 
                 >{console.log(user)}
                   <Dropdown.Toggle style={{
-                    backgroundImage: `url(${user?.photoURL || usersimple?.client?.profileImg || ""})`,
+                    backgroundImage: `url(${userLogged?.profileImg || usersimple?.client?.profileImg || ""})`,
                     color: 'transparent',
                     backgroundSize: "cover",
                     height: "2rem",
@@ -104,7 +105,9 @@ function HeaderNavBar() {
                     >
                       Ir a Mi Perfil
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => logout()}>
+                    <Dropdown.Item onClick={() =>{
+                      dispatch(logoutUser())
+                       logout()}}>
                       Cerrar Sesion
                     </Dropdown.Item></Dropdown.Menu>
                 </Dropdown>
@@ -116,7 +119,9 @@ function HeaderNavBar() {
                   > Login
 
                   </NavDropdown.Item>
+                <NavDropdown>
 
+                </NavDropdown>
                 </NavDropdown>
                 <NavDropdown title="Regístrate" id="signin-nav-dropdown">
                   <NavDropdown.Item defaultValue="cliente" onClick={handleShow}>

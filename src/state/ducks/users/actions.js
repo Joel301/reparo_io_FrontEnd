@@ -12,26 +12,31 @@ export const loginUser = function (user) {
   //   enabled: data.dataValues.enabled,
   //   cartId: data.cart.id,
   // };
-  return async function(dispatch){
-
-  await axios.post("https://reparoiobackend-main.up.railway.app/home/user/login",user).catch((err)=>console.log(err));
-  let userLogged = await axios.get("https://reparoiobackend-main.up.railway.app/home/user/login").then((res)=> res.data).catch((err)=>console.log(err))
-  return dispatch({
-    type:'LOGIN_USER',
-    payload: userLogged
-  })
+  return async function (dispatch) {
+    try{
+      let loggedUser 
+      let typeOfUser          
+      console.log(user)
+      await axios.post("/home/user/login",user).then(res=>{loggedUser = res.data.dataValues
+                                                            typeOfUser = res.data.msg.split(' ')[0]          })
+      console.log(loggedUser,typeOfUser)
+      loggedUser.type=typeOfUser
+      return dispatch({
+        type: "LOGIN_USER",
+        payload:loggedUser
+      });
+    }
+    catch(err){
+      console.log(err)
+    }
     
-
-}
+  };
 };
 
 export const logoutUser = function () {
-
-
-
-
-
-  return {
-    type: "LOGOUT_USER",
-  };
+  return async function (dispatch){
+    axios.post('/home/user/logout')
+    return dispatch({type:"LOGOUT_USER"}) 
+  }
+  
 };

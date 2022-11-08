@@ -18,17 +18,19 @@ import { getClientId } from "../../state/ducks/clients/actions";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import axios from "axios";
-
-export default function DetailClient() {
+import { Rating } from "@mui/material";
+import FormEditClient from "./Formularios/FormEditClient";
+export default function ClientProfile({user}) {
   const { id } = useParams();
-  const { user, usersimple } = useAuth();
+  console.log(user)
   const navigate = useNavigate();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const { client, professional, admin } = usersimple || {};
+  
   const [show, setShow] = useState(false);
+  const [ showEdit,setShowEdit]= useState(false)
+  const onHideEdit = ()=> setShowEdit(false)
   const handleClose = () => setShow(false);
-
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
   const professionals = useSelector(
@@ -47,7 +49,7 @@ export default function DetailClient() {
     e.preventDefault();
     console.log("hola");
     let review = {
-      clientId: client.id,
+      clientId: user.id,
       professionalId,
       comment,
       rating,
@@ -62,13 +64,13 @@ export default function DetailClient() {
   };
 
   useEffect(() => {
-    console.log(usersimple);
+    
     // dispatch(getClientId(id));
   }, [dispatch, id]);
 
   return (
     <>
-      {client ? (
+      {user ? (
         <Card
           style={{
             display: "grid",
@@ -99,7 +101,7 @@ export default function DetailClient() {
                 gridArea: "  1 / 1 / 3 / 2",
                 justifySelf: "center",
                 backgroundImage: `url(${
-                  user?.photoURL || usersimple?.client?.profileImg || ""
+                  user?.profileImg || user.profileImg || ""
                 })`,
                 backgroundSize: "cover",
                 alignSelf: "center",
@@ -117,7 +119,7 @@ export default function DetailClient() {
               alignSelf: "end",
             }}
           >
-            {usersimple?.client?.firstName} {usersimple?.client?.lastName}
+            {user.firstName} {user.lastName}
           </h2>
 
           <h5
@@ -128,7 +130,7 @@ export default function DetailClient() {
             }}
           >
             {" "}
-            {client.address}
+            {user.address}
           </h5>
           <h5
             style={{
@@ -138,7 +140,7 @@ export default function DetailClient() {
             }}
           >
             {" "}
-            {client.phoneNumber}
+            {user.phoneNumber}
           </h5>
           <h5
             style={{
@@ -147,8 +149,9 @@ export default function DetailClient() {
               alignSelf: "center",
             }}
           >
-            {client.email}
+            {user.email}
           </h5>
+          <Button onClick={()=>setShowEdit(true)} style={{gridArea:"8 / 1 / 9 / 2"}}> Editar Perfil</Button>
 
           {/* HISTORIAL DE COMPRAS */}
           <ListGroup
@@ -160,9 +163,7 @@ export default function DetailClient() {
               marginBottom: "10px",
               overflowY: "scroll",
               WebkitOverflowScrolling: "touch",
-              WebkitScrollbarTrack: {
-                backgroundColor: "black",
-              },
+             
             }}
           >
             <ListGroup.Item
@@ -249,11 +250,11 @@ export default function DetailClient() {
                         onSubmit={(e) => handleSubmit(e, item.professionalId)}
                       >
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Puntua a tu profesional!</Form.Label>
-                          <StarRatings
-                            rating={rating}
+                          <Form.Label>Puntua a tu profesional!</Form.Label><br/>
+                          <Rating
+                            value={rating}
                             starRatedColor="blue"
-                            changeRating={(rating) => setRating(rating)}
+                            onChange={(_,rating) => setRating(rating)}
                             numberOfStars={5}
                             name="rating"
                           />
@@ -267,7 +268,7 @@ export default function DetailClient() {
                           <Form.Control
                             type="text-area"
                             placeholder="Escribe algun comentario"
-                            onChange={(e) => {
+                            onChange={(e) => { 
                               setComment(e.target.value);
                             }}
                           />
@@ -288,6 +289,9 @@ export default function DetailClient() {
               );
             })}
           </ListGroup>
+          <Modal show={showEdit} onHide={onHideEdit}>
+              <FormEditClient/>
+          </Modal>
         </Card>
       ) : (
         <Alert variant="danger">

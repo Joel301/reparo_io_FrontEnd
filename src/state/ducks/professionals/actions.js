@@ -64,7 +64,7 @@ export function getAllProfessions() {
 }
 
 export function postProfessionals(payload) {
-    const POSTURL = "/home/user"
+    const POSTURL = "/home/user/register"
     console.log(payload)
     return async function (dispatch) {
         try {
@@ -80,7 +80,7 @@ export function postProfessionals(payload) {
     }
 }
 export function postlClient(payload) {
-    const POSTURL = "/home/user"
+    const POSTURL = "/home/user/register"
     console.log({ ...payload, isClient: true })
     return async function (dispatch) {
         try {

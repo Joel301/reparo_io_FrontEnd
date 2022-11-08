@@ -1,23 +1,31 @@
-//React
-import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { useEffect, useState } from "react";
+import {
+  Card,
+  Button,
+  ListGroup,
+  Alert,
+  Badge,
+  Tooltip,
+  OverlayTrigger,
+  Modal,
+  Form,
+} from "react-bootstrap";
 
-//Redux
-import { getDetail } from "../../state/ducks/detail/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { Link } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 import { filterByProfession } from "../../state/ducks/professionals/actions";
-//Bootstrap
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import Alert from "react-bootstrap/Alert";
-import Badge from "react-bootstrap/Badge";
 import { Rating } from "@mui/material";
 
-export default function Detail() {
+export default function ProfessionalProfile(user) {
   const { id } = useParams();
-
+  // const { user, usersimple } = useAuth();
+  const navigate = useNavigate();
+  
+ 
   const {
     firstName,
     lastName,
@@ -27,21 +35,21 @@ export default function Detail() {
     email,
     professions,
     reviews,
-  } = useSelector((state) => state.detail);
-
+  } = user
   const dispatch = useDispatch();
-
-  const navigate = useNavigate();
+  const professionals = useSelector(
+    (state) => state.professionals.allProfessionals
+  );
+  
 
   useEffect(() => {
-    console.log(reviews);
-    dispatch(getDetail(id));
-  }, []);
+    
+  }, [dispatch, id]);
 
   return (
     <>
-      {firstName ? (
-        <Card
+      {user ? (
+          <Card
           style={{
             display: "grid",
             gridTemplateColumns: " 2fr repeat(4, 1fr)",
@@ -190,20 +198,71 @@ export default function Detail() {
               );
             })}
           </ListGroup>
+          <ListGroup
+            as="ol"
+            style={{
+              gridArea: "1 / 3 / 9 / 6",
+              margin: "2rem",
+              maxHeight: "50rem",
+              marginBottom: "10px",
+              overflowY: "scroll",
+              WebkitOverflowScrolling: "touch",
+            }}
+            defaultActiveKey="#link1"
+          >
+            <ListGroup.Item href="#link1" style={{ cursor: "default" }}>
+              Reseñas
+            </ListGroup.Item>
+            {reviews?.map((review) => {
+              return (
+                <ListGroup.Item
+                  as="li"
+                  className="d-flex justify-content-between align-items-start"
+                >
+                  <div className="ms-2 me-auto">
+                    <cite>"{review.comment}"</cite>
+                    <div style={{ display: "flex",gap:'1rem' }}>
+                      <div
+                        style={{
+                          backgroundImage: `url(${review.clientImg})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          width: "2rem",
+                          height: "2rem",
+                          borderRadius: "50%",
+                        }}
+                      />
+                      <p
+                        style={{
+                          color: "lightgrey",
+                          textDecoration: "underline",
+                          textDecorationColor: "lightgrey",
+                        }}
+                      >
+                        {" "}
+                        {review.clientName}
+                      </p>
+                    </div>
+                  </div>
+                  <Badge bg="primary" pill>
+                    <Rating value={review.rating} readOnly />
+                  </Badge>
+                </ListGroup.Item>
+              );
+            })}
+          </ListGroup>
         </Card>
       ) : (
-        <>
-          <Alert variant="danger">
-            <Alert.Heading>Ha ocurrido un problema</Alert.Heading>
-            <p>Redirigete hacia el Home.</p>
-            <hr />
-            <div className="d-flex justify-content-end">
-              <Link to="/home">
-                <Button variant="outline-success">HOME</Button>
-              </Link>
-            </div>
-          </Alert>
-        </>
+        <Alert variant="danger">
+          <Alert.Heading>Ha ocurrido un problema</Alert.Heading>
+          <p>Redirigete hacia Home.</p>
+          <hr />
+          <div className="d-flex justify-content-end">
+            <Link to="/">
+              <Button variant="outline-success">HOME</Button>
+            </Link>
+          </div>
+        </Alert>
       )}
     </>
   );
