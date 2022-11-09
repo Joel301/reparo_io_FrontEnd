@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 
 
-export default function FormRegistro({ isClient = false }) {
+export default function FormRegistro({ isClient = false,onClose }) {
     const isclient = isClient
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -58,7 +58,7 @@ export default function FormRegistro({ isClient = false }) {
         if (professionsRef.current.includes(e.target.value)) {
             professionsRef.current = professionsRef.current.filter(el => el !== e.target.value)
         } else professionsRef.current.push(e.target.value)
-        console.log(professionsRef);
+        
 
     }
 
@@ -80,15 +80,14 @@ export default function FormRegistro({ isClient = false }) {
                 }
             )
             const file = await res.json();
-            console.log(file.secure_url);
-            console.log(res);
+           
             setImage(file.secure_url);
             setLoading(false);}
 
     // se envia la informacion del formulario incluye la validación:
     function hedleOnSubmit(e) {
         e.preventDefault(e)
-
+        
         const input = {
             firstName: nameRef.current.value,
             lastName: lastNameRef.current.value,
@@ -96,7 +95,7 @@ export default function FormRegistro({ isClient = false }) {
                 passwordRef.current.value : "No coinciden",
             email: emailRef.current.value,
             phoneNumber: phoneNumberRef.current.value,
-            profileImg: image,
+            profileImg: image?image:null,
             aboutMe: aboutMeRef.current.value,
             address: addressRef.current.value,
         };
@@ -110,7 +109,7 @@ export default function FormRegistro({ isClient = false }) {
             input['email'] = `${user.email}`
             input['password'] = 'thisisnotapass'
         }
-        console.log(input)
+       
         const formErrors = isclient
             ? validateFormClient(input)
             : validateFormProfessional(input)
@@ -122,27 +121,26 @@ export default function FormRegistro({ isClient = false }) {
             alert('Verifique que todos los campos esten llenos')
             return
         }
-        console.log(!!user && !usersimple)
-        console.log("esta en firebase: ", !!user)
-        console.log("esta en base de datos?: : ", usersimple && !usersimple.email)
-        console.log("es, admin: ", usersimple && !!usersimple.adminId)
-        console.log("es, client: ", usersimple && !!usersimple.clientId)
-        console.log("es, professional: ", usersimple && !!usersimple.professionalId)
-        if (user && !usersimple && !usersimple.email) {
-            // aqui se da de alta en firebase
+        
+        if (user && usersimple.error) {
+            
             console.log("en firebase")
-            const { email, uid } = user
-            // console.log(user)
+            const { email, uid,photoURL } = user
+            console.log("input to send",input)
+                    if(input.profileImg===null)input.profileImg=photoURL
             isclient
-                ? dispatch(postlClient({ ...input, email, authid: uid }))
-                : dispatch(postProfessionals({ ...input, email, authid: uid }))
+                ? dispatch(postlClient({ ...input, email, authid: uid,google:true }))
+                : dispatch(postProfessionals({ ...input, email, authid: uid,google:true}))
             navigate('/Home')
         } else {
             console.log("sin firebase")
+            console.log('que es userSimple:  ',user)
             signup(input.email, input.password)
                 // .then(r => r)
                 .then((r) => {
-                    const { email, uid } = r.user
+                    const { email, uid, 
+                    } = r.user
+                    
                     console.log(r)
                     isclient
                         ? dispatch(postlClient({ ...input, email, authid: uid }))
@@ -311,7 +309,7 @@ export default function FormRegistro({ isClient = false }) {
                 <Form.Check type="checkbox" label="Acepto términos y condiciones" />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button onClick={()=>onClose()} variant="primary" type="submit">
                 Registrame
             </Button>
 
