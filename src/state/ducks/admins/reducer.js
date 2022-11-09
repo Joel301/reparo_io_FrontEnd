@@ -1,12 +1,37 @@
 const initialState = {
   clients: [],
   professions: [],
-  
+  orders: [],
 }
 
 
 const adminsReducer = (state = initialState, action) => {
     switch (action.type) {
+
+      case "GET_ORDERS": {
+        return {
+          ...state,
+          orders: [action.payload]
+        }
+      }
+
+      case "UPDATE_ORDER":
+      let i = state.orders.findIndex((element) => {
+        return element.id === action.payload.orderId;
+      });
+      console.log(i, "iiiiii")
+
+      //Creo nuevo array para evitar mutabilidad
+      const updatedOrders = [...state.orders];
+      
+      //Actualizo el status del elemento conseguido por id
+      updatedOrders[i].status = action.payload.status;
+      console.log(updatedOrders, "updatedOrders")
+
+      return {
+        ...state,
+        orders: updatedOrders,
+      };
 
       case "GET_CLIENT": {
         return {

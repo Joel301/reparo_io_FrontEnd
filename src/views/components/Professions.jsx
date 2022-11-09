@@ -28,7 +28,7 @@ export default function Professions() {
     }, [dispatch]);
 
     return (
-        <div style={{ marginTop: "2rem" }}>
+        <div style={{ marginTop: "2rem", paddingBottom: "0px", marginBottom: "0px" }}>
 
             {/* Titulo componente profesiones  */}
             <div style={{ marginTop: "70px", fontWeight: "bolder", display: 'flex', justifyContent: 'center', marginBottom: "70px" }}>
