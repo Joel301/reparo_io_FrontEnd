@@ -50,14 +50,16 @@ function HeaderNavBar() {
   }
   useEffect(() => {
     console.log(userLogged);
-
+    
+      
     if (profesionales[0] === undefined) {
       dispatch(getAllProfessionals())
     }
   }, [userLogged])
 
 
-  const showProf = (boolean) => setshowFormprof(boolean);
+  const showProf = () => {setshowFormprof(false)
+    setshowFormClient(false)};
 
   return (
 
@@ -159,7 +161,7 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como profesional</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <FormRegistro />
+          <FormRegistro onClose={showProf} />
         </Offcanvas.Body>
       </Offcanvas>
       <Offcanvas
@@ -172,7 +174,7 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como cliente</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <FormRegistro isClient={true} />
+          <FormRegistro onClose ={showProf}isClient={true} />
         </Offcanvas.Body>
       </Offcanvas>
     </Navbar>

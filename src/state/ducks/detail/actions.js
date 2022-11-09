@@ -4,9 +4,9 @@ export function getDetail(id) {
   return async function (dispatch) {
     try {
       let detalle = await axios.get("/home/professionals/" + id).then(res=>res.data)
-      console.log(detalle)
-      let reviews = await axios.get("/home/reviews",{profesionalId:id}).then(res=>res.data)
+      let reviews = await axios.get("/home/reviews").then(res=>res.data)
       let professionalReviews = reviews
+        .filter((review) => review.professionalId === id)
         .map((review) => {
           return { comment:review.comment,
                 rating:review.rating,
@@ -39,18 +39,13 @@ export function putDetail(id, body) {
         }
     }
 }
-
-
-export function removeDetail (){
-  return async function(dispatch){
+export function removeDetail(){
+  return async (dispatch)=>{
     return dispatch({
       type:'REMOVE_DETAIL'
     })
   }
 }
-
-
-
 // export function getDetailReviews(professionalId) {
 //   return async (dispatch) => {
 //     try {

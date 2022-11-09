@@ -7,19 +7,19 @@ import { loginUser } from "../../state/ducks/users/actions";
 import { Google } from "@mui/icons-material";
 function LogIn({ show, onClose }) {
   const loggedUser = useSelector((state) => state.user);
-  const [user, setUser] = useState({
+  const [userToLog, setUserToLog] = useState({
     email: "",
     password: "",
     google: false,
   });
-  const { login, loginWithGoogle, usersimple } = useAuth();
+  const { login, loginWithGoogle, user ,logout} = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(loginUser(user));
+      dispatch(loginUser(userToLog));
 
       
     } catch (error) {
@@ -29,17 +29,23 @@ function LogIn({ show, onClose }) {
     }
   };
   const handleInputChange = (e) =>
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setUserToLog({ ...userToLog, [e.target.name]: e.target.value });
 
-  const googlelog = async () => {
-    loginWithGoogle();
-    await login(user.email, user.password);
-    setUser({ email: usersimple.email, password: null, google: true });
-    dispatch(loginUser(user));
+  const googlelog =  async() => {
+    await logout()
+  //  await loginWithGoogle().then(res=>{
+  //   setUserToLog({ email: res.user.email, password: null, google: true })
+  //   console.log('res De LoginCon gooogle',res)
+  // }).then(()=>dispatch(loginUser(userToLog)))
+    let userGoogle = await loginWithGoogle()
+    setUserToLog({ email: userGoogle.user.email, password: null, google: true })
+    dispatch(loginUser(userToLog))
     navigate("/");
+    
+    
   };
   return (
-    <Offcanvas show={show} onHide={onClose}>
+    <Offcanvas placement="end" show={show} onHide={onClose}>
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>Iniciaar sesion</Offcanvas.Title>
       </Offcanvas.Header>

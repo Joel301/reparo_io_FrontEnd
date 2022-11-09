@@ -40,8 +40,8 @@ export default function Detail() {
     setLoading(false)
    
    return ()=>{
-    if(firstName){
-      dispatch(removeDetail())}
+    
+      dispatch(removeDetail())
    }
   }, [id,]);
 
