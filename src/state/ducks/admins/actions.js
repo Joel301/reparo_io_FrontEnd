@@ -85,3 +85,17 @@ export function getAllOrders() {
     };
   };
 }
+
+export function updateOrderStatus(orderId, status) {
+  return async function () {
+    //EJEMPLO body={status: "algun status"} opciones para status: "creado", "pendiente", "cancelado", "completo"
+    await axios.patch(
+      `https://reparoiobackend-main.up.railway.app/api/orders/${orderId}`,
+      { status: status }
+    );
+    return {
+      type: "UPDATE_ORDER",
+      payload: { orderId, status },
+    };
+  };
+}
