@@ -24,6 +24,7 @@ export function addToCart(worker, client) {
 }
 
 export function deleteItemCart(item) {
+  console.log(item)
   return async function (dispatch) {
     try {
       await axios.delete(

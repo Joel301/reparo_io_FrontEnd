@@ -19,6 +19,8 @@ import { useEffect } from "react";
 
 export default function Admin({user}) {
   const allProfesionales = useSelector(state => state.professionals.allProfessionals.length)
+  const allProfesionaless = useSelector(state => state.professionals.allProfessionals)
+  console.log(allProfesionaless)
   const allProfesiones = useSelector(state => state.professionals.professions.length)
   const allClientes = useSelector(state => state.client.clients.length)
   const dispatch = useDispatch()
@@ -42,13 +44,13 @@ export default function Admin({user}) {
   };
 
   const usuario =  {
-    Id: "3425hlkasjdhfkljasdhf234",
-    nombre: "Lucas",
-    apellido: "Caño",
-    celular: "2614987585",
-    mail: "luema94@gmail.com",
-    img: "https://i.pinimg.com/originals/75/08/77/750877ee27f0a6082c6590f805714efc.png",
-    nacionalidad: "Argentina"
+    id: "3425hlkasjdhfkljasdhf234",
+    firstName: "Lucas",
+    lastName: "Caño",
+    phoneNumber: "2614987585",
+    email: "luema94@gmail.com",
+    profileImg: "https://i.pinimg.com/originals/75/08/77/750877ee27f0a6082c6590f805714efc.png",
+    address: "Argentina"
   }
 
   useEffect(()=>{
@@ -69,9 +71,9 @@ export default function Admin({user}) {
               borderRadius: "50%"
             }}
           >
-            <h1 style={{ textAlign: "center" }}>{usuario.nombre} {usuario.apellido}</h1>
+            <h1 style={{ textAlign: "center" }}>{usuario.firstName} {usuario.lastName}</h1>
             <img
-              src={usuario.img}
+              src={usuario.profileImg}
               style={{
                 width: "200px",
                 height: "200px",
@@ -80,10 +82,10 @@ export default function Admin({user}) {
               }}
             />
             <ListGroup variant="flush">
-              <ListGroup.Item>ID: {usuario.Id}</ListGroup.Item>
-              <ListGroup.Item>Correo: {usuario.mail}</ListGroup.Item>
-              <ListGroup.Item>Celular: {usuario.celular}</ListGroup.Item>
-              <ListGroup.Item>Nacionalidad: {usuario.nacionalidad}</ListGroup.Item>
+              <ListGroup.Item>ID: {usuario.id}</ListGroup.Item>
+              <ListGroup.Item>Correo: {usuario.email}</ListGroup.Item>
+              <ListGroup.Item>Celular: {usuario.phoneNumber}</ListGroup.Item>
+              <ListGroup.Item>Direccion: {usuario.address}</ListGroup.Item>
             </ListGroup>
           </Card >
           <Card style={{
