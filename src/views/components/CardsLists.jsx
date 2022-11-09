@@ -32,6 +32,7 @@ function CardsList() {
   const profesionales = useSelector(
     (state) => state.professionals.professionalsFiltered
   );
+  console.log( profesionales)
 
   const professions = useSelector((state) => state.professionals.professions);
   const client = useSelector(state => state.clients)
