@@ -18,7 +18,7 @@ function UserProfile() {
     }
     function Profile(user) {
         switch (user.type) {
-            case 'admin':{
+            case 'administrador':{
                 return isAdmin(user)
             }
             case 'cliente':{
@@ -29,8 +29,7 @@ function UserProfile() {
             }
                 
         
-            default: <div>No existe dicho usuario</div>
-                break;
+            default: return <div>No existe dicho usuario</div>
         }
     }
     const profileToRender = Profile(user)

@@ -25,10 +25,12 @@ export function addToCart(worker, client) {
 
 export function deleteItemCart(item) {
   console.log(item)
+  let id = item
+  if(typeof item === "object") id = item.idDb
   return async function (dispatch) {
     try {
       await axios.delete(
-        `https://reparoiobackend-develop.up.railway.app/api/cart/${item.idDb}`
+        `https://reparoiobackend-main.up.railway.app/api/cart/${id}`
       );
       return dispatch({
         type: "DELETE_ITEM_CART",
@@ -78,7 +80,7 @@ export function postCart(body) {
       const postCarrito = await axios.post(
         "https://reparoiobackend-main.up.railway.app/api/orders",
         body
-      );
+      ); console.log(postCarrito)
       return dispatch({
         type: "POST_CART",
         payload: postCarrito.data,
@@ -112,6 +114,7 @@ export function postingCart(cartList, clientId) {
   return async function (dispatch) {
     try {
       const addCartList = cartList.map(async (el) => {
+        
         const response = await axios.post(
           "https://reparoiobackend-main.up.railway.app/api/cart",
           {
@@ -120,12 +123,15 @@ export function postingCart(cartList, clientId) {
             days: el.days,
           }
         );
+        console.log(response, "leeeeeeeeemeeeeeeeeeeeeeeeeeeeee")
         el.idDb = response.data.newCartDetail.id;
         return el;
       });
+      console.log(addCartList)
+      const promesahasbulla = await Promise.all(addCartList)
       return dispatch({
         type: "POSTING_CART",
-        payload: Promise.all(addCartList),
+        
       });
     } catch (error) {
       console.log(error);
