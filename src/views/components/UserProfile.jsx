@@ -24,7 +24,7 @@ function UserProfile() {
             case 'cliente':{
                 return isClient(user)
 }
-            case 'professional':{
+            case 'profesional':{
                 return isProfessional(user)
             }
                 

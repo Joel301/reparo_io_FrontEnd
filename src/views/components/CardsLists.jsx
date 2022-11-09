@@ -23,6 +23,7 @@ import CardFormat from "./CardFormat";
 import SearchBar from "./SearchBar";
 import Paginado from "./Paginado";
 import { useParams, useNavigate } from "react-router-dom";
+import { removeDetail } from "../../state/ducks/detail/actions";
 
 function CardsList() {
   const { prof } = useParams();
@@ -34,7 +35,7 @@ function CardsList() {
 
   const professions = useSelector((state) => state.professionals.professions);
   const client = useSelector(state => state.clients)
-
+  const detail = useSelector(state=>state.detail)
   const [orden, setOrden] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -136,7 +137,7 @@ function CardsList() {
     if (firstRender && prof) {
       setFilterByProf([prof]);
     }
-
+    
     dispatch(filterByProfession(filterByProf));
 
     // console.log(filterByProf);

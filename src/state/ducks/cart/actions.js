@@ -27,7 +27,7 @@ export function deleteItemCart(item) {
   return async function (dispatch) {
     try {
       await axios.delete(
-        `https://reparoiobackend-main.up.railway.app/api/cart/${item.idDb}`
+        `https://reparoiobackend-develop.up.railway.app/api/cart/${item.idDb}`
       );
       return dispatch({
         type: "DELETE_ITEM_CART",

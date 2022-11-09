@@ -10,6 +10,9 @@ import {
   OverlayTrigger,
   Modal,
   Form,
+  ModalHeader,
+  ModalFooter,
+  ModalTitle,
 } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,12 +24,11 @@ import axios from "axios";
 import { Rating } from "@mui/material";
 import FormEditClient from "./Formularios/FormEditClient";
 export default function ClientProfile({user}) {
-  const { id } = useParams();
+  
   console.log(user)
   const navigate = useNavigate();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  
   const [show, setShow] = useState(false);
   const [ showEdit,setShowEdit]= useState(false)
   const onHideEdit = ()=> setShowEdit(false)
@@ -63,11 +65,7 @@ export default function ClientProfile({user}) {
     setRating(0);
   };
 
-  useEffect(() => {
-    
-    // dispatch(getClientId(id));
-  }, [dispatch, id]);
-
+  
   return (
     <>
       {user ? (
@@ -106,8 +104,8 @@ export default function ClientProfile({user}) {
                 backgroundSize: "cover",
                 alignSelf: "center",
                 borderRadius: "50%",
-                height: "8rem",
-                width: "8rem",
+                height: "10rem",
+                width: "10rem",
               }}
             ></div>
           </div>
@@ -175,7 +173,7 @@ export default function ClientProfile({user}) {
                 <div className="fw-bold">Historial de Compras</div>
               </div>
             </ListGroup.Item>
-            {[].map((item) => {
+            {user.shoppingHistory.map((item) => {
               let { firstName, lastName, id } = professionals.find(
                 (prof) => prof.id === item.professionalId
               );
@@ -290,7 +288,9 @@ export default function ClientProfile({user}) {
             })}
           </ListGroup>
           <Modal show={showEdit} onHide={onHideEdit}>
+            <ModalHeader><ModalTitle>Editar Cliente</ModalTitle></ModalHeader>
               <FormEditClient/>
+              <ModalFooter/>
           </Modal>
         </Card>
       ) : (

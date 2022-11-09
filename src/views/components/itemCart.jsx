@@ -12,7 +12,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import CloseButton from 'react-bootstrap/CloseButton'
 import Badge from 'react-bootstrap/Badge'
 import Button from 'react-bootstrap/Button'
-import { Container } from 'react-bootstrap'
+import {  Container, ModalBody } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import Table from 'react-bootstrap/Table'
 import Form from 'react-bootstrap/Form'
@@ -59,11 +59,11 @@ export default function ItemCart () {
     const items = useSelector((state) => state.cart.list)
     const order = useSelector((state) => state.cart.order)
     const url = useSelector((state) => state.cart.url)
-
-
+    const user = useSelector(state=>state.user)
+    const[showModal,setShowModal]=useState(false)
     let id = order ? order.newOrder.id : ""
 
-
+    console.log(order)
     const [component, setComponent] = useState('')
     const [show, setShow] = useState(false)
     const [name, setName] = useState("")
@@ -166,8 +166,10 @@ export default function ItemCart () {
 
     return (
         <>
+        
         {
-            items ?
+            items ? 
+            
             items.map((item) => {
                 return (
                 <>
@@ -233,6 +235,7 @@ export default function ItemCart () {
 
             <></>
             }
+            
             <Badge pill bg="warning" text="dark" style={{width: "150px", height: "40px", fontSize: "15px"}}>
                 Costo Total: ${costoTotal(items)}
             </Badge>{' '}
@@ -240,12 +243,16 @@ export default function ItemCart () {
                 {
                     items.length > 0 
                     ? 
-                    <Button variant="success" value='resumen'  onClick={() => postCarrito(postItem)}>
+                    <Button variant="success" value='resumen'  onClick={() =>{
+                        if(!user.id)return setShowModal(true);
+                         postCarrito(postItem)
+                         }}>
                         Resumen de la compra
                     </Button> 
                     :
                      <></>
                 }
+                
                 
             </Container>
 
@@ -266,7 +273,7 @@ export default function ItemCart () {
                                         <th>Precio</th>
                                     </tr>
                                 </thead>
-                                {
+                                {   
                                     items ?
                                     items.map((item) => {
                                         return (
@@ -350,6 +357,14 @@ export default function ItemCart () {
                 :
                 <></>
             }
+            <Modal  show = {showModal} variant="danger" onHide={() => setShowModal(false)} dismissible>
+        <Modal.Header closeButton><Modal.Title>Hola!</Modal.Title></Modal.Header>
+       <ModalBody>
+          Para poder realizar el siguiente paso debes iniciar sesion, o registrarte <br/>
+          Arriba a la derecha tienes el boton para loguearte
+        </ModalBody>
+        
+      </Modal>
         </>
     )
 }
