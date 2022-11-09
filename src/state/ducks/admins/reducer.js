@@ -2,6 +2,7 @@ const initialState = {
   clients: [],
   professions: [],
   orders: [],
+  ordersFiltered: [],
 }
 
 
@@ -11,27 +12,49 @@ const adminsReducer = (state = initialState, action) => {
       case "GET_ORDERS": {
         return {
           ...state,
-          orders: [action.payload]
+          ordersFiltered: action.payload.orders,
+          orders: action.payload.orders
         }
       }
 
-      case "UPDATE_ORDER":
-      let i = state.orders.findIndex((element) => {
-        return element.id === action.payload.orderId;
-      });
-      console.log(i, "iiiiii")
+      case "FILTER_STATUS": {
+        let arrayFiltrados = []
 
-      //Creo nuevo array para evitar mutabilidad
-      const updatedOrders = [...state.orders];
-      
-      //Actualizo el status del elemento conseguido por id
-      updatedOrders[i].status = action.payload.status;
-      console.log(updatedOrders, "updatedOrders")
+        if(action.payload === "Todas") {
+          return{
+            ...state,
+            ordersFiltered: state.orders
+          }
+        } else { 
+          state.orders.map(orden => {
 
-      return {
-        ...state,
-        orders: updatedOrders,
-      };
+            if(orden.status === (action.payload)) {
+              arrayFiltrados.push(orden)
+            } 
+          })
+        }
+        return {
+          ...state,
+          ordersFiltered: arrayFiltrados,
+        }
+      }
+
+      case "UPDATE_ORDER":{
+        let i = state.orders.findIndex((element) => {
+          return element.id === action.payload.orderId
+        })
+
+        //Creo nuevo array para evitar mutabilidad
+        const updatedOrders = [...state.orders]
+        
+        //Actualizo el status del elemento conseguido por id
+        updatedOrders[i].status = action.payload.status
+
+        return {
+          ...state,
+          orders: updatedOrders,
+        }
+      }
 
       case "GET_CLIENT": {
         return {

@@ -4,17 +4,15 @@ import { useEffect, useState } from 'react'
 
 //Redux
 import { useDispatch, useSelector } from 'react-redux'
-import { getOrdersDB, updateOrderStatus } from '../../../state/ducks/admins/actions'
+import { filterStatus, getOrdersDB, updateOrderStatus } from '../../../state/ducks/admins/actions'
 
 //Bootstrap
 import Table from 'react-bootstrap/Table'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { Form } from 'react-bootstrap'
-
 
 export default function Ordenes () {
 
-    const ordenes = useSelector((state) => state.admins.orders)
+    const ordenes = useSelector((state) => state.admins.ordersFiltered)
     
     const dispatch = useDispatch()
 
@@ -24,19 +22,49 @@ export default function Ordenes () {
         dispatch(getOrdersDB())
         setState(ordenes)
     }, [state])
+
+    const estados = ["creada", "procesando", "cancelada", "completa"]
     
     const changeStatus = (id, status) => {
         setState(id)
         dispatch(updateOrderStatus(id, status))
     }
 
+    const filterByStatus = (e, status) => {
+        e.preventDefault()
+        dispatch(filterStatus(status))
+    }
+
 
     return (
         <div style={{paddingBottom: "100px", marginBottom: "100px"}}>
                 <h1 style={{ display: "flex", justifyContent: "center", paddingBottom: "50px", paddingTop: "50px"}}>Editar Ordenes</h1>
+
+                <Dropdown style={{ display: "flex", height: "2.5rem", margin: "30px" }}>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic2">
+                        Filtrar por Estado
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <Dropdown.Item
+                        onClick={(e) => filterByStatus(e, "Todas")}
+                        >
+                        Todas
+                        </Dropdown.Item>
+                        {
+                            estados.map((status) => {
+                            return (<Dropdown.Item 
+                                        style={{textTransform: "capitalize"}}
+                                        onClick={(e) => filterByStatus(e, status)}
+                                        >{status}
+                                    </Dropdown.Item>)
+                            })
+                        }
+                    </Dropdown.Menu>
+                </Dropdown>
             
             {
-                ordenes.length > 0 ?
+                ordenes ?
                     <Table striped bordered hover style={{paddingBottom: "50px", marginBottom: "50px"}}>
                         <thead>
                             <tr>
@@ -51,7 +79,7 @@ export default function Ordenes () {
                         </thead>
                         <tbody >
                                 {
-                                    ordenes[0].orders?.map((orden) => {
+                                    ordenes?.map((orden) => {
                                         return (
                                             <tr>
                                                 <td>{orden.date}</td>
@@ -67,7 +95,7 @@ export default function Ordenes () {
                                                         </Dropdown.Toggle>
                                                             <Dropdown.Menu>
                                                                 {
-                                                                    ordenes[0].orderStatus?.map((status) => {
+                                                                    estados.map((status) => {
                                                                     return (<Dropdown.Item 
                                                                                 style={{textTransform: "capitalize"}}
                                                                                 onClick={(e) => changeStatus(orden.id, status)}
