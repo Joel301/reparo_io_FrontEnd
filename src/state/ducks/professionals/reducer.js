@@ -70,7 +70,7 @@ return{...state,
       } else { 
         state.allProfessionals.map(profe => {
 
-          if(profe.review > parseInt(action.payload) || profe.review === parseInt(action.payload)) {
+          if(profe.rating === parseInt(action.payload)) {
             arrayFiltrados.push(profe)
           } 
         })
@@ -123,19 +123,19 @@ return{...state,
       let sortOrder2 =
         action.payload === "asc"
           ? state.professionalsFiltered.sort(function (a, b) {
-              if (a.review > b.review) {
+              if (a.rating > b.rating) {
                 return 1;
               }
-              if (b.review > a.review) {
+              if (b.rating > a.rating) {
                 return -1;
               }
               return 0;
             })
           : state.professionalsFiltered.sort(function (a, b) {
-              if (a.review > b.review) {
+              if (a.rating > b.rating) {
                 return -1;
               }
-              if (b.review > a.review) {
+              if (b.rating > a.rating) {
                 return 1;
               }
               return 0;
@@ -143,7 +143,7 @@ return{...state,
 
       return {
         ...state,
-        professionals: sortOrder2,
+        professionalsFiltered: sortOrder2,
       };
 
     default:
