@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../state/ducks/cart/actions";
+import { Rating } from "@mui/material";
 function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert, client}) {
   let profToString = worker.professions?.map((e) => e.name);
   const reservedProf = useSelector(state=>state.cart.list)
@@ -34,7 +35,7 @@ function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert
         <Card.Title>{`${worker.firstName} ${worker.lastName}`}</Card.Title>
 
         <Card.Text>{profToString?.join(", ")}</Card.Text>
-        <Card.Subtitle>Reputacion: {worker.review}</Card.Subtitle>
+        <Card.Subtitle style={{display:'flex',alignItems:'center'}}>Reputacion: <Rating value={worker.rating} readOnly /></Card.Subtitle>
       </Card.Body>
       <Card.Footer
         style={{ display: "flex", gap: "2rem", justifyContent: "center" }}

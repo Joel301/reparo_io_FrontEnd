@@ -11,7 +11,7 @@ import { getAllProfessionals } from "../../state/ducks/professionals/actions"
 import { getClientId } from "../../state/ducks/clients/actions";
 
 //Bootstrap Material UI
-import { Button, Badge, Container, Nav, Navbar, NavDropdown, Offcanvas, Dropdown } from "react-bootstrap"
+import { Button, Badge, Container, Nav, Navbar, NavDropdown, Offcanvas, Dropdown, NavbarBrand } from "react-bootstrap"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 //Components
@@ -107,22 +107,16 @@ function HeaderNavBar() {
                     </Dropdown.Item>
                     <Dropdown.Item onClick={() =>{
                       dispatch(logoutUser())
-                       logout()}}>
+                       logout()
+                       navigate('/')
+                      }}>
                       Cerrar Sesion
                     </Dropdown.Item></Dropdown.Menu>
                 </Dropdown>
               </>
             ) : (
               <> <LogIn show={showLoginForm} onClose={loginClose} />
-                <NavDropdown title="Iniciar Sesion" id="login-nav-dropdown">
-                  <NavDropdown.Item onClick={() => setShowLoginForm(true)}
-                  > Login
-
-                  </NavDropdown.Item>
-                <NavDropdown>
-
-                </NavDropdown>
-                </NavDropdown>
+                <NavbarBrand onClick={() => setShowLoginForm(true)}  style={{fontSize:'0.9rem',alignSelf:'center',cursor:'pointer'}}>Iniciar Sesion</NavbarBrand>
                 <NavDropdown title="Regístrate" id="signin-nav-dropdown">
                   <NavDropdown.Item defaultValue="cliente" onClick={handleShow}>
                     Cliente
@@ -162,7 +156,7 @@ function HeaderNavBar() {
         placement="end"
       >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Regístrate como prodesional</Offcanvas.Title>
+          <Offcanvas.Title>Regístrate como profesional</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <FormRegistro />

@@ -18,7 +18,7 @@ function rootReducer(state = initialState, action) {
     case "FILTER_BY_PROFESSION":
      
 
- if(action.payload.length!==0&&action.payload[0]!== undefined){  //['albanil','herrero']
+ if(action.payload.length!==0&&action.payload[0]!== undefined){  //['albanil']
   let filtered
   let payloadToLower = action.payload.map((e)=>e.toLowerCase())
  
@@ -28,10 +28,11 @@ function rootReducer(state = initialState, action) {
      filtered = state.allProfessionals.filter((profesional) => {
         return profesional.professions
           .map((e) =>{ 
-            return e.name})
+            console.log(e);
+            return e.name.toLowerCase()})
           .includes(payloadToLower[i]);
       })
-     
+     console.log(payloadToLower[i]);
      
     }else{
         filtered = filtered.filter((profesional) => {

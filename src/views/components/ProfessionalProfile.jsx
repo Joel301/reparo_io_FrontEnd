@@ -20,30 +20,32 @@ import { useAuth } from "../../Context/AuthContext";
 import { filterByProfession } from "../../state/ducks/professionals/actions";
 import { Rating } from "@mui/material";
 
-export default function ProfessionalProfile(user) {
-  const { id } = useParams();
-  // const { user, usersimple } = useAuth();
+export default function ProfessionalProfile({user}) {
   const navigate = useNavigate();
   
  
   const {
+    id,
     firstName,
     lastName,
     profileImg,
     phoneNumber,
     address,
     email,
-    professions,
     reviews,
+    orders
   } = user
+
+  
   const dispatch = useDispatch();
   const professionals = useSelector(
     (state) => state.professionals.allProfessionals
   );
   
+  let professions = professionals.find((prof)=>prof.id===id ).professions
 
   useEffect(() => {
-    
+    console.log(reviews)
   }, [dispatch, id]);
 
   return (
@@ -81,8 +83,8 @@ export default function ProfessionalProfile(user) {
                 backgroundSize: "cover",
                 alignSelf: "center",
                 borderRadius: "50%",
-                height: "8rem",
-                width: "8rem",
+                height: "10rem",
+                width: "10rem",
               }}
             ></div>
           </div>
@@ -132,7 +134,7 @@ export default function ProfessionalProfile(user) {
               gap: "1rem",
             }}
           >
-            {professions.map((profession) => {
+            {professions?.map((profession) => {
               return (
                 <Button
                   onClick={(e) => {
@@ -160,7 +162,7 @@ export default function ProfessionalProfile(user) {
             <ListGroup.Item href="#link1" style={{ cursor: "default" }}>
               Reseñas
             </ListGroup.Item>
-            {reviews?.map((review) => {
+            {reviews.map((review) => {
               return (
                 <ListGroup.Item
                   as="li"
@@ -171,7 +173,7 @@ export default function ProfessionalProfile(user) {
                     <div style={{ display: "flex",gap:'1rem' }}>
                       <div
                         style={{
-                          backgroundImage: `url(${review.clientImg})`,
+                          backgroundImage: `url(${review.client.profileImg})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
                           width: "2rem",
@@ -181,13 +183,13 @@ export default function ProfessionalProfile(user) {
                       />
                       <p
                         style={{
-                          color: "lightgrey",
+                          color: "black",
                           textDecoration: "underline",
-                          textDecorationColor: "lightgrey",
+                          textDecorationColor: "darkgrey",
                         }}
                       >
                         {" "}
-                        {review.clientName}
+                        {review.client.firstName}
                       </p>
                     </div>
                   </div>
@@ -213,7 +215,7 @@ export default function ProfessionalProfile(user) {
             <ListGroup.Item href="#link1" style={{ cursor: "default" }}>
               Reseñas
             </ListGroup.Item>
-            {reviews?.map((review) => {
+            {/* {reviews?.map((review) => {
               return (
                 <ListGroup.Item
                   as="li"
@@ -249,7 +251,7 @@ export default function ProfessionalProfile(user) {
                   </Badge>
                 </ListGroup.Item>
               );
-            })}
+            })} */}
           </ListGroup>
         </Card>
       ) : (

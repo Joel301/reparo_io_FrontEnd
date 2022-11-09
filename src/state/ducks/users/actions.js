@@ -11,32 +11,52 @@ export const loginUser = function (user) {
   //   profileImg: data.dataValues.profileImg,
   //   enabled: data.dataValues.enabled,
   //   cartId: data.cart.id,
+  // 
   // };
   return async function (dispatch) {
-    try{
-      let loggedUser 
-      let typeOfUser          
-      console.log(user)
-      await axios.post("/home/user/login",user).then(res=>{loggedUser = res.data.dataValues
-                                                            typeOfUser = res.data.msg.split(' ')[0]          })
-      console.log(loggedUser,typeOfUser)
-      loggedUser.type=typeOfUser
+    try {
+      let loggedUser;
+      let typeOfUser;
+     
+      await axios.post("/home/user/login", user).then((res) => {
+        loggedUser = res.data.dataValues;
+        typeOfUser = res.data.msg.split(" ")[0];
+      });
+    console.log(user)
+      loggedUser.type = typeOfUser;
+      switch (loggedUser.type) {
+        case "cliente": {
+          let shoppingHistory = await axios.get(`/api/clients/e04a10c9-7637-442d-9992-6cd585caac29`).then((res) => res.data.orders.map((order) => order.orderDetails).flat()); 
+         console.log(shoppingHistory) 
+          loggedUser.shoppingHistory = shoppingHistory;
+        }
+        case "profesional": {
+          let reviews = await axios
+            .get("/home/reviews", { professionalId: loggedUser.id })
+            .then((res) => res.data);
+
+            console.log(reviews)
+           let orders = await axios.get(`/api/orders/`).then((res)=>res.data)
+           console.log(orders)
+          loggedUser.reviews = reviews;
+          // loggedUser.orders = orders
+        }
+      
+      }
+      
       return dispatch({
         type: "LOGIN_USER",
-        payload:loggedUser
+        payload: loggedUser,
       });
+    } catch (err) {
+      console.log(err);
     }
-    catch(err){
-      console.log(err)
-    }
-    
   };
 };
 
 export const logoutUser = function () {
-  return async function (dispatch){
-    axios.post('/home/user/logout')
-    return dispatch({type:"LOGOUT_USER"}) 
-  }
-  
+  return async function (dispatch) {
+    axios.post("/home/user/logout");
+    return dispatch({ type: "LOGOUT_USER" });
+  };
 };

@@ -23,7 +23,11 @@
           reviews:action.payload
         }
       }
-
+      case"REMOVE_DETAIL":{
+        return{
+          
+        }
+      }
       default: return state;
       }
    }

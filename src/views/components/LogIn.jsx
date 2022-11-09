@@ -21,7 +21,7 @@ function LogIn({ show, onClose }) {
     try {
       dispatch(loginUser(user));
 
-      navigate("/");
+      
     } catch (error) {
       //aqui debe de manejarse el error dependiendo lo que se tenga que hacer si no se puede logear
 

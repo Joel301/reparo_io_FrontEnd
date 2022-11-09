@@ -18,11 +18,12 @@ export function postClient(payload){
 export function getClientId(id){
     return async function(dispatch){
         try {
-            const getClient = await axios.get(`/home/clients/${id}`)
-            console.log(getClient)
+            const getClient = await axios.get(`/home/clients/${id}`).then(res=>res.data)
+            
+            
             return dispatch({
                 type: 'GET_CLIENT',
-                payload: getClient.data
+                payload: getClient
             })
         } catch (error) {
             console.log(error)
