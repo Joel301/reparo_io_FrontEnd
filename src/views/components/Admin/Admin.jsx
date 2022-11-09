@@ -43,15 +43,7 @@ export default function Admin({user}) {
     handleClose()
   };
 
-  const usuario =  {
-    id: "3425hlkasjdhfkljasdhf234",
-    firstName: "Lucas",
-    lastName: "Caño",
-    phoneNumber: "2614987585",
-    email: "luema94@gmail.com",
-    profileImg: "https://i.pinimg.com/originals/75/08/77/750877ee27f0a6082c6590f805714efc.png",
-    address: "Argentina"
-  }
+  const usuario = user;
 
   useEffect(()=>{
       dispatch(getClients())
