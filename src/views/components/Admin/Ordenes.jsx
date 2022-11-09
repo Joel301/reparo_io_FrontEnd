@@ -1,9 +1,92 @@
 
+//React
+import { useEffect, useState } from 'react'
+
+//Redux
+import { useDispatch, useSelector } from 'react-redux'
+import { getOrdersDB, updateOrderStatus } from '../../../state/ducks/admins/actions'
+
+//Bootstrap
+import Table from 'react-bootstrap/Table'
+import Dropdown from 'react-bootstrap/Dropdown'
+import { Form } from 'react-bootstrap'
+
 
 export default function Ordenes () {
+
+    const ordenes = useSelector((state) => state.admins.orders)
+    
+    const dispatch = useDispatch()
+
+    const [state, setState] = useState('')
+
+    useEffect(() => {
+        dispatch(getOrdersDB())
+        setState(ordenes)
+    }, [state])
+    
+    const changeStatus = (id, status) => {
+        setState(id)
+        dispatch(updateOrderStatus(id, status))
+    }
+
+
     return (
-        <>
-            Soy Ordenes
-        </>
+        <div style={{paddingBottom: "100px", marginBottom: "100px"}}>
+                <h1 style={{ display: "flex", justifyContent: "center", paddingBottom: "50px", paddingTop: "50px"}}>Editar Ordenes</h1>
+            
+            {
+                ordenes.length > 0 ?
+                    <Table striped bordered hover style={{paddingBottom: "50px", marginBottom: "50px"}}>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>ID Orden</th>
+                                <th>ID Cliente</th>
+                                <th>Cantidad de Profesionales</th>
+                                <th>Costo Total</th>
+                                <th>Estado Actual</th>
+                                <th>Cambiar Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                                {
+                                    ordenes[0].orders?.map((orden) => {
+                                        return (
+                                            <tr>
+                                                <td>{orden.date}</td>
+                                                <td>{orden.id}</td>
+                                                <td>{orden.clientId}</td>
+                                                <td>{orden.orderDetails.length}</td>
+                                                <td>${orden.amount}</td>
+                                                <td>{orden.status}</td>
+                                                <td>
+                                                    <Dropdown>
+                                                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                                            Cambiar Estado 
+                                                        </Dropdown.Toggle>
+                                                            <Dropdown.Menu>
+                                                                {
+                                                                    ordenes[0].orderStatus?.map((status) => {
+                                                                    return (<Dropdown.Item 
+                                                                                style={{textTransform: "capitalize"}}
+                                                                                onClick={(e) => changeStatus(orden.id, status)}
+                                                                                >{status}
+                                                                            </Dropdown.Item>)
+                                                                    })
+                                                                }
+                                                            </Dropdown.Menu>
+                                                    </Dropdown>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                        </tbody >
+                    </Table>
+                :
+                <></>
+            }
+        </div>
     )
 }

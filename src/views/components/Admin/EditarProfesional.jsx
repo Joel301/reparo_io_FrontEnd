@@ -72,9 +72,6 @@ export default function EditarProfesional () {
     ]
     
 
-    useEffect(() => {
-        
-    }, [dispatch, newProfessional])
 
     //Buscar por ID
     function handleInputChange(e) {
