@@ -61,13 +61,12 @@ function HeaderNavBar() {
 
   return (
 
-
     <Navbar sticky="top" expand="md" bg="primary" variant="dark">
       <Container>
         <Container>
           <Link to="/">
 
-            <img style={{ width: "5%" }} src={logoReparoio} />
+            <img style={{ width: "7%", paddingRight: "20px" }} src={logoReparoio} />
 
             <Navbar.Brand>Reparo.io</Navbar.Brand>
           </Link>
