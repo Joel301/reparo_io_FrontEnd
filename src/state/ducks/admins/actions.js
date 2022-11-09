@@ -85,7 +85,15 @@ export function updateOrderStatus(orderId, status) {
         type: "UPDATE_ORDER",
         payload: {orderId,status}
       }
-  
-  
     }
-  }
+}
+
+export function filterStatus(status) {
+
+    return async function(dispatch) {
+        return dispatch({
+            type: "FILTER_STATUS",
+            payload: status
+          })
+    }
+}
