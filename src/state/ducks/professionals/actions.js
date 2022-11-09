@@ -83,6 +83,7 @@ export function postProfessionals(payload) {
 }
 export function postlClient(payload) {
     const POSTURL = "/home/user/register"
+    
     console.log({ ...payload, isClient: true })
     return async function (dispatch) {
         try {

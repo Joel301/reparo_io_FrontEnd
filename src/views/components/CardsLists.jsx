@@ -178,6 +178,7 @@ function CardsList() {
             {reputations.map((rep) => {
               return (
                 <Dropdown.Item
+                key={rep.id}
                   onClick={(e) => reputationFilterHandleOnChange(rep.id)}
                 >
                   {rep.name}
@@ -251,6 +252,7 @@ function CardsList() {
           {filterByProf?.map((e) => {
             return (
               <Badge
+                key={e}
                 onClick={() => deleteFilter(e)}
                 style={{ height: "fit-content", cursor: "pointer" }}
               >

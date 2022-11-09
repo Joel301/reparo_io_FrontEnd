@@ -48,7 +48,7 @@ function CardFormat({ worker,estado,estadoBoolean,setRepeatedAlert,repeatedAlert
           {`${worker.firstName} ${worker.lastName}`}
         </Card.Title>
 
-        <Card.Text class="text-secondary" style={{display: "flex", gap: "2rem", justifyContent: "center",
+        <Card.Text  style={{display: "flex", gap: "2rem", justifyContent: "center",
           textTransform: "capitalize"}}>
             {profToString?.join(", ")}
         </Card.Text>

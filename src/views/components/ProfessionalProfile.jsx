@@ -137,6 +137,7 @@ export default function ProfessionalProfile({user}) {
             {professions?.map((profession) => {
               return (
                 <Button
+                  key={profession.id}
                   onClick={(e) => {
                     dispatch(filterByProfession([e.target.value]));
                     return navigate(`/home/${profession.name}`);
@@ -159,12 +160,13 @@ export default function ProfessionalProfile({user}) {
             }}
             defaultActiveKey="#link1"
           >
-            <ListGroup.Item href="#link1" style={{ cursor: "default" }}>
+            <ListGroup.Item key='soyunico'href="#link1" style={{ cursor: "default" }}>
               Reseñas
             </ListGroup.Item>
             {reviews.map((review) => {
               return (
                 <ListGroup.Item
+                key={review.id}
                   as="li"
                   className="d-flex justify-content-between align-items-start"
                 >
@@ -212,7 +214,7 @@ export default function ProfessionalProfile({user}) {
             }}
             defaultActiveKey="#link1"
           >
-            <ListGroup.Item href="#link1" style={{ cursor: "default" }}>
+            <ListGroup.Item key='yotambiensoy uncio' href="#link1" style={{ cursor: "default" }}>
               Reseñas
             </ListGroup.Item>
             {/* {reviews?.map((review) => {
