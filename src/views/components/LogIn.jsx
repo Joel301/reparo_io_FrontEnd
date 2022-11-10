@@ -49,7 +49,7 @@ function LogIn({ show, onClose }) {
   return (
     <Offcanvas placement="end" show={show} onHide={onClose}>
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Iniciaar sesion</Offcanvas.Title>
+        <Offcanvas.Title>Iniciar sesion</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body
         style={{ display: "flex", flexDirection: "column", gap: "2rem" }}

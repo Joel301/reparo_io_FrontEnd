@@ -205,7 +205,7 @@ export default function FormRegistro({ isClient = false,onClose }) {
                     type="email"
                     placeholder={!!user && user.email ? user.email : "nombre@example.com"} />
             </Form.Group>
-            {!!user && user.email ? <div onClick={otherAccount}>Usar Otra Cuenta</div> : ""}
+            {!!user && user.email ? <Button onClick={otherAccount}>Usar Otra Cuenta</Button> : ""}
             {console.log(user, usersimple)}
             {errors.email && <span className="errors">{errors.email}</span>}
             <Form.Group className="mb-2" controlId="formBasicPassword">

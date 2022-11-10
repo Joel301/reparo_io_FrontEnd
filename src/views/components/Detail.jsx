@@ -16,6 +16,7 @@ import Badge from "react-bootstrap/Badge";
 import { Spinner } from "react-bootstrap";
 import { Rating } from "@mui/material";
 
+
 export default function Detail() {
   const { id } = useParams();
 
@@ -32,6 +33,7 @@ export default function Detail() {
   } = useSelector((state) => state.detail);
   const [loading,setLoading] = useState(false)
   const dispatch = useDispatch();
+  
   
   const navigate = useNavigate();
 
@@ -202,8 +204,14 @@ export default function Detail() {
             );
           })}
         </ListGroup>
+        
       </Card>
       )}
+      <div style={{display: "flex",  justifyContent: "center"}}>
+      <Button onClick={(e) => navigate("/home")}>
+          Volver a Inicio
+        </Button>
+        </div>
     </>
   );
 }
