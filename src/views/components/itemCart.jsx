@@ -59,7 +59,7 @@ export default function ItemCart () {
     const items = useSelector((state) => state.cart.list)
     const order = useSelector((state) => state.cart.order)
     const url = useSelector((state) => state.cart.url)
-    
+    const[showModal,setShowModal]=useState(false)
     
     let id = order ? order.newOrder.id : ""
 
@@ -88,13 +88,9 @@ export default function ItemCart () {
         dispatch(deleteItemCart(item))
     }
     
-    const postItem = items.map(el => {
-        return {
-            clientId: cliente.id,
-        }
-    })
+ 
 
-    const postCarrito = (e) => {
+    const postCarrito = () => {
         setComponent("resumen")
         setShow(true)
         dispatch(postCart({cartId: cliente.cartId}))
@@ -163,15 +159,23 @@ export default function ItemCart () {
     }
     
     useEffect(()=>{
-        if(cliente.id){
-            dispatch(postingCart(items,cliente.id))
-        }
-    }, [cliente.id])
+        // if(cliente.id){
+        //     dispatch(postingCart(items,cliente.id))
+        // }
+    }, [])
 
 
 
     return (
         <>
+        <Modal  show = {showModal} variant="danger" onHide={() => setShowModal(false)} dismissible>
+        <Modal.Header closeButton><Modal.Title>Hola!</Modal.Title></Modal.Header>
+       <ModalBody>
+          Para poder realizar el siguiente paso debes iniciar sesion, o registrarte <br/>
+          Arriba a la derecha tienes el boton para loguearte
+        </ModalBody>
+        
+      </Modal>
         
         {
             items ? 
@@ -250,8 +254,8 @@ export default function ItemCart () {
                     items.length > 0 
                     ? 
                     <Button variant="success" value='resumen'  onClick={() =>{
-                        
-                         postCarrito(postItem)
+                        if(!cliente.id)return setShowModal(true);
+                         postCarrito()
                          }}>
                         Resumen de la compra
                     </Button> 
@@ -359,6 +363,7 @@ export default function ItemCart () {
                             }
                         </Modal.Footer>
                     </Modal>
+                    
                 </>
                 :
                 <></>

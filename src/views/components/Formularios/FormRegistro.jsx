@@ -9,7 +9,7 @@ import './estilos.css'
 import { useAuth } from "../../../Context/AuthContext"
 import { useEffect } from "react";
 
-
+import { Google } from "@mui/icons-material";
 
 export default function FormRegistro({ isClient = false,onClose }) {
     const isclient = isClient
@@ -197,7 +197,7 @@ export default function FormRegistro({ isClient = false,onClose }) {
 
       tal vez que lo invite a continuar con sus datos o que cancele el logeo con google? no se no dormi bien.
        */}
-            <Button onClick={logwithgoogle}>boton feo para google 🤣</Button>
+            <Button onClick={logwithgoogle}><Google /> Continua con Google</Button>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Control
                     disabled={!!user && user.email}

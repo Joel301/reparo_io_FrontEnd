@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../state/ducks/users/actions";
 import { Google } from "@mui/icons-material";
+import { postingCart } from "../../state/ducks/cart/actions";
 function LogIn({ show, onClose }) {
   const loggedUser = useSelector((state) => state.user);
+  const items = useSelector(state=>state.cart.list)
   const [userToLog, setUserToLog] = useState({
     email: "",
     password: "",
@@ -20,7 +22,7 @@ function LogIn({ show, onClose }) {
     e.preventDefault();
     try {
       dispatch(loginUser(userToLog));
-
+      dispatch(postingCart(items,loggedUser.id))
       
     } catch (error) {
       //aqui debe de manejarse el error dependiendo lo que se tenga que hacer si no se puede logear
