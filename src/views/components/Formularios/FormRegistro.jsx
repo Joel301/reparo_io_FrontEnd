@@ -132,8 +132,8 @@ export default function FormRegistro({ isClient = false, onClose }) {
             isclient
                 ? dispatch(postlClient({ ...input, email, authid: uid, google: true }))
                 : dispatch(postProfessionals({ ...input, email, authid: uid, google: true }))
-            navigate('/Home')
-            window.location.reload()
+            navigate('/home')
+            // window.location.reload()
         } else {
             console.log("sin firebase")
             console.log('que es userSimple:  ', user)
