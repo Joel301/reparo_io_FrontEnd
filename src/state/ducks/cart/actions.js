@@ -100,7 +100,10 @@ export function getMercadoPagoLink(body) {
       const response = await axios.post(
         "https://reparoiobackend-main.up.railway.app/api/mercado",
         body
-      );
+      ).then((res)=>{
+        localStorage.clear()
+        return res
+      });
       console.log(response, "response");
       return dispatch({
         type: "URL_MERCADO_PAGO",
