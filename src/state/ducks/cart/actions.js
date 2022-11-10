@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export function addToCart(worker, client) {
-  console.log(worker, "Soy workeeer");
+  console.log(client, "soy client")
   return async function (dispatch) {
     try {
       const itemDeCompra = {
@@ -23,15 +23,17 @@ export function addToCart(worker, client) {
   };
 }
 
+
+
 export function deleteItemCart(item) {
-  console.log(item)
-  let id = item
-  if(typeof item === "object") id = item.idDb
+  console.log(item);
   return async function (dispatch) {
     try {
-      await axios.delete(
-        `https://reparoiobackend-main.up.railway.app/api/cart/${id}`
-      );
+      if (item.idDb) {
+        await axios.delete(
+          `https://reparoiobackend-main.up.railway.app/api/cart/${item.idDb}`
+        );
+      }
       return dispatch({
         type: "DELETE_ITEM_CART",
         payload: item.professional.id,
@@ -123,7 +125,7 @@ export function postingCart(cartList, clientId) {
             days: el.days,
           }
         );
-        console.log(response, "leeeeeeeeemeeeeeeeeeeeeeeeeeeeee")
+        
         el.idDb = response.data.newCartDetail.id;
         return el;
       });
