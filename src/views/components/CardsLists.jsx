@@ -205,7 +205,7 @@ function CardsList() {
                   key={prof.id}
                   onClick={(e) => professionFilterHandleOnChange(e)}
                 >
-                  {prof.name}
+                  {prof.name[0].toUpperCase()+ prof.name.substring(1)}
                 </Dropdown.Item>
               );
             })}
@@ -216,10 +216,10 @@ function CardsList() {
           <Dropdown.Toggle>Orden por Nombre</Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item onClick={(e) => handleOrderByName(e)}>
-              asc
+              Ascendente
             </Dropdown.Item>
             <Dropdown.Item onClick={(e) => handleOrderByName(e)}>
-              desc
+              Descendente
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -227,10 +227,10 @@ function CardsList() {
           <Dropdown.Toggle>Orden por Reviews</Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item onClick={(e) => handleOrderReputation(e)}>
-              asc
+              Ascendente
             </Dropdown.Item>
             <Dropdown.Item onClick={(e) => handleOrderReputation(e)}>
-              desc
+              Descendente
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

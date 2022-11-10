@@ -89,7 +89,7 @@ return{...state,
 
     case "ORDER_BY_NAME":
       let sortOrder =
-        action.payload === "asc"
+        action.payload === "Ascendente"
           ? state.professionalsFiltered.sort(function (a, b) {
               if (a.firstName.toLowerCase() > b.firstName.toLowerCase()) {
                 return 1;
@@ -121,7 +121,7 @@ return{...state,
 
     case "ORDER_REPUTATION":
       let sortOrder2 =
-        action.payload === "asc"
+        action.payload === "Ascendente"
           ? state.professionalsFiltered.sort(function (a, b) {
               if (a.rating > b.rating) {
                 return 1;
