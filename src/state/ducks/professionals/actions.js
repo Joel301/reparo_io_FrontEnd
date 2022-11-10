@@ -38,7 +38,7 @@ export function getProfesional(payload) {
     return async function (dispatch) {
         try {
             const prof = await axios.get(`/home?search=${payload}`).then((res)=> res.data)
-            const reviews = await axios.get('/home/reviews',{professionalId:prof.id})
+            const reviews = await axios.get('/home/reviews',{professionalId:prof.id}).then((res)=>res.splice(0,9))
             prof.reviews = reviews
             return dispatch({
                 type: 'GET_PROFESSIONALS',

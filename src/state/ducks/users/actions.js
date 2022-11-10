@@ -45,7 +45,7 @@ export const loginUser = function (user) {
            
             
          let orders = await axios.get(`/api/orders/professional/${loggedUser.id}`).then((res)=>res.data.orders)
-          loggedUser.reviews = reviews;
+          loggedUser.reviews = reviews.splice(0,9)
           loggedUser.orders = orders
             ;
         }
