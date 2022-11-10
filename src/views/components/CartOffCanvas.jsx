@@ -58,24 +58,19 @@ export default function CartOffCanvas({ estado, estadoBoolean }) {
       <Offcanvas.Body style={{display:'flex',flexDirection:'column',gap:'2rem'}}>
 
         {
-          cartItems.map(({professional,quantity, days})=>{
-            return (<CartOffItem professional={professional} totalDays={quantity} days={days} exitCanvas={exitCanvas} />)
+          cartItems.map(({professional,quantity, days, idDb})=>{
+            return (<CartOffItem idDb = {idDb? idDb : undefined} professional={professional} totalDays={quantity} days={days} exitCanvas={exitCanvas} />)
             })
         }
       
         <Button variant='success' onClick={()=> {
-          if(!client.id) return setShowModal(true)
-          navigate('/cart')
-      return dispatch(postingCart(cartItems,client.id))}}>Realizar Compras</Button>
+          if(client.id){
+            dispatch(postingCart(cartItems,client.id))
+          }
+           navigate('/cart')}}>Realizar Compras</Button>
+          
       </Offcanvas.Body>
-      <Modal  show = {showModal} variant="danger" onHide={() => setShowModal(false)} dismissible>
-        <Modal.Header closeButton><Modal.Title>Hola!</Modal.Title></Modal.Header>
-       <ModalBody>
-          Para poder realizar el siguiente paso debes iniciar sesion, o registrarte <br/>
-          Arriba a la derecha tienes el boton para loguearte
-        </ModalBody>
-        
-      </Modal>
+      
 
     </Offcanvas>
   )

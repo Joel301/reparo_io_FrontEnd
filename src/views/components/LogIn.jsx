@@ -52,7 +52,7 @@ function LogIn({ show, onClose }) {
       <Offcanvas.Body
         style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
       >
-        <Button onClick={googlelog}>
+        <Button onClick={()=>googlelog()}>
           <Google /> Continua con Google
         </Button>
         <Form onSubmit={handleSubmit}>

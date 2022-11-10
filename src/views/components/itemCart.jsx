@@ -1,11 +1,11 @@
 
 //React Redux
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 
 //Actions
-import { deleteItemCart, addDayToProf, removeDayFromProf, getMercadoPagoLink, postCart, deleteOrder } from "../../state/ducks/cart/actions"
+import { deleteItemCart, addDayToProf, removeDayFromProf, getMercadoPagoLink, postCart, deleteOrder, postingCart } from "../../state/ducks/cart/actions"
 
 //Bootstrap
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -59,14 +59,15 @@ export default function ItemCart () {
     const items = useSelector((state) => state.cart.list)
     const order = useSelector((state) => state.cart.order)
     const url = useSelector((state) => state.cart.url)
-    const user = useSelector(state=>state.user)
-    const[showModal,setShowModal]=useState(false)
+    
+    
     let id = order ? order.newOrder.id : ""
 
     console.log(order)
     const [component, setComponent] = useState('')
     const [show, setShow] = useState(false)
     const [name, setName] = useState("")
+    
 
     function handleInputChange(e) {
       e.preventDefault(e)
@@ -160,7 +161,12 @@ export default function ItemCart () {
         dispatch(deleteOrder(orderId))
         handleClose()
     }
-
+    
+    useEffect(()=>{
+        if(cliente.id){
+            dispatch(postingCart(items,cliente.id))
+        }
+    }, [cliente.id])
 
 
 
@@ -244,7 +250,7 @@ export default function ItemCart () {
                     items.length > 0 
                     ? 
                     <Button variant="success" value='resumen'  onClick={() =>{
-                        if(!user.id)return setShowModal(true);
+                        
                          postCarrito(postItem)
                          }}>
                         Resumen de la compra
@@ -357,14 +363,7 @@ export default function ItemCart () {
                 :
                 <></>
             }
-            <Modal  show = {showModal} variant="danger" onHide={() => setShowModal(false)} dismissible>
-        <Modal.Header closeButton><Modal.Title>Hola!</Modal.Title></Modal.Header>
-       <ModalBody>
-          Para poder realizar el siguiente paso debes iniciar sesion, o registrarte <br/>
-          Arriba a la derecha tienes el boton para loguearte
-        </ModalBody>
-        
-      </Modal>
+           
         </>
     )
 }
