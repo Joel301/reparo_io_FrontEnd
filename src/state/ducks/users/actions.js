@@ -17,41 +17,42 @@ export const loginUser = function (user) {
       let typeOfUser;
       let cartId
       await axios.post("/home/user/login", user).then((res) => {
-        
+        console.log("enaction: ",user, res.data)
         loggedUser = res.data.dataValues;
         typeOfUser = res.data.msg.split(" ")[0];
-        if(typeOfUser==='cliente')cartId = res.data.cart.id
-        
+        if (typeOfUser === 'cliente') cartId = res.data.dataValues.id
       });
-    
+
       loggedUser.type = typeOfUser;
-      if(typeOfUser==='cliente') loggedUser.cartId = cartId
+      if (typeOfUser === 'cliente') loggedUser.cartId = cartId
       switch (loggedUser.type) {
         case "cliente": {
-          let shoppingHistory = await axios.get(`/api/clients/${loggedUser.id}`).then((res) => res.data.orders.map((order) => order.orderDetails).flat()); 
-         
+          let shoppingHistory = await axios.get(`/api/clients/${loggedUser.id}`).then((res) => res.data.orders.map((order) => order.orderDetails).flat());
+
           loggedUser.shoppingHistory = shoppingHistory;
         }
         case "profesional": {
           let reviews = await axios
             .get("/home/reviews")
-            .then((res) => res.data).then((res)=>res.filter((review) => review.professionalId === loggedUser.id)
-            .map((review) => {
-              return { comment:review.comment,
-                    rating:review.rating,
-                    clientName:review.client.firstName,
-                    clientImg:review.client.profileImg };
-            }))
-           
-            
-         let orders = await axios.get(`/api/orders/professional/${loggedUser.id}`).then((res)=>res.data.orders)
-          loggedUser.reviews = reviews.splice(0,9)
+            .then((res) => res.data).then((res) => res.filter((review) => review.professionalId === loggedUser.id)
+              .map((review) => {
+                return {
+                  comment: review.comment,
+                  rating: review.rating,
+                  clientName: review.client.firstName,
+                  clientImg: review.client.profileImg
+                };
+              }))
+
+
+          let orders = await axios.get(`/api/orders/professional/${loggedUser.id}`).then((res) => res.data.orders)
+          loggedUser.reviews = reviews.splice(0, 9)
           loggedUser.orders = orders
             ;
         }
-      
+
       }
-    console.log(loggedUser);
+      console.log(loggedUser);
       return dispatch({
         type: "LOGIN_USER",
         payload: loggedUser,
@@ -65,7 +66,7 @@ export const loginUser = function (user) {
 export const logoutUser = function () {
   return async function (dispatch) {
     axios.post("/home/user/logout");
-  
+
     return dispatch({ type: "LOGOUT_USER" });
   };
 };
