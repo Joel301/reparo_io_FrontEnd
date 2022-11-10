@@ -17,18 +17,19 @@ export const loginUser = function (user) {
       let typeOfUser;
       let cartId
       await axios.post("/home/user/login", user).then((res) => {
-        console.log(res)
+        
         loggedUser = res.data.dataValues;
         typeOfUser = res.data.msg.split(" ")[0];
-        cartId = res.data.cart.id
+        if(typeOfUser==='cliente')cartId = res.data.cart.id
+        
       });
-      console.log(loggedUser)
+    
       loggedUser.type = typeOfUser;
-      loggedUser.cartId = cartId
+      if(typeOfUser==='cliente') loggedUser.cartId = cartId
       switch (loggedUser.type) {
         case "cliente": {
           let shoppingHistory = await axios.get(`/api/clients/${loggedUser.id}`).then((res) => res.data.orders.map((order) => order.orderDetails).flat()); 
-         console.log(shoppingHistory) 
+         
           loggedUser.shoppingHistory = shoppingHistory;
         }
         case "profesional": {
@@ -42,15 +43,15 @@ export const loginUser = function (user) {
                     clientImg:review.client.profileImg };
             }))
            
-            console.log(reviews)
-           let orders = await axios.get(`/api/orders/`).then((res)=>res.data)
-           console.log(orders)
+            
+         let orders = await axios.get(`/api/orders/professional/${loggedUser.id}`).then((res)=>res.data.orders)
           loggedUser.reviews = reviews;
-          // loggedUser.orders = orders
+          loggedUser.orders = orders
+            ;
         }
       
       }
-      
+    console.log(loggedUser);
       return dispatch({
         type: "LOGIN_USER",
         payload: loggedUser,
@@ -64,6 +65,7 @@ export const loginUser = function (user) {
 export const logoutUser = function () {
   return async function (dispatch) {
     axios.post("/home/user/logout");
+  
     return dispatch({ type: "LOGOUT_USER" });
   };
 };

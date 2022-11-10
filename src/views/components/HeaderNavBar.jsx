@@ -109,8 +109,10 @@ function HeaderNavBar() {
                     <Dropdown.Item onClick={() =>{
                       dispatch(logoutUser())
                        logout()
-                       navigate('/')
+                       localStorage.clear()
                        
+                       navigate('/')
+                       window.location.reload()
                       }}>
                       Cerrar Sesion
                     </Dropdown.Item></Dropdown.Menu>

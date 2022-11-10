@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import { filterByProfession } from "../../state/ducks/professionals/actions";
 import { Rating } from "@mui/material";
+import { getClients } from "../../state/ducks/clients/actions";
 
 export default function ProfessionalProfile({user}) {
   const navigate = useNavigate();
@@ -36,7 +37,8 @@ export default function ProfessionalProfile({user}) {
     orders
   } = user
 
-  
+ 
+  const clients = useSelector(state => state.client.clients)
   const dispatch = useDispatch();
   const professionals = useSelector(
     (state) => state.professionals.allProfessionals
@@ -45,8 +47,9 @@ export default function ProfessionalProfile({user}) {
   let professions = professionals.find((prof)=>prof.id===id ).professions
 
   useEffect(() => {
-    console.log(reviews)
-  }, [dispatch, id]);
+   
+   dispatch(getClients())
+  }, [id]);
 
   return (
     <>
@@ -59,7 +62,7 @@ export default function ProfessionalProfile({user}) {
             width: "80rem",
             margin: "3rem auto",
             padding: "1rem",
-            height: "40rem",
+            height: "50rem",
             fontFamily: "DMSans",
           }}
         >
@@ -151,7 +154,7 @@ export default function ProfessionalProfile({user}) {
           <ListGroup
             as="ol"
             style={{
-              gridArea: "1 / 3 / 9 / 6",
+              gridArea: "1 / 3 / 6 / 6",
               margin: "2rem",
               maxHeight: "50rem",
               marginBottom: "10px",
@@ -205,7 +208,7 @@ export default function ProfessionalProfile({user}) {
           <ListGroup
             as="ol"
             style={{
-              gridArea: "1 / 3 / 9 / 6",
+              gridArea: "6 / 3 / 9 / 6",
               margin: "2rem",
               maxHeight: "50rem",
               marginBottom: "10px",
@@ -215,45 +218,48 @@ export default function ProfessionalProfile({user}) {
             defaultActiveKey="#link1"
           >
             <ListGroup.Item key='yotambiensoy uncio' href="#link1" style={{ cursor: "default" }}>
-              Reseñas
+              Trabajos
             </ListGroup.Item>
-            {/* {reviews?.map((review) => {
+            {orders?.map(({clientId,days,orderId,status}) => {
+              console.log(status)
+              let orderClient = clients?.find(client =>client.id === clientId)
+              
+              let statusColor = ()=>{
+                if(status==="creada")return "secondary"
+                if(status==="procesando")return "warning"
+                if(status==="cancelada")return "danger"
+                if(status === "completa")return "success"
+              }
+
               return (
                 <ListGroup.Item
+                key={orderId}
                   as="li"
                   className="d-flex justify-content-between align-items-start"
                 >
                   <div className="ms-2 me-auto">
-                    <cite>"{review.comment}"</cite>
+                    <h6 style={{color: "black",fontWeight:'bold',textTransform:'capitalize'}}>{orderClient.firstName} {orderClient.lastName}</h6>
                     <div style={{ display: "flex",gap:'1rem' }}>
+                      
                       <div
-                        style={{
-                          backgroundImage: `url(${review.clientImg})`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                          width: "2rem",
-                          height: "2rem",
-                          borderRadius: "50%",
-                        }}
-                      />
-                      <p
-                        style={{
-                          color: "lightgrey",
-                          textDecoration: "underline",
-                          textDecorationColor: "lightgrey",
-                        }}
+                       style={{display:'flex',flexDirection:'row'}}
                       >
                         {" "}
-                        {review.clientName}
-                      </p>
+                        <div style={{display:'flex',gap:'4px',width:'20rem'}}>
+                        {days.map(day=> (<p> {day}</p>))}
+                        </div>
+
+                      </div>
                     </div>
                   </div>
-                  <Badge bg="primary" pill>
-                    <Rating value={review.rating} readOnly />
+                  <div style={{display:'flex',flexDirection:'column',gap:'0.6rem'}}>
+                  <Badge  bg={statusColor()}  >
+                    {status}
                   </Badge>
+                  <p style={{justifySelf:'flex-end'}}>{orderClient.address}</p></div>
                 </ListGroup.Item>
               );
-            })} */}
+            })} 
           </ListGroup>
         </Card>
       ) : (
