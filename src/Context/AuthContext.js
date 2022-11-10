@@ -55,15 +55,15 @@ export function AuthProvider({ children }) {
         const unsubuscribe = onAuthStateChanged(auth,async (currentUser) => {
             // console.log(currentUser)
             setUser(currentUser);
-            if (currentUser) {
-                const { email, uid } = currentUser
-              await  axios.get("/home/user", { params: { id: uid } }).then(
-                    (response) => setUsersimple({ ...response.data })
-                )
+            // if (currentUser) {
+            //     const { email, uid } = currentUser
+            //   await  axios.get("/home/user", { params: { id: uid } }).then(
+            //         (response) => setUsersimple({ ...response.data })
+            //     )
 
-            } else {
-                setUsersimple(currentUser)
-            }
+            // } else {
+            //     setUsersimple(currentUser)
+            // }
             setLoading(false);
         });
         return () => unsubuscribe();
