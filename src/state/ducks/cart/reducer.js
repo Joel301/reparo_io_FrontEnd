@@ -17,6 +17,8 @@ export default function cartReducer(state = initialState, action) {
         (item) => item.professional.id !== action.payload
       );
 
+    
+
       return {
         ...state,
         list: [...updatedList],
@@ -84,6 +86,13 @@ export default function cartReducer(state = initialState, action) {
         ...state,
         order: {},
       };
+
+      case 'CLEAR_CART':{
+        return {
+          list: [],
+          url: "",
+        }
+      }
 
     default:
       return state;

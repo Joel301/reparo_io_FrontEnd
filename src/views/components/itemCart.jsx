@@ -12,6 +12,7 @@ import {
   postCart,
   deleteOrder,
   postingCart,
+  clearCart,
 } from "../../state/ducks/cart/actions";
 
 //Bootstrap
@@ -369,7 +370,7 @@ export default function ItemCart() {
               </Button>
               {url ? (
                 <a href={url}>
-                  <Button variant="secondary">Pagar</Button>
+                  <Button onClick={()=> clearCart()} variant="secondary">Pagar</Button>
                 </a>
               ) : (
                 <></>
