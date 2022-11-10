@@ -97,7 +97,7 @@ function HeaderNavBar() {
                     width: "2rem",
                     borderRadius: "50%",
                     marginRight: "2rem",
-                  }} /* onClick={showProfile} */ />
+                  }}  />
                   <Dropdown.Menu>
                     <Dropdown.Item
                     onClick={() =>

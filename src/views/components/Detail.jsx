@@ -20,6 +20,7 @@ export default function Detail() {
   const { id } = useParams();
 
   const {
+  
     firstName,
     lastName,
     profileImg,
