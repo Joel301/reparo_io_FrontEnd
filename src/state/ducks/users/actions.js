@@ -10,31 +10,38 @@ export const loginUser = function (user) {
   //   email: data.dataValues.email,
   //   profileImg: data.dataValues.profileImg,
   //   enabled: data.dataValues.enabled,
-  //   cartId: data.cart.id,
-  // 
-  // };
+  //   cartId: data.cart.id, 
   return async function (dispatch) {
     try {
       let loggedUser;
       let typeOfUser;
-     
+      let cartId
       await axios.post("/home/user/login", user).then((res) => {
+        console.log(res)
         loggedUser = res.data.dataValues;
         typeOfUser = res.data.msg.split(" ")[0];
+        cartId = res.data.cart.id
       });
-    console.log(user)
+      console.log(loggedUser)
       loggedUser.type = typeOfUser;
+      loggedUser.cartId = cartId
       switch (loggedUser.type) {
         case "cliente": {
-          let shoppingHistory = await axios.get(`/api/clients/e04a10c9-7637-442d-9992-6cd585caac29`).then((res) => res.data.orders.map((order) => order.orderDetails).flat()); 
+          let shoppingHistory = await axios.get(`/api/clients/${loggedUser.id}`).then((res) => res.data.orders.map((order) => order.orderDetails).flat()); 
          console.log(shoppingHistory) 
           loggedUser.shoppingHistory = shoppingHistory;
         }
         case "profesional": {
           let reviews = await axios
-            .get("/home/reviews", { professionalId: loggedUser.id })
-            .then((res) => res.data);
-
+            .get("/home/reviews")
+            .then((res) => res.data).then((res)=>res.filter((review) => review.professionalId === loggedUser.id)
+            .map((review) => {
+              return { comment:review.comment,
+                    rating:review.rating,
+                    clientName:review.client.firstName,
+                    clientImg:review.client.profileImg };
+            }))
+           
             console.log(reviews)
            let orders = await axios.get(`/api/orders/`).then((res)=>res.data)
            console.log(orders)

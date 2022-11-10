@@ -110,6 +110,7 @@ function HeaderNavBar() {
                       dispatch(logoutUser())
                        logout()
                        navigate('/')
+                       
                       }}>
                       Cerrar Sesion
                     </Dropdown.Item></Dropdown.Menu>

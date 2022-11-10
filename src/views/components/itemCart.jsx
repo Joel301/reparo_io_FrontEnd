@@ -88,13 +88,9 @@ export default function ItemCart () {
         dispatch(deleteItemCart(item))
     }
     
-    const postItem = items.map(el => {
-        return {
-            clientId: cliente.id,
-        }
-    })
+ 
 
-    const postCarrito = (e) => {
+    const postCarrito = () => {
         setComponent("resumen")
         setShow(true)
         dispatch(postCart({cartId: cliente.cartId}))
@@ -163,10 +159,10 @@ export default function ItemCart () {
     }
     
     useEffect(()=>{
-        if(cliente.id){
-            dispatch(postingCart(items,cliente.id))
-        }
-    }, [cliente.id])
+        // if(cliente.id){
+        //     dispatch(postingCart(items,cliente.id))
+        // }
+    }, [])
 
 
 
@@ -251,7 +247,7 @@ export default function ItemCart () {
                     ? 
                     <Button variant="success" value='resumen'  onClick={() =>{
                         
-                         postCarrito(postItem)
+                         postCarrito()
                          }}>
                         Resumen de la compra
                     </Button> 
