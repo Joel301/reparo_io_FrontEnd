@@ -238,7 +238,7 @@ export default function ProfessionalProfile({user}) {
                   className="d-flex justify-content-between align-items-start"
                 >
                   <div className="ms-2 me-auto">
-                    <h6 style={{color: "black",fontWeight:'bold',textTransform:'capitalize'}}>{orderClient.firstName} {orderClient.lastName}</h6>
+                    <h6 style={{color: "black",fontWeight:'bold',textTransform:'capitalize'}}>{orderClient?.firstName} {orderClient?.lastName}</h6>
                     <div style={{ display: "flex",gap:'1rem' }}>
                       
                       <div
@@ -256,7 +256,7 @@ export default function ProfessionalProfile({user}) {
                   <Badge  bg={statusColor()}  >
                     {status}
                   </Badge>
-                  <p style={{justifySelf:'flex-end'}}>{orderClient.address}</p></div>
+                  <p style={{justifySelf:'flex-end'}}>{orderClient?.address}</p></div>
                 </ListGroup.Item>
               );
             })} 
