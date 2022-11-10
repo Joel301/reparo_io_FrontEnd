@@ -9,9 +9,9 @@ import './estilos.css'
 import { useAuth } from "../../../Context/AuthContext"
 import { useEffect } from "react";
 
+import { Google } from "@mui/icons-material";
 
-
-export default function FormRegistro({ isClient = false }) {
+export default function FormRegistro({ isClient = false,onClose }) {
     const isclient = isClient
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -55,15 +55,14 @@ export default function FormRegistro({ isClient = false }) {
 
     // Se llena el input de profesiones:
     function handleSelectProfession(e) {
-        e.preventDefault()
         if (professionsRef.current.includes(e.target.value)) {
             professionsRef.current = professionsRef.current.filter(el => el !== e.target.value)
         } else professionsRef.current.push(e.target.value)
+        
 
     }
 
-    // ESTO DEBE SERVIR PARA CLOUDINARY:
-
+    // Esta es la logica para el funcionamiento de cloudinary:
         const [image,setImage] = useState("");
         const [loading, setLoading] = useState(false);
         
@@ -81,15 +80,14 @@ export default function FormRegistro({ isClient = false }) {
                 }
             )
             const file = await res.json();
-            console.log(file.secure_url);
-            console.log(res);
+           
             setImage(file.secure_url);
             setLoading(false);}
 
     // se envia la informacion del formulario incluye la validación:
     function hedleOnSubmit(e) {
         e.preventDefault(e)
-
+        
         const input = {
             firstName: nameRef.current.value,
             lastName: lastNameRef.current.value,
@@ -97,10 +95,13 @@ export default function FormRegistro({ isClient = false }) {
                 passwordRef.current.value : "No coinciden",
             email: emailRef.current.value,
             phoneNumber: phoneNumberRef.current.value,
-            profileImg: image ,
+            profileImg: image?image:null,
             aboutMe: aboutMeRef.current.value,
             address: addressRef.current.value,
         };
+        if (input["profileImg"] === "") {
+            input["profileImg"] = user?.photoURL||""
+        }
         if (!isClient) {
             input["professions"] = professionsRef.current
         }
@@ -108,7 +109,7 @@ export default function FormRegistro({ isClient = false }) {
             input['email'] = `${user.email}`
             input['password'] = 'thisisnotapass'
         }
-        console.log(input)
+       
         const formErrors = isclient
             ? validateFormClient(input)
             : validateFormProfessional(input)
@@ -120,38 +121,37 @@ export default function FormRegistro({ isClient = false }) {
             alert('Verifique que todos los campos esten llenos')
             return
         }
-        console.log(!!user && !usersimple)
-        console.log("esta en firebase: ", !!user)
-        console.log("esta en base de datos?: : ", usersimple && !usersimple.email)
-        console.log("es, admin: ", usersimple && !!usersimple.adminId)
-        console.log("es, client: ", usersimple && !!usersimple.clientId)
-        console.log("es, professional: ", usersimple && !!usersimple.professionalId)
-        if (user && usersimple && !usersimple.email) {
-            // aqui se da de alta en firebase
+        
+        if (user && usersimple.error) {
+            
             console.log("en firebase")
-            const { email, uid } = user
-            // console.log(user)
+            const { email, uid,photoURL } = user
+            console.log("input to send",input)
+                    if(input.profileImg===null)input.profileImg=photoURL
             isclient
-                ? dispatch(postlClient({ ...input, email, authid: uid }))
-                : dispatch(postProfessionals({ ...input, email, authid: uid }))
-            navigate('/')
+                ? dispatch(postlClient({ ...input, email, authid: uid,google:true }))
+                : dispatch(postProfessionals({ ...input, email, authid: uid,google:true}))
+            navigate('/Home')
         } else {
             console.log("sin firebase")
+            console.log('que es userSimple:  ',user)
             signup(input.email, input.password)
                 // .then(r => r)
                 .then((r) => {
-                    const { email, uid } = r.user
+                    const { email, uid, 
+                    } = r.user
+                    
                     console.log(r)
                     isclient
                         ? dispatch(postlClient({ ...input, email, authid: uid }))
                         : dispatch(postProfessionals({ ...input, email, authid: uid }))
-                    navigate('/')
+                    navigate('/Home')
                     // esto de abajo esta bueno pero no puede ser un mensaje que no sea alert?
                     // alert('Tu perfil ha sido creado')
                 }
                 ).catch(error => {
                     //aqui se pueden manejar los errores de auth con correo y usuario, 
-                    if (error.code === "auth/email-already-in-use") { 
+                    if (error.code === "auth/email-already-in-use") {
                         login(input.email, input.password)
                     }
                     else { console.log(error) }
@@ -197,7 +197,7 @@ export default function FormRegistro({ isClient = false }) {
 
       tal vez que lo invite a continuar con sus datos o que cancele el logeo con google? no se no dormi bien.
        */}
-            <Button onClick={logwithgoogle}>boton feo para google 🤣</Button>
+            <Button onClick={logwithgoogle}><Google /> Continua con Google</Button>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Control
                     disabled={!!user && user.email}
@@ -271,9 +271,9 @@ export default function FormRegistro({ isClient = false }) {
                     type="file"
                     placeholder="imagen"
                     onChange={upLoadImage} />
-                    
+
             </Form.Group>
-           
+
             {errors.profileImg && <span className="errors">{errors.profileImg}</span>}
             {!isclient && <Form.Group
                 className="mb-3"
@@ -309,7 +309,7 @@ export default function FormRegistro({ isClient = false }) {
                 <Form.Check type="checkbox" label="Acepto términos y condiciones" />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button onClick={()=>onClose()} variant="primary" type="submit">
                 Registrame
             </Button>
 

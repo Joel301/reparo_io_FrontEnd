@@ -22,7 +22,6 @@ export function getProfessions () {
             const profesiones = await axios.get(
                 `https://reparoiobackend-main.up.railway.app/home/professions/`
               )
-              console.log(profesiones, "profesiones action")
               return dispatch({
                 type: 'GET_PROFESSIONS',
                 payload: profesiones.data
@@ -63,3 +62,38 @@ export function addProfessions (body) {
     }
 }
 
+export function getOrdersDB () {
+    return async function (dispatch) {
+        try {
+               const orders = await axios.get("https://reparoiobackend-main.up.railway.app/api/orders")
+            return dispatch ({
+                type: "GET_ORDERS",
+                payload: orders.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export function updateOrderStatus(orderId, status) {
+  
+    return async function () {
+      //EJEMPLO body={status: "algun status"} opciones para status: "creado", "pendiente", "cancelado", "completo"
+      await axios.patch( `https://reparoiobackend-main.up.railway.app/api/orders/${orderId}`, {status: status})
+      return {
+        type: "UPDATE_ORDER",
+        payload: {orderId,status}
+      }
+    }
+}
+
+export function filterStatus(status) {
+
+    return async function(dispatch) {
+        return dispatch({
+            type: "FILTER_STATUS",
+            payload: status
+          })
+    }
+}

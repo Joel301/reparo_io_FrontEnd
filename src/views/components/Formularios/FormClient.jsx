@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-router-dom'
 import Form from 'react-bootstrap/Form';
 import { validateFormClient } from "./validation";
+import { postClient } from "../../../state/ducks/clients/actions";
 
 
 export default function FormClient() {
@@ -74,7 +75,7 @@ export default function FormClient() {
 
     const currentError = validateFormClient(input)
     setErrors(currentError)
-
+    dispatch(postClient(input) )
     // console.log(input)
   }
 

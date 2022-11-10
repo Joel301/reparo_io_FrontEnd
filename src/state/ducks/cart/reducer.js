@@ -24,10 +24,10 @@ export default function cartReducer(state = initialState, action) {
     }
 
     case "POSTING_CART": {
-      console.log(action.payload);
+      console.log(action.payload, "leeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeaccccccccccccc");
       return {
         ...state,
-        list: [...state.list, ...action.payload],
+        
       };
     }
 

@@ -52,12 +52,12 @@ export function AuthProvider({ children }) {
     const resetPassword = async (email) => sendPasswordResetEmail(auth, email);
 
     useEffect(() => {
-        const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {
+        const unsubuscribe = onAuthStateChanged(auth,async (currentUser) => {
             // console.log(currentUser)
             setUser(currentUser);
             if (currentUser) {
                 const { email, uid } = currentUser
-                axios.get("/home/user", { params: { id: uid } }).then(
+              await  axios.get("/home/user", { params: { id: uid } }).then(
                     (response) => setUsersimple({ ...response.data })
                 )
 

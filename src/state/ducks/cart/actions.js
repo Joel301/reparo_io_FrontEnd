@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export function addToCart(worker, client) {
-  console.log(worker, "Soy workeeer");
+  console.log(client, "soy client")
   return async function (dispatch) {
     try {
       const itemDeCompra = {
@@ -23,12 +23,17 @@ export function addToCart(worker, client) {
   };
 }
 
+
+
 export function deleteItemCart(item) {
+  console.log(item);
   return async function (dispatch) {
     try {
-      await axios.delete(
-        `https://reparoiobackend-main.up.railway.app/api/cart/${item.idDb}`
-      );
+      if (item.idDb) {
+        await axios.delete(
+          `https://reparoiobackend-main.up.railway.app/api/cart/${item.idDb}`
+        );
+      }
       return dispatch({
         type: "DELETE_ITEM_CART",
         payload: item.professional.id,
@@ -77,7 +82,7 @@ export function postCart(body) {
       const postCarrito = await axios.post(
         "https://reparoiobackend-main.up.railway.app/api/orders",
         body
-      );
+      ); console.log(postCarrito)
       return dispatch({
         type: "POST_CART",
         payload: postCarrito.data,
@@ -95,7 +100,10 @@ export function getMercadoPagoLink(body) {
       const response = await axios.post(
         "https://reparoiobackend-main.up.railway.app/api/mercado",
         body
-      );
+      ).then((res)=>{
+        localStorage.clear()
+        return res
+      });
       console.log(response, "response");
       return dispatch({
         type: "URL_MERCADO_PAGO",
@@ -111,6 +119,7 @@ export function postingCart(cartList, clientId) {
   return async function (dispatch) {
     try {
       const addCartList = cartList.map(async (el) => {
+        
         const response = await axios.post(
           "https://reparoiobackend-main.up.railway.app/api/cart",
           {
@@ -119,12 +128,15 @@ export function postingCart(cartList, clientId) {
             days: el.days,
           }
         );
+        
         el.idDb = response.data.newCartDetail.id;
         return el;
       });
+      console.log(addCartList)
+      const promesahasbulla = await Promise.all(addCartList)
       return dispatch({
         type: "POSTING_CART",
-        payload: Promise.all(addCartList),
+        
       });
     } catch (error) {
       console.log(error);

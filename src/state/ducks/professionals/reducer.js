@@ -13,12 +13,17 @@ function rootReducer(state = initialState, action) {
         professionalsFiltered: action.payload,
         allProfessionals: action.payload,
       };
-
+     
+    case "GET_PROFESSIONALS": 
+      return {
+        ...state,
+        professionalsFiltered: action.payload
+      }
 
     case "FILTER_BY_PROFESSION":
      
 
- if(action.payload.length!==0&&action.payload[0]!== undefined){  //['albanil','herrero']
+ if(action.payload.length!==0&&action.payload[0]!== undefined){  //['albanil']
   let filtered
   let payloadToLower = action.payload.map((e)=>e.toLowerCase())
  
@@ -28,10 +33,11 @@ function rootReducer(state = initialState, action) {
      filtered = state.allProfessionals.filter((profesional) => {
         return profesional.professions
           .map((e) =>{ 
-            return e.name})
+            console.log(e);
+            return e.name.toLowerCase()})
           .includes(payloadToLower[i]);
       })
-     
+     console.log(payloadToLower[i]);
      
     }else{
         filtered = filtered.filter((profesional) => {
@@ -64,7 +70,7 @@ return{...state,
       } else { 
         state.allProfessionals.map(profe => {
 
-          if(profe.review > parseInt(action.payload) || profe.review === parseInt(action.payload)) {
+          if(profe.rating === parseInt(action.payload)) {
             arrayFiltrados.push(profe)
           } 
         })
@@ -117,19 +123,19 @@ return{...state,
       let sortOrder2 =
         action.payload === "asc"
           ? state.professionalsFiltered.sort(function (a, b) {
-              if (a.review > b.review) {
+              if (a.rating > b.rating) {
                 return 1;
               }
-              if (b.review > a.review) {
+              if (b.rating > a.rating) {
                 return -1;
               }
               return 0;
             })
           : state.professionalsFiltered.sort(function (a, b) {
-              if (a.review > b.review) {
+              if (a.rating > b.rating) {
                 return -1;
               }
-              if (b.review > a.review) {
+              if (b.rating > a.rating) {
                 return 1;
               }
               return 0;
@@ -137,7 +143,7 @@ return{...state,
 
       return {
         ...state,
-        professionals: sortOrder2,
+        professionalsFiltered: sortOrder2,
       };
 
     default:
