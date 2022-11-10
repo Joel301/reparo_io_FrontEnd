@@ -20,7 +20,7 @@ export const loginUser = function (user) {
         console.log("enaction: ",user, res.data)
         loggedUser = res.data.dataValues;
         typeOfUser = res.data.msg.split(" ")[0];
-        if (typeOfUser === 'cliente') cartId = res.data.dataValues.id
+        if(typeOfUser==='cliente')cartId = res.data.cart.id
       });
 
       loggedUser.type = typeOfUser;
