@@ -370,7 +370,7 @@ export default function ItemCart() {
               </Button>
               {url ? (
                 <a href={url}>
-                  <Button onClick={()=> clearCart()} variant="secondary">Pagar</Button>
+                  <Button onClick={()=> dispatch(clearCart())} variant="secondary">Pagar</Button>
                 </a>
               ) : (
                 <></>
