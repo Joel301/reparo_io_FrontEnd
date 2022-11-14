@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import axios from "axios";
 
 export function addToCart(worker, client) {
@@ -159,3 +160,15 @@ export const deleteOrder = function (orderId) {
     }
   };
 };
+
+export function clearCart(){
+  return async function(dispatch){
+    try {
+      return dispatch({
+        type: "CLEAR_CART"
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}

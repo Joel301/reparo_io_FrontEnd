@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 import { Google } from "@mui/icons-material";
 
-export default function FormRegistro({ isClient = false,onClose }) {
+export default function FormRegistro({ isClient = false, onClose }) {
     const isclient = isClient
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -58,36 +58,37 @@ export default function FormRegistro({ isClient = false,onClose }) {
         if (professionsRef.current.includes(e.target.value)) {
             professionsRef.current = professionsRef.current.filter(el => el !== e.target.value)
         } else professionsRef.current.push(e.target.value)
-        
+
 
     }
 
     // Esta es la logica para el funcionamiento de cloudinary:
-        const [image,setImage] = useState("");
-        const [loading, setLoading] = useState(false);
-        
-        const upLoadImage = async (e) =>{
-            const files= e.target.files;
-            const data = new FormData();
-            data.append("file", files[0]);
-            data.append("upload_preset","reparoio_images");
-            setLoading(true);
-            const res = await fetch(
-                "https://api.cloudinary.com/v1_1/de2sdmotl/image/upload",
-                {
-                    method: "POST",
-                    body: data,
-                }
-            )
-            const file = await res.json();
-           
-            setImage(file.secure_url);
-            setLoading(false);}
+    const [image, setImage] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const upLoadImage = async (e) => {
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "reparoio_images");
+        setLoading(true);
+        const res = await fetch(
+            "https://api.cloudinary.com/v1_1/de2sdmotl/image/upload",
+            {
+                method: "POST",
+                body: data,
+            }
+        )
+        const file = await res.json();
+
+        setImage(file.secure_url);
+        setLoading(false);
+    }
 
     // se envia la informacion del formulario incluye la validación:
     function hedleOnSubmit(e) {
         e.preventDefault(e)
-        
+
         const input = {
             firstName: nameRef.current.value,
             lastName: lastNameRef.current.value,
@@ -95,12 +96,12 @@ export default function FormRegistro({ isClient = false,onClose }) {
                 passwordRef.current.value : "No coinciden",
             email: emailRef.current.value,
             phoneNumber: phoneNumberRef.current.value,
-            profileImg: image?image:null,
+            profileImg: image ? image : null,
             aboutMe: aboutMeRef.current.value,
             address: addressRef.current.value,
         };
         if (input["profileImg"] === "") {
-            input["profileImg"] = user?.photoURL||""
+            input["profileImg"] = user?.photoURL || ""
         }
         if (!isClient) {
             input["professions"] = professionsRef.current
@@ -109,7 +110,7 @@ export default function FormRegistro({ isClient = false,onClose }) {
             input['email'] = `${user.email}`
             input['password'] = 'thisisnotapass'
         }
-       
+
         const formErrors = isclient
             ? validateFormClient(input)
             : validateFormProfessional(input)
@@ -121,26 +122,27 @@ export default function FormRegistro({ isClient = false,onClose }) {
             alert('Verifique que todos los campos esten llenos')
             return
         }
-        
-        if (user && usersimple.error) {
-            
+
+        if (user && (!usersimple || usersimple?.error)) {
+
             console.log("en firebase")
-            const { email, uid,photoURL } = user
-            console.log("input to send",input)
-                    if(input.profileImg===null)input.profileImg=photoURL
+            const { email, uid, photoURL } = user
+            console.log("input to send", input)
+            if (input.profileImg === null) input.profileImg = photoURL
             isclient
-                ? dispatch(postlClient({ ...input, email, authid: uid,google:true }))
-                : dispatch(postProfessionals({ ...input, email, authid: uid,google:true}))
-            navigate('/Home')
+                ? dispatch(postlClient({ ...input, email, authid: uid, google: true }))
+                : dispatch(postProfessionals({ ...input, email, authid: uid, google: true }))
+            navigate('/home')
+            // window.location.reload()
         } else {
             console.log("sin firebase")
-            console.log('que es userSimple:  ',user)
+            console.log('que es userSimple:  ', user)
             signup(input.email, input.password)
                 // .then(r => r)
                 .then((r) => {
-                    const { email, uid, 
+                    const { email, uid,
                     } = r.user
-                    
+
                     console.log(r)
                     isclient
                         ? dispatch(postlClient({ ...input, email, authid: uid }))
@@ -205,7 +207,7 @@ export default function FormRegistro({ isClient = false,onClose }) {
                     type="email"
                     placeholder={!!user && user.email ? user.email : "nombre@example.com"} />
             </Form.Group>
-            {!!user && user.email ? <div onClick={otherAccount}>Usar Otra Cuenta</div> : ""}
+            {!!user && user.email ? <Button onClick={otherAccount}>Usar Otra Cuenta</Button> : ""}
             {console.log(user, usersimple)}
             {errors.email && <span className="errors">{errors.email}</span>}
             <Form.Group className="mb-2" controlId="formBasicPassword">
@@ -309,7 +311,7 @@ export default function FormRegistro({ isClient = false,onClose }) {
                 <Form.Check type="checkbox" label="Acepto términos y condiciones" />
             </Form.Group>
 
-            <Button onClick={()=>onClose()} variant="primary" type="submit">
+            <Button onClick={() => onClose()} variant="primary" type="submit">
                 Registrame
             </Button>
 

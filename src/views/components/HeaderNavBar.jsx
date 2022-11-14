@@ -50,16 +50,18 @@ function HeaderNavBar() {
   }
   useEffect(() => {
     console.log(userLogged);
-    
-      
+
+
     if (profesionales[0] === undefined) {
       dispatch(getAllProfessionals())
     }
   }, [userLogged])
 
 
-  const showProf = () => {setshowFormprof(false)
-    setshowFormClient(false)};
+  const showProf = () => {
+    setshowFormprof(false)
+    setshowFormClient(false)
+  };
 
   return (
 
@@ -97,30 +99,30 @@ function HeaderNavBar() {
                     width: "2rem",
                     borderRadius: "50%",
                     marginRight: "2rem",
-                  }}  />
+                  }} />
                   <Dropdown.Menu>
                     <Dropdown.Item
-                    onClick={() =>
-                      navigate(`details/me`)
-                    }
+                      onClick={() =>
+                        navigate(`details/me`)
+                      }
                     >
                       Ir a Mi Perfil
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() =>{
-                      dispatch(logoutUser())
-                       logout()
-                       localStorage.clear()
-                       
-                       navigate('/')
-                       window.location.reload()
-                      }}>
+                    <Dropdown.Item onClick={async () => {
+                      await logout()
+                      await dispatch(logoutUser())
+                      localStorage.clear()
+
+                      navigate('/')
+                      window.location.reload()
+                    }}>
                       Cerrar Sesion
                     </Dropdown.Item></Dropdown.Menu>
                 </Dropdown>
               </>
             ) : (
               <> <LogIn show={showLoginForm} onClose={loginClose} />
-                <NavbarBrand onClick={() => setShowLoginForm(true)}  style={{fontSize:'0.9rem',alignSelf:'center',cursor:'pointer'}}>Iniciar Sesion</NavbarBrand>
+                <NavbarBrand onClick={() => setShowLoginForm(true)} style={{ fontSize: '0.9rem', alignSelf: 'center', cursor: 'pointer' }}>Iniciar Sesion</NavbarBrand>
                 <NavDropdown title="Regístrate" id="signin-nav-dropdown">
                   <NavDropdown.Item defaultValue="cliente" onClick={handleShow}>
                     Cliente
@@ -176,7 +178,7 @@ function HeaderNavBar() {
           <Offcanvas.Title>Regístrate como cliente</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <FormRegistro onClose ={showProf}isClient={true} />
+          <FormRegistro onClose={showProf} isClient={true} />
         </Offcanvas.Body>
       </Offcanvas>
     </Navbar>
